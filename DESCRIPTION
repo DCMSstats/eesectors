@@ -9,7 +9,8 @@ Maintainer: Matthew Upson <matthew.upson@digital.cabinet-office.gov.uk>
 Description: Provides functions to support production of the Economic
     Estimates statistical release.
 License: OGL
-Suggests: dplyr
+Suggests: dplyr,
+          knitr
 Imports: testthat
 VignetteBuilder: knitr
 Encoding: UTF-8

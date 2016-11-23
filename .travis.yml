@@ -1,0 +1,14 @@
+language: r
+cache: packages
+sudo: required
+
+r_packages:
+  - knitr
+
+r_github_packages:
+  - jimhester/covr
+  - UKGov-Data-Science/govstyle@v0.1.0
+  - MangoTheCat/visualTest
+
+after_success:
+  - Rscript -e 'covr::codecov()'
