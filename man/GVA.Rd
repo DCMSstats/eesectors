@@ -4,9 +4,11 @@
 \name{GVA}
 \alias{GVA}
 \title{GVA data for 2010:2015.}
-\format{A data frame with 48 rows and 3 variables: \describe{
-  \item{sector}{DCMS sector} \item{year}{calendar year} \item{GVA}{gross
-  value added} }}
+\format{A tibble with 54 rows and 3 variables: \describe{
+  \item{sector}{DCMS sector}
+  \item{year}{calendar year}
+  \item{GVA}{gross value added}
+  }.}
 \source{
 \url{https://www.gov.uk/government/statistics/dcms-sectors-economic-estimates-2016}
 }
@@ -19,5 +21,8 @@ These data are provided for testing ouputs of this package against, and for
 the initial development phase during which the original data sources were not
 available.
 }
-\keyword{datasets}
+\keyword{DCMS}
+\keyword{Economic}
+\keyword{Estimates}
+\keyword{Sectors}
 

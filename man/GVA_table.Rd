@@ -7,21 +7,10 @@
 GVA_table(x)
 }
 \arguments{
-\item{base_size}{Integer. Sets the base size of text for the plot. Defaults
-to \code{12}.}
-
-\item{base_colour}{Character string. Sets the default colour of axes and axis
-labels. Must be a named R colour or hexadecimal colour code (e.g.
-"#FF0000"). Defaults to \code{gray40}.}
-
-\item{axes}{Character string. Specifies the presence or absence of axes Must
-be one of \code{n} (no axes), \code{x} (only x axis), \code{y} (only y
-axis), or \code{xy} (both axes shown).}
+\item{x}{Input dataframe.}
 }
 \value{
-Will not return anything of itself, but when used in conjuntion with
-  \code{\link{ggplot}} and (e.g.) \code{\link{geom_point}} from the package
-  \code{ggplot2}, will apply styling to a plot.
+Properly formatted GVA table for release.
 }
 \description{
 \code{GVA_table} Formats the GVA by sectors table labelled as
@@ -38,7 +27,6 @@ library(dplyr)
 library(EESectors)
 
 GVA_table(GVA)
-
 
 }
 

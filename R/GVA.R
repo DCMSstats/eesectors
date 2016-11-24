@@ -5,10 +5,13 @@
 #' the initial development phase during which the original data sources were not
 #' available.
 #'
-#' @format A data frame with 48 rows and 3 variables: \describe{
-#'   \item{sector}{DCMS sector} \item{year}{calendar year} \item{GVA}{gross
-#'   value added} }
+#' @format A tibble with 54 rows and 3 variables: \describe{
+#'   \item{sector}{DCMS sector}
+#'   \item{year}{calendar year}
+#'   \item{GVA}{gross value added}
+#'   }.
 #' @source
 #'   \url{https://www.gov.uk/government/statistics/dcms-sectors-economic-estimates-2016}
 #'
+#' @keywords Economic Estimates Sectors DCMS
 "GVA"
