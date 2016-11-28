@@ -16,7 +16,13 @@ Suggests:
 Imports:
     testthat,
     dplyr,
-    tidyr
+    tidyr,
+    ggplot2,
+    xtable,
+    scales,
+    govstyle
+Remotes:
+    github::UKGov-Data-Science/govstyle
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true

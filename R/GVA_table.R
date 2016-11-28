@@ -8,6 +8,7 @@
 #'   \code{xtable} to format a pretty html table.
 #'
 #' @param x Input dataframe.
+#' @param html Should the table be output as is or using \code{xtable} as html.
 #'
 #' @return Properly formatted GVA table for release.
 #'

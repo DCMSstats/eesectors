@@ -4,10 +4,12 @@
 \alias{GVA_table}
 \title{Format GVA table}
 \usage{
-GVA_table(x)
+GVA_table(x, html = TRUE)
 }
 \arguments{
 \item{x}{Input dataframe.}
+
+\item{html}{Should the table be output as is or using \code{xtable} as html.}
 }
 \value{
 Properly formatted GVA table for release.
