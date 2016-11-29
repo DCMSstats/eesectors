@@ -2,6 +2,7 @@
 
 export(GVA_plot_1)
 export(GVA_plot_2)
+export(GVA_plot_3)
 export(GVA_table)
 import(ggplot2)
 import(xtable)

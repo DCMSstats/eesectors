@@ -4,6 +4,6 @@
 
 # EESectors
 
-**This is a prototype and not to be used in production**
+**This is a prototype and subject to constant development**
 
 This package provides function used in the creation of a Reproducible Analytical Pipeline (RAP) for the Economic Estimates for DCMS sectors publication.
