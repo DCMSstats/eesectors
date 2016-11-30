@@ -1,14 +1,14 @@
 Package: EESectors
 Type: Package
 Title: Back End Functions to Support RAP
-Version: 0.1.0
+Version: 0.0.0.9000
 Authors@R: c(
     person("Matthew", "Upson", , "matthew.upson@digital.cabinet-office.gov.uk", c("aut", "cre"))
     )
 Maintainer: Matthew Upson <matthew.upson@digital.cabinet-office.gov.uk>
 Description: Provides functions to support production of the Economic
     Estimates statistical release.
-License: MIT
+License: GPL-3
 Depends:
     R (>= 2.10)
 Suggests:

@@ -1,10 +1,10 @@
-#' @title Format GVA table
+#' @title Format GVA by sectors table
 #'
-#' @description \code{GVA_table} Formats the GVA by sectors table labelled as
+#' @description \code{GVA_by_sector_table} Formats the GVA by sectors table labelled as
 #'   3.1 in the 2016 Economic estimates of DCMS Sectors statistical release
 #'   (\url{https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544103/DCMS_Sectors_Economic_Estimates_-_August_2016.pdf}).
 #'
-#' @details \code{GVA_table} takes as input a standardised long format GVA data frame, and uses
+#' @details \code{GVA_by_sector_table} takes as input a standardised long format GVA data frame, and uses
 #'   \code{xtable} to format a pretty html table.
 #'
 #' @param x Input dataframe.
@@ -17,14 +17,14 @@
 #' library(dplyr)
 #' library(EESectors)
 #'
-#' GVA_table(GVA)
+#' GVA_by_sector_table(GVA_by_sector_2016)
 #'
 #' @importFrom dplyr mutate_ filter_
 #' @importFrom tidyr spread
 #' @import xtable
 #' @export
 
-GVA_table <- function(x, html = TRUE) {
+GVA_by_sector_table <- function(x, html = TRUE) {
 
   tryCatch(
     expr = {
@@ -65,10 +65,7 @@ GVA_table <- function(x, html = TRUE) {
       GVA_all_sectors_perc <- GVA_all_sectors_perc * 100
       GVA_all_sectors_perc <- cbind(
         sector = 'perc_of_UK',
-        GVA_all_sectors_perc,
-        since_2014 = NA,
-        since_2010 = NA,
-        UK_perc = NA
+        GVA_all_sectors_perc
       )
 
       GVA_table <- dplyr::bind_rows(
@@ -116,12 +113,12 @@ GVA_table <- function(x, html = TRUE) {
     warning = function() {
 
       w <- warnings()
-      warning('Warning produced GAV_table():', w)
+      warning('Warning produced GVA_by_sector_table():', w)
 
     },
     error = function(e)  {
 
-      stop('Error produced running GVA_table():', e)
+      stop('Error produced running GVA_by_sector_table():', e)
 
     },
     finally = {}

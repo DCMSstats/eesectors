@@ -13,7 +13,7 @@ GVA_plot_3(x)
 Properly formatted GVA table for release.
 }
 \description{
-\code{GVA_plot_3} Creates Figure 3.2 from
+\code{GVA_plot_3} Creates Figure 3.3 from
   (\url{https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544103/DCMS_Sectors_Economic_Estimates_-_August_2016.pdf})
   using \code{ggplot2}.
 }
@@ -25,7 +25,7 @@ Properly formatted GVA table for release.
 
 library(EESectors)
 
-GVA_plot_3(GVA)
+GVA_plot_3(GVA_by_sector_2016)
 
 }
 

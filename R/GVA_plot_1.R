@@ -15,7 +15,7 @@
 #'
 #' library(EESectors)
 #'
-#' GVA_plot_1(GVA)
+#' GVA_plot_1(GVA_by_sector_2016)
 #'
 #' @importFrom dplyr mutate_ filter_
 #' @importFrom tidyr spread
