@@ -10,19 +10,21 @@ Description: Provides functions to support production of the Economic
     Estimates statistical release.
 License: GPL-3
 Depends:
-    R (>= 2.10)
+    R (>= 3.1.0)
 Suggests:
-    knitr
+    knitr (>= 1.15.1),
+    testthat (>= 1.0.2)
 Imports:
-    testthat,
-    dplyr,
-    tidyr,
-    ggplot2,
-    xtable,
-    scales,
-    govstyle
+    dplyr (>= 0.5.0),
+    ggplot2 (>= 2.1.0),
+    govstyle (>= 0.1.0),
+    lazyeval (>= 0.1.0),
+    scales (>= 0.4.0),
+    tidyr (>= 0.6.0),
+    xtable (>= 1.8-2)
 Remotes:
     github::UKGov-Data-Science/govstyle
+BugReports: https://github.com/UKGov-Data-Science/EESectors/issues
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
