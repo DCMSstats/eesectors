@@ -10,5 +10,12 @@ r_github_packages:
   - UKGov-Data-Science/govstyle@v0.1.0
   - MangoTheCat/visualTest
 
+install:
+  - R -e "0" --args --bootstrap-packrat
+
+cache:
+  directories: $TRAVIS_BUILD_DIR/packrat/
+  packages: true
+
 after_success:
   - Rscript -e 'covr::codecov()'
