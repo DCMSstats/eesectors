@@ -7,8 +7,8 @@ r_packages:
 
 r_github_packages:
   - jimhester/covr
-  - UKGov-Data-Science/govstyle@v0.1.0
   - MangoTheCat/visualTest
+  - UKGov-Data-Science/govstyle@v0.1.1
 
 install:
   - R -e "0" --args --bootstrap-packrat
