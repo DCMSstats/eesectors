@@ -29,32 +29,43 @@
 #' GVA <- long_data(GVA_by_sector_2016)
 #'
 #' @importFrom lazyeval interp
+#' @import assertr
 #' @export
 
 
 long_data <- function(x) {
 
-  message('Initiating long_data class.\n\nExpects a data.frame with three columns: sector, year, and measure, where measure is one of
-GVA, exports, or enterprises. The data.frame should include historical data, which is used for checks on the quality of
-this year\'s data, and for producing tables and plots. More information on the format expected by this class is given by
-?long_data().')
+  message('Initiating long_data class.
+\n\nExpects a data.frame with three columns: sector, year, and measure, where
+measure is one of GVA, exports, or enterprises. The data.frame should include
+historical data, which is used for checks on the quality of this year\'s data,
+and for producing tables and plots. More information on the format expected by
+this class is given by ?long_data().')
 
-  # Integrity checks on incoming long table
+  # Integrity checks on incoming long table ----
 
-  message('\n*** Running integrity checks on input dataframe:')
+  # Check the structure of the data is as expected: data.frame containing no
+  # missing values and three columns, containing sector, year, and one
+  # additional column.
 
+  message('\n*** Running integrity checks on input dataframe (x):')
   message('\nChecking input is properly formatted...')
-
+  message('Checking x is a data.frame...')
   if (!is.data.frame(x)) stop("x must be a data.frame")
 
+  message('Checking x has correct columns...')
   if (length(colnames(x)) != 3) stop("x must have three columns: sector, year, and one of GVA, export, or x")
 
+  message('Checking x contains a year column...')
   if (!'year' %in% colnames(x)) stop("x must contain year column")
 
+  message('Checking x contains a sector column...')
   if (!'sector' %in% colnames(x)) stop("x must contain sector column")
 
+  message('Checking x does not contain missing values...')
   if (anyNA(x)) stop("x cannot contain any missing values")
 
+  message('Checking for the correct number of rows...')
   if (nrow(x) != length(unique(x$sector)) * length(unique(x$year))) {
 
     warning("x does not appear to be well formed. nrow(x) should equal
@@ -63,19 +74,78 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
 
   message('...passed')
 
-  message('\nChecking current year\'s values against previous years. These tests are implemented
-in the function calculate_bounds(). See ?calculate_bounds() for more information...')
+  # User assertr to run statistical tests on the data itself ----
 
-  test_df <- calculate_bounds(x, colnames(x)[!colnames(x) %in% c('year','sector')], tol = 3)
+  message('\n***Running statistical checks on input dataframe (x)...\n
+  These tests are implemented using the package assertr see:
+  https://cran.r-project.org/web/packages/assertr for more details.')
 
-  if (any(test_df$GVA > test_df$upper_bound) | any(test_df$GVA < test_df$lower_bound)) {
+  # Extract third column name
 
-    warning('x failed statistical testing based on')
+  value <- colnames(x)[(!colnames(x) %in% c('sector','year'))]
 
-  } else message('...passed')
+  # Check snsible range for year
+
+  message('Checking years in a sensible range (2000:2020)...')
+  assertr::assert_(x, assertr::in_set(2000:2020), ~year)
+
+  # Check that the correct levels are in sector
+
+  message('Checking sectors are correct...')
+  sectors_set = c(
+    'Creative Industries', 'Cultural Sector',
+    'Digital Sector', 'Gambling',
+    'Sport', 'Telecoms',
+    'Tourism', 'UK', 'all_sectors'
+  )
+  assertr::assert_(x, assertr::in_set(sectors_set), ~sector, error_fun = raise_issue)
+
+  # Check for outliers in the value column (GVA, exports, enterprises)
+
+  message('Checking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...')
+  series_split <- split(x, x$sector)
+  lapply(
+    series_split,
+    function(x) {
+      message('Checking sector timeseries: ', unique(x[['sector']]))
+      assertr::insist_(
+        x,
+        assertr::within_n_mads(3),
+        lazyeval::interp(~value, value = as.name(value)),
+        error_fun = raise_issue)
+    }
+  )
+
+  message('...passed')
+
+  # Check for outliers based on the mahalanobis distance across year and value
+
+  message('Checking for outliers on a row by row basis using mahalanobis distance...')
+
+  lapply(
+    series_split,
+    function(x) {
+
+      # Note that this test will fail on GVA_by_sector_2016 if x < 6 for
+      # within_n_mads(x)
+
+      message('Checking sector timeseries: ', unique(x[['sector']]))
+      assertr::insist_rows(
+        x,
+        assertr::maha_dist,
+        assertr::within_n_mads(6),
+        dplyr::everything(),
+        error_fun = raise_issue
+      )
+    }
+  )
+
+  message('...passed')
+
+  # Define the class here ----
 
   structure(
-  list(
+    list(
       df = x,
       colnames = colnames(x),
       type = colnames(x)[!colnames(x) %in% c('year','sector')],

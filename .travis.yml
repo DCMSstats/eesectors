@@ -10,7 +10,7 @@ r_github_packages:
 #  - MangoTheCat/visualTest
 #  - UKGov-Data-Science/govstyle@v0.1.1
 
-#install:
+install:
 #  - R -e "0" --args --bootstrap-packrat
 
 cache:
