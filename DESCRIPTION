@@ -1,7 +1,7 @@
 Package: eesectors
 Type: Package
 Title: Back End Functions to Support RAP
-Version: 0.0.0.9002
+Version: 0.0.0.9003
 Authors@R: c(
     person("Matthew", "Upson", , "matthew.upson@digital.cabinet-office.gov.uk", c("aut", "cre"))
     )
@@ -13,17 +13,21 @@ Depends:
     R (>= 3.1.0)
 Suggests:
     knitr (>= 1.15.1),
-    testthat (>= 1.0.2)
+    testthat (>= 1.0.2),
+    purrr (>= 0.2.2)
 Imports:
+    assertr (>= 1.0.2),
     dplyr (>= 0.5.0),
     ggplot2 (>= 2.2.0),
+    gh (>= 1.0.0),
     govstyle (>= 0.1.1),
     lazyeval (>= 0.1.0),
     scales (>= 0.4.0),
     tidyr (>= 0.6.0),
     xtable (>= 1.8-2)
 Remotes:
-    github::ukgovdatascience/govstyle
+    github::ukgovdatascience/govstyle,
+    github::r-pkgs/gh
 BugReports: https://github.com/ukgovdatascience/eesectors/issues
 VignetteBuilder: knitr
 Encoding: UTF-8
