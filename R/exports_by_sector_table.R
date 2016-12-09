@@ -21,7 +21,7 @@
 #' @examples
 #'
 #' library(dplyr)
-#' library(EESectors)
+#' library(eesectors)
 #'
 #' exports_by_sector_table(exports_by_sector_2016)
 #'
