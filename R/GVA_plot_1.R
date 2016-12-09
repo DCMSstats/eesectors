@@ -13,7 +13,7 @@
 #'
 #' @examples
 #'
-#' library(EESectors)
+#' library(eesectors)
 #'
 #' GVA_plot_1(GVA_by_sector_2016)
 #'

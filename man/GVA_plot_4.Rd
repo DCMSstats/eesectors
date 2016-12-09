@@ -23,7 +23,7 @@ Properly formatted GVA table for release.
 }
 \examples{
 
-library(EESectors)
+library(eesectors)
 
 GVA_plot_4(GVA_by_sector_2016)
 

@@ -24,7 +24,7 @@
 #'
 #' @examples
 #'
-#' library(EESectors)
+#' library(eesectors)
 #'
 #' GVA <- long_data(GVA_by_sector_2016)
 #'

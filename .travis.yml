@@ -7,11 +7,11 @@ r_packages:
 
 r_github_packages:
   - jimhester/covr
-  - MangoTheCat/visualTest
-  - UKGov-Data-Science/govstyle@v0.1.1
+#  - MangoTheCat/visualTest
+#  - UKGov-Data-Science/govstyle@v0.1.1
 
-install:
-  - R -e "0" --args --bootstrap-packrat
+#install:
+#  - R -e "0" --args --bootstrap-packrat
 
 cache:
   directories: $TRAVIS_BUILD_DIR/packrat/

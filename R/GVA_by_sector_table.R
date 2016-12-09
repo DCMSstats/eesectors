@@ -15,7 +15,7 @@
 #' @examples
 #'
 #' library(dplyr)
-#' library(EESectors)
+#' library(eesectors)
 #'
 #' GVA_by_sector_table(GVA_by_sector_2016)
 #'

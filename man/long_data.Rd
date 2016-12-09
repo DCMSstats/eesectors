@@ -34,7 +34,7 @@ The \code{long_data} class expects a \code{data.frame} with three
 }
 \examples{
 
-library(EESectors)
+library(eesectors)
 
 GVA <- long_data(GVA_by_sector_2016)
 
