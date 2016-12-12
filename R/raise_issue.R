@@ -1,3 +1,4 @@
+
 #' @title Warn when assertr checks fail and raise issue on github
 #'
 #' @description \code{raise_issue} replaces the default function

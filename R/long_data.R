@@ -89,7 +89,8 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
 
   # Check snsible range for year
 
-  message('\nChecking years in a sensible range (2000:2020)...')
+  message('Checking years in a sensible range (2000:2020)...')
+
   assertr::assert_(x, assertr::in_set(2000:2020), ~year)
 
   # Check that the correct levels are in sector
@@ -101,11 +102,11 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
     'Sport', 'Telecoms',
     'Tourism', 'UK', 'all_sectors'
   )
-  assertr::assert_(x, assertr::in_set(sectors_set), ~sector, error_fun = raise_issue(x))
+  assertr::assert_(x, assertr::in_set(sectors_set), ~sector, error_fun = raise_issue)
 
   # Check for outliers in the value column (GVA, exports, enterprises)
 
-  message('\nChecking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...')
+  message('Checking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...')
   series_split <- split(x, x$sector)
   lapply(
     series_split,
@@ -123,7 +124,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
 
   # Check for outliers based on the mahalanobis distance across year and value
 
-  message('\nChecking for outliers on a row by row basis using mahalanobis distance...')
+  message('Checking for outliers on a row by row basis using mahalanobis distance...')
 
   lapply(
     series_split,
