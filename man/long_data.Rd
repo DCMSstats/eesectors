@@ -4,10 +4,13 @@
 \alias{long_data}
 \title{long data class}
 \usage{
-long_data(x)
+long_data(x, log_issues = FALSE)
 }
 \arguments{
 \item{x}{Input dataframe, see details.}
+
+\item{log_issues}{should issues with the data quality be logged to github?
+See \code{?raise_issue()} for additional details.}
 }
 \value{
 If the class is instantiated correctly, nothing is returned.

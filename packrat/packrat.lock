@@ -94,6 +94,16 @@ Version: 2.2.0
 Hash: 78c14285e0c114542d051a09bd552472
 Requires: digest, gtable, lazyeval, plyr, reshape2, scales, tibble
 
+Package: gh
+Source: github
+Version: 1.0.0
+Hash: 63a4834a18bc0cfd2f709a7ddfa35af8
+Requires: httr, ini, jsonlite
+GithubRepo: gh
+GithubUsername: r-pkgs
+GithubRef: master
+GithubSha1: eecde016754be7769f6f401deb39cc90f3ac7cdd
+
 Package: git2r
 Source: CRAN
 Version: 0.16.0
@@ -124,6 +134,11 @@ Source: CRAN
 Version: 1.2.1
 Hash: 7de1f8f760441881804af7c1ff324340
 Requires: R6, curl, jsonlite, mime, openssl
+
+Package: ini
+Source: CRAN
+Version: 0.2
+Hash: 12df248cc384eb68545a617da2730c8e
 
 Package: jsonlite
 Source: CRAN
@@ -199,6 +214,12 @@ Package: praise
 Source: CRAN
 Version: 1.0.0
 Hash: 77da8f1df873a4b91e5c4a68fe2fb1b6
+
+Package: purrr
+Source: CRAN
+Version: 0.2.2
+Hash: 883eb391742d94eb62d05aa8c5055211
+Requires: BH, Rcpp, dplyr, lazyeval, magrittr
 
 Package: reshape2
 Source: CRAN
