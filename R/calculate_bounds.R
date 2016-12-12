@@ -32,7 +32,6 @@
 #'   Journal of Experimental Social Psychology. 49 (4), pp. 764 - 766.
 #'   http://dx.doi.org/10.1016/j.jesp.2013.03.013
 #'
-#' @importFrom lazyeval interp
 
 calculate_bounds <- function(df, measure = NULL, test_year = NULL, tol = 3) {
 
