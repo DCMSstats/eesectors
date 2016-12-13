@@ -49,6 +49,16 @@ Source: CRAN
 Version: 1.3-1
 Hash: a28c977a419f4a42621984f3770f2dac
 
+Package: covr
+Source: github
+Version: 2.2.1
+Hash: af65d6c4f3f34417e9d59f5a84943a74
+Requires: crayon, httr, jsonlite, rex, withr
+GithubRepo: covr
+GithubUsername: jimhester
+GithubRef: master
+GithubSha1: 9a8832d9e1380ad523e7c0a489554fd4fc884027
+
 Package: crayon
 Source: CRAN
 Version: 1.3.2
@@ -226,6 +236,12 @@ Source: CRAN
 Version: 1.4.2
 Hash: fd2714b51cb380c30fec1687005587a2
 Requires: Rcpp, plyr, stringr
+
+Package: rex
+Source: CRAN
+Version: 1.1.1
+Hash: 69e208c6283398d235e507a658ba8079
+Requires: lazyeval, magrittr
 
 Package: roxygen2
 Source: CRAN
