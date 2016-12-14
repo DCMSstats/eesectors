@@ -15,7 +15,8 @@ test_that(
 
 # Note that this test will require a valid GITHUB_PAT without which the test may
 # fail. In addition you will need an internet connection since this test uses
-# the github API via the gh package.
+# the github API via the gh package. On MAC the GITHUB_PAT is stored in
+# /etc/launchd.conf
 
 test_that(
   'Test that raise_issue creates github issues',

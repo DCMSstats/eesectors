@@ -34,7 +34,7 @@
 #'   repository \code{repo}.
 #'
 #' @return \code{err_str} as warning.
-#' @importFrom gh gh
+#'
 #' @export
 
 raise_issue <- function(

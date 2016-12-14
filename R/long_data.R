@@ -31,8 +31,6 @@
 #'
 #' GVA <- long_data(GVA_by_sector_2016)
 #'
-#' @importFrom lazyeval interp
-#' @import assertr
 #' @export
 
 
@@ -104,7 +102,12 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
   )
   assertr::assert_(x, assertr::in_set(sectors_set), ~sector, error_fun = raise_issue)
 
-  # Check for outliers in the value column (GVA, exports, enterprises)
+  # Check for outliers ----
+
+  # Check for simple outliers in the value column (GVA, exports, enterprises)
+  # for each sector, over the entire timeseries. Outliers are detected using
+  # median +- 3 * median absolute deviation, implemented in the
+  # assertr::within_n_mads() function.
 
   message('Checking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...')
   series_split <- split(x, x$sector)
@@ -122,7 +125,13 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
 
   message('...passed')
 
-  # Check for outliers based on the mahalanobis distance across year and value
+  # Check for outliers using mahalanobis ----
+
+  # This test also looks for outliers, by considering the relationship between
+  # the variable year and the value variable. It measures the mahalabois
+  # distance, which is similar to the euclidean norm, and then looks for
+  # ourliers in this new vector of norms. Any value with a distance too great is
+  # flagged as an outlier.
 
   message('Checking for outliers on a row by row basis using mahalanobis distance...')
 
@@ -153,7 +162,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
       df = x,
       colnames = colnames(x),
       type = colnames(x)[!colnames(x) %in% c('year','sector')],
-      sector_levels = unique(x$sector),
+      sector_levels = levels(x$sector),
       years = unique(x$year)
     ),
     class = "long_data")
