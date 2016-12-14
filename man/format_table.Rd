@@ -4,13 +4,16 @@
 \alias{format_table}
 \title{format_table()}
 \usage{
-format_table(x, html = TRUE)
+format_table(x, html = TRUE, ...)
 }
 \arguments{
 \item{x}{Object of \code{class(x) == 'long_data'}.}
 
 \item{html}{Should the output be an R \code{data.frame} (and \code{tbl} and
 \code{tbl_df}) or as html using \code{xtable}.}
+
+\item{...}{Passes arguments to \code{print.xtable} and \code{xtable}. Will
+silently be dropped if \code{html = FALSE}.}
 }
 \value{
 wide format table
