@@ -7,7 +7,7 @@
 \usage{
 format_table(x, html, fmt, ...)
 
-\method{format_table}{long_data}(x, html = TRUE, fmt = "\%.1f", ...)
+\method{format_table}{long_data}(x, html = FALSE, fmt = "\%.1f", ...)
 }
 \arguments{
 \item{x}{Object of \code{class(x) == 'long_data'}.}
