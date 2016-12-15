@@ -5,6 +5,7 @@
 #'   (\url{https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544103/DCMS_Sectors_Economic_Estimates_-_August_2016.pdf}).
 #'
 #'
+#'
 #' @details The \code{long_data} class expects a \code{data.frame} with three
 #'   columns: sector, year, and measure, where measure is one of GVA, exports,
 #'   or enterprises. The \code{data.frame} should include historical data, which

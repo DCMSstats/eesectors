@@ -4,7 +4,7 @@
 \alias{roundf}
 \title{Prepare values for table}
 \usage{
-roundf(x, fmt = "\%.2f")
+roundf(x, fmt = "\%.1f")
 }
 \arguments{
 \item{x}{Value to be transformed.}

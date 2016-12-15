@@ -27,7 +27,7 @@ test_that(
 
     expect_is(roundf(pi), 'character')
 
-    expect_identical(roundf(pi*10^3), as.character(3.14))
+    expect_identical(roundf(pi*10^3, fmt = '%.2f'), as.character(3.14))
 
   }
 )
@@ -38,7 +38,7 @@ test_that(
 
     vec <- rep(pi * 10^3, 10)
 
-    expect_identical(roundf(vec), as.character(rep(3.14, 10)))
+    expect_identical(roundf(vec, fmt = '%.2f'), as.character(rep(3.14, 10)))
 
   }
 )
