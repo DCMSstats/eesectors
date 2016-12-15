@@ -3,30 +3,21 @@ context('Test that imported data are in the correct format')
 test_that(
   'GVA_by_sector_2016 contains the expected columns',
   {
-    expect_equal(
-      colnames(GVA_by_sector_2016),
-      c('sector', 'year', 'GVA')
-    )
+    expect_equal(colnames(GVA_by_sector_2016), c('sector', 'year', 'GVA'))
   }
 )
 
 test_that(
   'GVA_by_sector_2016 is the right shape',
   {
-    expect_equal(
-      dim(GVA_by_sector_2016),
-      c(54, 3)
-    )
+    expect_equal(dim(GVA_by_sector_2016), c(54, 3))
   }
 )
 
 test_that(
   'GVA_by_sector_2016 contain sthe right number of years',
   {
-    expect_equal(
-      unique(GVA_by_sector_2016$year),
-      2010:2015
-    )
+    expect_equal(unique(GVA_by_sector_2016$year), 2010:2015)
   }
 )
 
