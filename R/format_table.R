@@ -26,7 +26,7 @@ format_table <- function(x, html, fmt, ...) UseMethod('format_table')
 #' @describeIn format_table Create wide table from long_data() class
 #' @export
 
-format_table.long_data <- function(x, html = TRUE, fmt = '%.1f', ...) {
+format_table.long_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
 
   out <- tryCatch(
     expr = {

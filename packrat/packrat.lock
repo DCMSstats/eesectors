@@ -107,12 +107,12 @@ Requires: digest, gtable, lazyeval, plyr, reshape2, scales, tibble
 Package: gh
 Source: github
 Version: 1.0.0
-Hash: 63a4834a18bc0cfd2f709a7ddfa35af8
+Hash: 616f9ff6f277f9bcf6c3dabdc6c13caf
 Requires: httr, ini, jsonlite
 GithubRepo: gh
 GithubUsername: r-pkgs
 GithubRef: master
-GithubSha1: eecde016754be7769f6f401deb39cc90f3ac7cdd
+GithubSha1: 2be7b722baa6a4f04d292c6b1d4bf7359bfc0d9a
 
 Package: git2r
 Source: CRAN
@@ -122,12 +122,12 @@ Hash: 8022c40f316e7b99258eb19969e2a11c
 Package: govstyle
 Source: github
 Version: 0.1.1
-Hash: b0213de0c73aa08c543438c77f949251
+Hash: 144413fae7c8dd3d57c1f7da5878135f
 Requires: devtools, ggplot2, png, testthat
 GithubRepo: govstyle
 GithubUsername: ukgovdatascience
 GithubRef: master
-GithubSha1: 548dcc41a8378516c7f7ee04133c6c8ffef53abc
+GithubSha1: 2ef672b10fcaf7ffc166c6be86a833361d4c6298
 
 Package: gtable
 Source: CRAN

@@ -14,7 +14,8 @@ Depends:
 Suggests:
     knitr (>= 1.15.1),
     testthat (>= 1.0.2),
-    purrr (>= 0.2.2)
+    purrr (>= 0.2.2),
+    visualTest (>= 1.0.0)
 Imports:
     assertr (>= 1.0.2),
     dplyr (>= 0.5.0),
@@ -27,6 +28,7 @@ Imports:
     xtable (>= 1.8-2)
 Remotes:
     github::ukgovdatascience/govstyle,
+    github::mangothecat/visualTest,
     github::r-pkgs/gh
 BugReports: https://github.com/ukgovdatascience/eesectors/issues
 VignetteBuilder: knitr
