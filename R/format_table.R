@@ -1,8 +1,8 @@
 #' @title format_table()
 #'
-#' @description Method to convert table into wide format
+#' @description Generic method to convert tables into wide format
 #'
-#' @details Method to convert table into wide format
+#' @details Generic method to convert tables into wide format
 #'
 #' @param x Object of \code{class(x) == 'long_data'}.
 #' @param html Should the output be an R \code{data.frame} (and \code{tbl} and
@@ -10,14 +10,17 @@
 #' @param ... Passes arguments to \code{print.xtable} and \code{xtable}. Will
 #'   silently be dropped if \code{html = FALSE}.
 #'
-#' @return wide format table
+#' @return Wide format table.
 #'
 #' @export
 
 # Define as a method
 format_table <- function(x, html = TRUE, ...) UseMethod('format_table')
 
-# Define the method for the long_data class
+# Define the method for long_data() class
+
+#' @describeIn format_table Create wide table from long_data() class
+#' @export
 
 format_table.long_data <- function(x, html = TRUE, ...) {
 

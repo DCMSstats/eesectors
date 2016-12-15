@@ -2,9 +2,12 @@
 % Please edit documentation in R/format_table.R
 \name{format_table}
 \alias{format_table}
+\alias{format_table.long_data}
 \title{format_table()}
 \usage{
 format_table(x, html = TRUE, ...)
+
+\method{format_table}{long_data}(x, html = TRUE, ...)
 }
 \arguments{
 \item{x}{Object of \code{class(x) == 'long_data'}.}
@@ -16,12 +19,16 @@ format_table(x, html = TRUE, ...)
 silently be dropped if \code{html = FALSE}.}
 }
 \value{
-wide format table
+Wide format table.
 }
 \description{
-Method to convert table into wide format
+Generic method to convert tables into wide format
 }
 \details{
-Method to convert table into wide format
+Generic method to convert tables into wide format
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{long_data}: Create wide table from long_data() class
+}}
 
