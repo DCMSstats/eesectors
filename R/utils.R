@@ -35,7 +35,7 @@ relative_to <- function(x, y, digits = 2) {
 #'
 #' @return Tranfsormed variable \code{x}.
 
-roundf <- function(x, fmt = '%.2f') {
+roundf <- function(x, fmt = '%.1f') {
 
   # Vectorise for dataframes
 

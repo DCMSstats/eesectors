@@ -5,9 +5,9 @@
 \alias{format_table.long_data}
 \title{format_table()}
 \usage{
-format_table(x, html = TRUE, ...)
+format_table(x, html, fmt, ...)
 
-\method{format_table}{long_data}(x, html = TRUE, ...)
+\method{format_table}{long_data}(x, html = TRUE, fmt = "\%.1f", ...)
 }
 \arguments{
 \item{x}{Object of \code{class(x) == 'long_data'}.}
@@ -15,11 +15,14 @@ format_table(x, html = TRUE, ...)
 \item{html}{Should the output be an R \code{data.frame} (and \code{tbl} and
 \code{tbl_df}) or as html using \code{xtable}.}
 
+\item{fmt}{Format for values in the table to be displayed as, following
+\code{sprintf}.}
+
 \item{...}{Passes arguments to \code{print.xtable} and \code{xtable}. Will
 silently be dropped if \code{html = FALSE}.}
 }
 \value{
-Wide format table.
+wide format table
 }
 \description{
 Generic method to convert tables into wide format
@@ -31,4 +34,7 @@ Generic method to convert tables into wide format
 \itemize{
 \item \code{long_data}: Create wide table from long_data() class
 }}
+\seealso{
+\code{\link{sprintf}}
+}
 

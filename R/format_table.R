@@ -7,22 +7,26 @@
 #' @param x Object of \code{class(x) == 'long_data'}.
 #' @param html Should the output be an R \code{data.frame} (and \code{tbl} and
 #'   \code{tbl_df}) or as html using \code{xtable}.
+#' @param fmt Format for values in the table to be displayed as, following
+#'   \code{sprintf}.
 #' @param ... Passes arguments to \code{print.xtable} and \code{xtable}. Will
 #'   silently be dropped if \code{html = FALSE}.
 #'
-#' @return Wide format table.
+#' @seealso \code{\link{sprintf}}
+#'
+#' @return wide format table
 #'
 #' @export
 
 # Define as a method
-format_table <- function(x, html = TRUE, ...) UseMethod('format_table')
+format_table <- function(x, html, fmt, ...) UseMethod('format_table')
 
 # Define the method for long_data() class
 
 #' @describeIn format_table Create wide table from long_data() class
 #' @export
 
-format_table.long_data <- function(x, html = TRUE, ...) {
+format_table.long_data <- function(x, html = TRUE, fmt = '%.1f', ...) {
 
   out <- tryCatch(
     expr = {
@@ -106,8 +110,8 @@ format_table.long_data <- function(x, html = TRUE, ...) {
       # not by index, but will return to this problem when the method is
       # generalised.
 
-      df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)] <- roundf(df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)])
-      df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)] <- sprintf('%.2f',as.numeric(df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)]))
+      df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)] <- roundf(df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)], fmt)
+      df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)] <- sprintf(fmt, as.numeric(df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)]))
 
       # Print to html or as dataframe ----
 
