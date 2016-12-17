@@ -2,6 +2,8 @@
 
 S3method(format_table,long_data)
 export(figure3.1)
+export(figure3.2)
+export(figure3.3)
 export(format_table)
 export(long_data)
 export(raise_issue)
