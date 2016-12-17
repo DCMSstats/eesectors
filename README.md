@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/ukgovdatascience/eesectors.svg?branch=master)](https://travis-ci.org/ukgovdatascience/eesectors)
 [![codecov.io](http://codecov.io/github/ukgovdatascience/eesectors/coverage.svg?branch=master)](http://codecov.io/github/ukgovdatascience/eesectors?branch=master)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ivyleavedtoadflax/eesectors?branch=master&svg=true)](https://ci.appveyor.com/project/ivyleavedtoadflax/eesectors)
 [![GitHub tag](https://img.shields.io/github/tag/ukgovdatascience/eesectors.svg)](https://github.com/ukgovdatascience/eesectors/releases)
 
 # eesectors

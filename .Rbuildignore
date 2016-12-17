@@ -3,3 +3,4 @@
 ^\.travis.yml$
 ^packrat/
 ^\.Rprofile$
+^appveyor\.yml$
