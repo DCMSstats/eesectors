@@ -8,7 +8,7 @@
 #'   frame, and uses \code{ggplot} and \code{govstyle} to format a pretty(ish) plot.
 #' @param ... Passes arguments to \code{ggplot}.
 #'
-#' @param x Object of class \code{long_table()}.
+#' @param x Object of class \code{long_data()}.
 #'
 #' @return Figure 3.1
 #'
@@ -22,14 +22,7 @@
 #' @export
 
 # Define as a method
-figure3.1 <- function(x, ...) UseMethod('figure3.1')
-
-# Define the method for long_data() class
-
-#' @describeIn figure3.1 Create plot 3.1
-#' @export
-
-figure3.1.long_data <- function(x, ...) {
+figure3.1 <- function(x, ...) {
 
   out <- tryCatch(
     expr = {
@@ -65,12 +58,12 @@ figure3.1.long_data <- function(x, ...) {
     warning = function() {
 
       w <- warnings()
-      warning('Warning produced running GVA_plot():', w)
+      warning('Warning produced running figure3.1():', w)
 
     },
     error = function(e)  {
 
-      stop('Error produced running GVA_plot():', e)
+      stop('Error produced running figure3.1():', e)
 
     },
     finally = {}
