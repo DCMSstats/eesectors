@@ -2,12 +2,9 @@
 % Please edit documentation in R/figure3.1.R
 \name{figure3.1}
 \alias{figure3.1}
-\alias{figure3.1.long_data}
 \title{Create Figure 3.1}
 \usage{
 figure3.1(x, ...)
-
-\method{figure3.1}{long_data}(x, ...)
 }
 \arguments{
 \item{x}{Object of class \code{long_table()}.}
@@ -26,10 +23,6 @@ Creates Figure 3.1 from
 \code{figure3.1} takes as input a standardised long format GVA data
   frame, and uses \code{ggplot} and \code{govstyle} to format a pretty(ish) plot.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{long_data}: Create plot 3.1
-}}
 \examples{
 
 library(eesectors)

@@ -22,14 +22,7 @@
 #' @export
 
 # Define as a method
-figure3.1 <- function(x, ...) UseMethod('figure3.1')
-
-# Define the method for long_data() class
-
-#' @describeIn figure3.1 Create plot 3.1
-#' @export
-
-figure3.1.long_data <- function(x, ...) {
+figure3.1 <- function(x, ...) {
 
   out <- tryCatch(
     expr = {
