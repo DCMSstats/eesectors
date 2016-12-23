@@ -5,3 +5,4 @@
 packrat/lib*/
 GITHUB_PAT
 .Renviron
+inst/doc
