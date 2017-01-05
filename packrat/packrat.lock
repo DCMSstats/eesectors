@@ -1,6 +1,6 @@
 PackratFormat: 1.4
 PackratVersion: 0.4.8.1
-RVersion: 3.3.1
+RVersion: 3.3.2
 Repos: CRAN=https://cran.rstudio.com/
 
 Package: BH
@@ -83,8 +83,8 @@ Hash: 08eed0c80510af29bb15f840ccfe37ce
 
 Package: digest
 Source: CRAN
-Version: 0.6.10
-Hash: 87165608ca8aeb0958835c3c5b52b6b7
+Version: 0.6.11
+Hash: e959a80e637182a39f4f865ef4fc51cc
 
 Package: dplyr
 Source: CRAN
@@ -98,10 +98,20 @@ Version: 0.10
 Hash: c3601a10c987d439e0c63ec635234a76
 Requires: stringr
 
+Package: fakepackage
+Source: github
+Version: 0.1
+Hash: e14578409c9707d46eeed0ca0f4358af
+Requires: Rcpp, assertthat
+GithubRepo: r-appveyor
+GithubUsername: krlmlr
+GithubRef: master
+GithubSha1: 1545df9c1fe13b44d31be3ef3796161721304f12
+
 Package: ggplot2
 Source: CRAN
-Version: 2.2.0
-Hash: 78c14285e0c114542d051a09bd552472
+Version: 2.2.1
+Hash: 46e5cb78836848aa44655e577433f54b
 Requires: digest, gtable, lazyeval, plyr, reshape2, scales, tibble
 
 Package: gh
@@ -121,13 +131,13 @@ Hash: 8022c40f316e7b99258eb19969e2a11c
 
 Package: govstyle
 Source: github
-Version: 0.1.1
-Hash: 144413fae7c8dd3d57c1f7da5878135f
+Version: 0.1.2
+Hash: 0abdf206a44c51559f05a448e98970c2
 Requires: devtools, ggplot2, png, testthat
 GithubRepo: govstyle
 GithubUsername: ukgovdatascience
 GithubRef: master
-GithubSha1: 2ef672b10fcaf7ffc166c6be86a833361d4c6298
+GithubSha1: 8cd6098386020663592d94414cc3cdd4e46fdb8e
 
 Package: gtable
 Source: CRAN
@@ -152,8 +162,8 @@ Hash: 12df248cc384eb68545a617da2730c8e
 
 Package: jsonlite
 Source: CRAN
-Version: 1.1
-Hash: 86d4b85b84421a4815f1bb4872e30ef4
+Version: 1.2
+Hash: 3a193a612cae6814719ed523f7e7cf44
 
 Package: knitr
 Source: CRAN
@@ -229,7 +239,7 @@ Package: purrr
 Source: CRAN
 Version: 0.2.2
 Hash: 883eb391742d94eb62d05aa8c5055211
-Requires: BH, Rcpp, dplyr, lazyeval, magrittr
+Requires: BH, Rcpp, lazyeval, magrittr, dplyr
 
 Package: reshape2
 Source: CRAN
