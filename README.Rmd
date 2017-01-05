@@ -1,0 +1,104 @@
+---
+output: md_document
+---
+
+[![Build Status](https://travis-ci.org/ukgovdatascience/eesectors.svg?branch=master)](https://travis-ci.org/ukgovdatascience/eesectors)
+[![Build status](https://ci.appveyor.com/api/projects/status/vulmerft4p30339l/branch/master?svg=true)](https://ci.appveyor.com/project/ivyleavedtoadflax/eesectors/branch/master)
+[![codecov.io](http://codecov.io/github/ukgovdatascience/eesectors/coverage.svg?branch=master)](http://codecov.io/github/ukgovdatascience/eesectors?branch=master)
+[![GitHub tag](https://img.shields.io/github/tag/ukgovdatascience/eesectors.svg)](https://github.com/ukgovdatascience/eesectors/releases)
+
+```{r setup, echo=FALSE, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  error = FALSE
+  )
+
+```
+
+# eesectors
+## Functions for producing the Economic Estimates for DCMS Sectors First Statistical Release
+
+**This is a prototype and subject to constant development**
+
+This package provides functions used in the creation of a Reproducible Analytical Pipeline (RAP) for the Economic Estimates for DCMS sectors publication.
+
+See the [RAP-demo-md](https://github.com/ukgovdatascience/RAP-demo-md) repository for an example of implementing these functions in the context of a Statistical First Release (SFR).
+
+## Installation
+
+The package can then be installed using `devtools::install_github('ukgovdatascience/eesectors')`. 
+Some users may not be able to use the `devtools::install_github()` commands as a result of network security settings. 
+If this is the case, `eesectors` can be installed by downloading the [zip of the repository](https://github.com/ukgovdatascience/govstyle/archive/master.zip) and installing the package locally using devtools::install_local(<path to zip file>).
+
+## Quick start
+
+This package provides functions to recreate Chapter three of the [Economic estimates of DCMS Sectors](https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544103/DCMS_Sectors_Economic_Estimates_-_August_2016.pdf).
+
+The package is built around the `long_data` class.
+To create a `long_data` object, a `data.frame` must be passed to it which contains all the data required to produce the tables and charts in Chapter three.
+
+An example of how this dataset will need to look is bundled with the package: `GVA_by_sector_2016`.
+These data were extracted directly from the 2016 SFR which is in the public domain, and provide a test case for evaluating the data.
+
+```{r}
+library(eesectors)
+GVA_by_sector_2016
+```
+
+When an object is instantiated into the `long_data` class, a number of checks are run on the data passed as the first argument.
+These are explained in more detail in the help `?long_data()`
+
+```{r warning=TRUE, message=TRUE}
+gva <- long_data(GVA_by_sector_2016)
+```
+
+Any failed checks are raised as warnings, not errors, and so the user is able to continue.
+However it is also possible to log these warnings as github issues by setting `log_issues=TRUE`.
+This is a prototype feature that needs additional work to increase the usefulness of these issues, see below for details on environmental variables that are required for this functionality to work.
+
+### Creating tables and charts
+
+Tables and charts for Chapter three can be reproduced simply by running the relevant functions:
+
+```{r}
+format_table(gva)
+```
+
+```{r figure3.1}
+figure3.1(gva)
+```
+
+Note that figures produced remain `ggplot2` objects, and can therefore be edited in the following way:
+
+```{r figure3.2}
+p <- figure3.2(gva)
+
+p
+```
+
+
+
+```{r figure3.2edited}
+library(ggplot2)
+
+p + 
+  ggtitle('Figure 3.2')
+```
+
+Note that figures make use of the [govstyle](https://github.com/ukgovdatascience/govstyle) package.
+See the [vignette](https://github.com/ukgovdatascience/govstyle/blob/master/vignettes/absence_statistics.md) for more information on how to use this package.
+
+### Logging data issues to github
+
+In order to use this functionality, it is necessary to set the three following environmental variables:
+
+|Name|Example|Description|
+|---|---|---|
+|GITHUB_PAT|_|A github personal access token with the necessary permissions.|
+|LOG_REPO|RAP-demo-md|The name of a github repository where data issues can be logged.|
+|LOG_OWNER|ukgovdatascience|The owner of the repository referred to in LOG_REPO.|
+
+Environmental variables can be set interactively using `Sys.setenv()`, or more permanently by settin gteh variables in an `.Renviron` file which will be sourced when the project is loading (assuming you are using projects within Rstudio).
