@@ -4,3 +4,4 @@
 ^packrat/
 ^\.Rprofile$
 ^appveyor\.yml$
+^README\_files$
