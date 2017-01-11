@@ -28,9 +28,16 @@ figure3.1 <- function(x, ...) {
     expr = {
 
       # Extract the UK GVA
-
+      sectors_set <- x$sectors_set
       x <- dplyr::filter_(x$df, ~sector != 'UK')
       x <- dplyr::mutate_(x, year = ~factor(year, levels=c(2016:2010)))
+
+      # Convert to long form of sector, and arrange factor levels for plot
+
+      x$sector <- factor(
+        x = unname(sectors_set[as.character(x$sector)]),
+        levels = rev(as.character(unname(sectors_set[levels(x$sector)])))
+        )
 
       p <- ggplot2::ggplot(x) +
         ggplot2::aes_(

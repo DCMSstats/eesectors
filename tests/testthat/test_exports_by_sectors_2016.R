@@ -1,4 +1,4 @@
-context('Test that imported data are in the correct format')
+context('Test that exports_by_sector_2016 data are in the correct format')
 
 test_that(
   'exports_by_sector_2016 contains the expected columns',
@@ -35,14 +35,16 @@ test_that(
   {
     expect_equal(
       sort(as.character(unique(exports_by_sector_2016$sector))),
-      sort(c('Creative Industries',
-        'Cultural Sector',
-        'Digital Sector',
-        'Gambling',
-        'Sport',
-        'Telecoms',
+      sort(
+        c('creative',
+        'cultural',
+        'digital',
+        'gambling',
+        'sport',
+        'telecoms',
         'UK',
-        'all_sectors'))
+        'all_sectors')
+        )
     )
   }
 )

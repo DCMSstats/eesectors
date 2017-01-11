@@ -95,13 +95,23 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
   # Check that the correct levels are in sector
 
   message('Checking sectors are correct...')
-  sectors_set = c(
-    'Creative Industries', 'Cultural Sector',
-    'Digital Sector', 'Gambling',
-    'Sport', 'Telecoms',
-    'Tourism', 'UK', 'all_sectors'
+
+  # Save sectors name lookup for use later
+
+  sectors_set <- c(
+    "creative"    = "Creative Industries",
+    "cultural"    = "Cultural Sector",
+    "digital"     = "Digital Sector",
+    "gambling"    = "Gambling",
+    "sport"       = "Sport",
+    "telecoms"    = "Telecoms",
+    "tourism"     = "Tourism",
+    "all_sectors" = "All DCMS sectors",
+    "perc_of_UK"  = "% of UK GVA",
+    "UK"          = "UK"
   )
-  assertr::assert_(x, assertr::in_set(sectors_set), ~sector, error_fun = raise_issue)
+
+  assertr::assert_(x, assertr::in_set(names(sectors_set)), ~sector, error_fun = raise_issue)
 
   # Check for outliers ----
 
@@ -111,10 +121,16 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
   # assertr::within_n_mads() function.
 
   message('Checking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...')
+
+  # Create a list split by series containing a df in each
+
   series_split <- split(x, x$sector)
+
+  # Apply to each df in the list
+
   lapply(
-    series_split,
-    function(x) {
+    X = series_split,
+    FUN = function(x) {
       message('Checking sector timeseries: ', unique(x[['sector']]))
       assertr::insist_(
         x,
@@ -137,8 +153,8 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
   message('Checking for outliers on a row by row basis using mahalanobis distance...')
 
   lapply(
-    series_split,
-    function(x) {
+    X = series_split,
+    FUN = function(x) {
 
       # Note that this test will fail on GVA_by_sector_2016 if x < 6 for
       # within_n_mads(x)
@@ -164,6 +180,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
       colnames = colnames(x),
       type = colnames(x)[!colnames(x) %in% c('year','sector')],
       sector_levels = levels(x$sector),
+      sectors_set = sectors_set,
       years = unique(x$year)
     ),
     class = "long_data")
