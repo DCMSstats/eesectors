@@ -29,10 +29,17 @@ figure3.2 <- function(x, ...) {
 
       # Extract the UK GVA
 
+      sectors_set <- x$sectors_set
+
       # Calculate the index (2010=100) variable. This code filters out only the
       # all sectors and UK data, and then divides it by the 2010 data
 
       x <- dplyr::filter_(x$df, ~sector %in% c('UK','all_sectors'))
+
+      x$sector <- factor(
+        x = unname(sectors_set[as.character(x$sector)])
+      )
+
       x <- dplyr::group_by_(x, ~sector)
       x <- dplyr::mutate_(
         x,

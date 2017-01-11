@@ -5,3 +5,4 @@
 ^\.Rprofile$
 ^appveyor\.yml$
 ^README\_files$
+^README\.Rmd$

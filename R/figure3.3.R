@@ -27,10 +27,17 @@ figure3.3 <- function(x, ...) {
   out <- tryCatch(
     expr = {
 
+      sectors_set <- x$sectors_set
+
       # Calculate the index (2010=100) variable. This code filters out only the
       # all sectors and UK data, and then divides it by the 2010 data
 
       x <- dplyr::filter_(x$df, ~!sector %in% c('UK','all_sectors'))
+
+      x$sector <- factor(
+        x = unname(sectors_set[as.character(x$sector)])
+      )
+
       x <- dplyr::group_by_(x, ~sector)
       x <- dplyr::mutate_(
         x,
@@ -56,7 +63,7 @@ figure3.3 <- function(x, ...) {
         ggplot2::theme(
           legend.position = 'right'
         ) +
-        ggplot2::ylim(c(80, 130))
+        ggplot2::ylim(c(80, 150))
 
       return(p)
 
