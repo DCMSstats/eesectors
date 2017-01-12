@@ -53,61 +53,20 @@ evaluating the data.
     library(eesectors)
     GVA_by_sector_2016
 
-    ##                 sector year        GVA
-    ## 1  Creative Industries 2010   65188.00
-    ## 2      Cultural Sector 2010   20291.00
-    ## 3       Digital Sector 2010   97303.00
-    ## 4             Gambling 2010    8407.00
-    ## 5                Sport 2010    7016.00
-    ## 6             Telecoms 2010   24738.00
-    ## 7              Tourism 2010   49150.00
-    ## 8  Creative Industries 2011   69398.00
-    ## 9      Cultural Sector 2011   20954.00
-    ## 10      Digital Sector 2011  102966.00
-    ## 11            Gambling 2011    9268.00
-    ## 12               Sport 2011    7358.00
-    ## 13            Telecoms 2011   25436.00
-    ## 14             Tourism 2011   53947.00
-    ## 15 Creative Industries 2012   73033.00
-    ## 16     Cultural Sector 2012   21811.00
-    ## 17      Digital Sector 2012  105215.00
-    ## 18            Gambling 2012    9800.00
-    ## 19               Sport 2012    7901.00
-    ## 20            Telecoms 2012   25985.00
-    ## 21             Tourism 2012   57343.00
-    ## 22 Creative Industries 2013   77885.00
-    ## 23     Cultural Sector 2013   23490.00
-    ## 24      Digital Sector 2013  110027.00
-    ## 25            Gambling 2013    9950.00
-    ## 26               Sport 2013    9789.00
-    ## 27            Telecoms 2013   27976.00
-    ## 28             Tourism 2013   58997.00
-    ## 29 Creative Industries 2014   81625.00
-    ## 30     Cultural Sector 2014   23453.00
-    ## 31      Digital Sector 2014  111559.00
-    ## 32            Gambling 2014   10212.00
-    ## 33               Sport 2014   10288.00
-    ## 34            Telecoms 2014   29095.00
-    ## 35             Tourism 2014   60437.57
-    ## 36 Creative Industries 2015   87350.00
-    ## 37     Cultural Sector 2015   26981.00
-    ## 38      Digital Sector 2015  118388.00
-    ## 39            Gambling 2015   10300.00
-    ## 40               Sport 2015   10133.00
-    ## 41            Telecoms 2015   30246.00
-    ## 42             Tourism 2015   62406.84
-    ## 43                  UK 2010 1414635.00
-    ## 44                  UK 2011 1452075.00
-    ## 45                  UK 2012 1495576.00
-    ## 46                  UK 2013 1551553.00
-    ## 47                  UK 2014 1624276.00
-    ## 48                  UK 2015 1661081.00
-    ## 49         all_sectors 2010  177069.13
-    ## 50         all_sectors 2011  189810.66
-    ## 51         all_sectors 2012  197915.11
-    ## 52         all_sectors 2013  209389.68
-    ## 53         all_sectors 2014  213286.79
-    ## 54         all_sectors 2015  220928.23
+    ## # A tibble: 54 × 3
+    ##      sector  year    GVA
+    ##      <fctr> <int>  <dbl>
+    ## 1  creative  2010  65188
+    ## 2  cultural  2010  20291
+    ## 3   digital  2010  97303
+    ## 4  gambling  2010   8407
+    ## 5     sport  2010   7016
+    ## 6  telecoms  2010  24738
+    ## 7   tourism  2010  49150
+    ## 8  creative  2011  69398
+    ## 9  cultural  2011  20954
+    ## 10  digital  2011 102966
+    ## # ... with 44 more rows
 
 When an object is instantiated into the `long_data` class, a number of
 checks are run on the data passed as the first argument. These are
@@ -156,21 +115,21 @@ explained in more detail in the help `?long_data()`
 
     ## Checking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...
 
-    ## Checking sector timeseries: all_sectors
+    ## Checking sector timeseries: all_dcms
 
-    ## Checking sector timeseries: Creative Industries
+    ## Checking sector timeseries: creative
 
-    ## Checking sector timeseries: Cultural Sector
+    ## Checking sector timeseries: cultural
 
-    ## Checking sector timeseries: Digital Sector
+    ## Checking sector timeseries: digital
 
-    ## Checking sector timeseries: Gambling
+    ## Checking sector timeseries: gambling
 
-    ## Checking sector timeseries: Sport
+    ## Checking sector timeseries: sport
 
-    ## Checking sector timeseries: Telecoms
+    ## Checking sector timeseries: telecoms
 
-    ## Checking sector timeseries: Tourism
+    ## Checking sector timeseries: tourism
 
     ## Checking sector timeseries: UK
 
@@ -178,21 +137,21 @@ explained in more detail in the help `?long_data()`
 
     ## Checking for outliers on a row by row basis using mahalanobis distance...
 
-    ## Checking sector timeseries: all_sectors
+    ## Checking sector timeseries: all_dcms
 
-    ## Checking sector timeseries: Creative Industries
+    ## Checking sector timeseries: creative
 
-    ## Checking sector timeseries: Cultural Sector
+    ## Checking sector timeseries: cultural
 
-    ## Checking sector timeseries: Digital Sector
+    ## Checking sector timeseries: digital
 
-    ## Checking sector timeseries: Gambling
+    ## Checking sector timeseries: gambling
 
-    ## Checking sector timeseries: Sport
+    ## Checking sector timeseries: sport
 
-    ## Checking sector timeseries: Telecoms
+    ## Checking sector timeseries: telecoms
 
-    ## Checking sector timeseries: Tourism
+    ## Checking sector timeseries: tourism
 
     ## Checking sector timeseries: UK
 
@@ -222,8 +181,8 @@ the relevant functions:
     ## 5                Sport    7.0    7.4    7.9    9.8   10.3   10.1
     ## 6             Telecoms   24.7   25.4   26.0   28.0   29.1   30.2
     ## 7              Tourism   49.1   53.9   57.3   59.0   60.4   62.4
-    ## 8          all_sectors  177.1  189.8  197.9  209.4  213.3  220.9
-    ## 9           perc_of_UK   12.5   13.1   13.2   13.5   13.1   13.3
+    ## 8     All DCMS sectors  177.1  189.8  197.9  209.4  213.3  220.9
+    ## 9          % of UK GVA   12.5   13.1   13.2   13.5   13.1   13.3
     ## 10                  UK 1414.6 1452.1 1495.6 1551.6 1624.3 1661.1
     ## # ... with 3 more variables: since_2014 <dbl>, since_2010 <dbl>,
     ## #   UK_perc <dbl>
