@@ -43,7 +43,7 @@ test_that(
         'sport',
         'telecoms',
         'UK',
-        'all_sectors')
+        'all_dcms')
         )
     )
   }

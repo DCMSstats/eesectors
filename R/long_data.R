@@ -106,7 +106,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
     "sport"       = "Sport",
     "telecoms"    = "Telecoms",
     "tourism"     = "Tourism",
-    "all_sectors" = "All DCMS sectors",
+    "all_dcms"    = "All DCMS sectors",
     "perc_of_UK"  = "% of UK GVA",
     "UK"          = "UK"
   )

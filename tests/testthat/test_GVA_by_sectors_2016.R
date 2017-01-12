@@ -34,7 +34,7 @@ test_that(
           'telecoms',
           'tourism',
           'UK',
-          'all_sectors'))
+          'all_dcms'))
     )
   }
 )

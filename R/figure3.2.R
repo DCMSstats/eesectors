@@ -34,7 +34,7 @@ figure3.2 <- function(x, ...) {
       # Calculate the index (2010=100) variable. This code filters out only the
       # all sectors and UK data, and then divides it by the 2010 data
 
-      x <- dplyr::filter_(x$df, ~sector %in% c('UK','all_sectors'))
+      x <- dplyr::filter_(x$df, ~sector %in% c('UK','all_dcms'))
 
       x$sector <- factor(
         x = unname(sectors_set[as.character(x$sector)])

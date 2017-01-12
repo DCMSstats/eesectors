@@ -54,18 +54,18 @@ evaluating the data.
     GVA_by_sector_2016
 
     ## # A tibble: 54 × 3
-    ##                 sector  year    GVA
-    ##                 <fctr> <int>  <dbl>
-    ## 1  Creative Industries  2010  65188
-    ## 2      Cultural Sector  2010  20291
-    ## 3       Digital Sector  2010  97303
-    ## 4             Gambling  2010   8407
-    ## 5                Sport  2010   7016
-    ## 6             Telecoms  2010  24738
-    ## 7              Tourism  2010  49150
-    ## 8  Creative Industries  2011  69398
-    ## 9      Cultural Sector  2011  20954
-    ## 10      Digital Sector  2011 102966
+    ##      sector  year    GVA
+    ##      <fctr> <int>  <dbl>
+    ## 1  creative  2010  65188
+    ## 2  cultural  2010  20291
+    ## 3   digital  2010  97303
+    ## 4  gambling  2010   8407
+    ## 5     sport  2010   7016
+    ## 6  telecoms  2010  24738
+    ## 7   tourism  2010  49150
+    ## 8  creative  2011  69398
+    ## 9  cultural  2011  20954
+    ## 10  digital  2011 102966
     ## # ... with 44 more rows
 
 When an object is instantiated into the `long_data` class, a number of
@@ -115,21 +115,21 @@ explained in more detail in the help `?long_data()`
 
     ## Checking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...
 
-    ## Checking sector timeseries: all_sectors
+    ## Checking sector timeseries: all_dcms
 
-    ## Checking sector timeseries: Creative Industries
+    ## Checking sector timeseries: creative
 
-    ## Checking sector timeseries: Cultural Sector
+    ## Checking sector timeseries: cultural
 
-    ## Checking sector timeseries: Digital Sector
+    ## Checking sector timeseries: digital
 
-    ## Checking sector timeseries: Gambling
+    ## Checking sector timeseries: gambling
 
-    ## Checking sector timeseries: Sport
+    ## Checking sector timeseries: sport
 
-    ## Checking sector timeseries: Telecoms
+    ## Checking sector timeseries: telecoms
 
-    ## Checking sector timeseries: Tourism
+    ## Checking sector timeseries: tourism
 
     ## Checking sector timeseries: UK
 
@@ -137,21 +137,21 @@ explained in more detail in the help `?long_data()`
 
     ## Checking for outliers on a row by row basis using mahalanobis distance...
 
-    ## Checking sector timeseries: all_sectors
+    ## Checking sector timeseries: all_dcms
 
-    ## Checking sector timeseries: Creative Industries
+    ## Checking sector timeseries: creative
 
-    ## Checking sector timeseries: Cultural Sector
+    ## Checking sector timeseries: cultural
 
-    ## Checking sector timeseries: Digital Sector
+    ## Checking sector timeseries: digital
 
-    ## Checking sector timeseries: Gambling
+    ## Checking sector timeseries: gambling
 
-    ## Checking sector timeseries: Sport
+    ## Checking sector timeseries: sport
 
-    ## Checking sector timeseries: Telecoms
+    ## Checking sector timeseries: telecoms
 
-    ## Checking sector timeseries: Tourism
+    ## Checking sector timeseries: tourism
 
     ## Checking sector timeseries: UK
 
@@ -181,8 +181,8 @@ the relevant functions:
     ## 5                Sport    7.0    7.4    7.9    9.8   10.3   10.1
     ## 6             Telecoms   24.7   25.4   26.0   28.0   29.1   30.2
     ## 7              Tourism   49.1   53.9   57.3   59.0   60.4   62.4
-    ## 8          all_sectors  177.1  189.8  197.9  209.4  213.3  220.9
-    ## 9           perc_of_UK   12.5   13.1   13.2   13.5   13.1   13.3
+    ## 8     All DCMS sectors  177.1  189.8  197.9  209.4  213.3  220.9
+    ## 9          % of UK GVA   12.5   13.1   13.2   13.5   13.1   13.3
     ## 10                  UK 1414.6 1452.1 1495.6 1551.6 1624.3 1661.1
     ## # ... with 3 more variables: since_2014 <dbl>, since_2010 <dbl>,
     ## #   UK_perc <dbl>

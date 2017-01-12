@@ -69,15 +69,15 @@ format_table.long_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
 
     # Calculate the percentage of UK ----
 
-    df_sectors_perc <- dplyr::filter_(x$df, ~sector %in% c('all_sectors', 'UK'))
-    df_all_sectors_perc <- tidyr::spread_(df_sectors_perc, 'sector', 'GVA')
-    df_all_sectors_perc <- dplyr::mutate_(df_all_sectors_perc, perc_of_UK = ~all_sectors / UK)
-    df_all_sectors_perc <- dplyr::select_(df_all_sectors_perc, ~perc_of_UK, ~year)
-    df_all_sectors_perc <- tidyr::spread_(df_all_sectors_perc, 'year', 'perc_of_UK')
-    df_all_sectors_perc <- df_all_sectors_perc * 100
-    df_all_sectors_perc <- data.frame(
+    df_sectors_perc <- dplyr::filter_(x$df, ~sector %in% c('all_dcms', 'UK'))
+    df_all_dcms_perc <- tidyr::spread_(df_sectors_perc, 'sector', 'GVA')
+    df_all_dcms_perc <- dplyr::mutate_(df_all_dcms_perc, perc_of_UK = ~all_dcms / UK)
+    df_all_dcms_perc <- dplyr::select_(df_all_dcms_perc, ~perc_of_UK, ~year)
+    df_all_dcms_perc <- tidyr::spread_(df_all_dcms_perc, 'year', 'perc_of_UK')
+    df_all_dcms_perc <- df_all_dcms_perc * 100
+    df_all_dcms_perc <- data.frame(
       sector = factor('perc_of_UK', levels = names(x$sectors_set)),
-      df_all_sectors_perc
+      df_all_dcms_perc
     )
 
     # Normalise the factor levels in df_wide, and
@@ -86,7 +86,7 @@ format_table.long_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
 
     df_table <- dplyr::bind_rows(
       df_wide,
-      df_all_sectors_perc
+      df_all_dcms_perc
     )
 
     # Arrange in the order of the factors
