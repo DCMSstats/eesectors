@@ -13,6 +13,11 @@ Source: CRAN
 Version: 0.5-1
 Hash: 375869004db963f9915f2b8a49b4a718
 
+Package: MASS
+Source: CRAN
+Version: 7.3-45
+Hash: 0650d5701aa7e369e77c9e2c8e1dc913
+
 Package: R6
 Source: CRAN
 Version: 2.2.0
@@ -24,15 +29,19 @@ Version: 1.1-2
 Hash: c0d56cd15034f395874c870141870c25
 
 Package: Rcpp
-Source: CRAN
-Version: 0.12.8
-Hash: 436ad5c23fad4e22224c7ac2fc82b049
+Source: github
+Version: 0.12.8.4
+Hash: 672ba29dcb0c30f385c6ae8a9253b119
+GithubRepo: Rcpp
+GithubUsername: RcppCore
+GithubRef: master
+GithubSha1: 5625a232cf9e2904ac7ca149599287d8cae49a57
 
 Package: assertr
 Source: CRAN
 Version: 1.0.2
 Hash: 2f50983e1b7750ea4b1f40bdf844153f
-Requires: dplyr, lazyeval
+Requires: MASS, dplyr, lazyeval
 
 Package: assertthat
 Source: CRAN
@@ -89,7 +98,7 @@ Hash: e959a80e637182a39f4f865ef4fc51cc
 Package: dplyr
 Source: CRAN
 Version: 0.5.0
-Hash: 3dcd1c1192d66441a627252b535e5cc2
+Hash: 686cf74b975a5e60e200d0c399367bdf
 Requires: BH, DBI, R6, Rcpp, assertthat, lazyeval, magrittr, tibble
 
 Package: evaluate
@@ -101,8 +110,8 @@ Requires: stringr
 Package: fakepackage
 Source: github
 Version: 0.1
-Hash: e14578409c9707d46eeed0ca0f4358af
-Requires: Rcpp, assertthat
+Hash: b8d622b5068e6ad8f7ad2a391ce451c9
+Requires: MASS, Rcpp, assertthat
 GithubRepo: r-appveyor
 GithubUsername: krlmlr
 GithubRef: master
@@ -112,7 +121,8 @@ Package: ggplot2
 Source: CRAN
 Version: 2.2.1
 Hash: 46e5cb78836848aa44655e577433f54b
-Requires: digest, gtable, lazyeval, plyr, reshape2, scales, tibble
+Requires: MASS, digest, gtable, lazyeval, plyr, reshape2, scales,
+    tibble
 
 Package: gh
 Source: github
@@ -222,7 +232,7 @@ Hash: 6ad605ba7b4b476d84be6632393f5765
 Package: plyr
 Source: CRAN
 Version: 1.8.4
-Hash: fee2f470d73a85f4db7e89d771427e57
+Hash: 608be4a0a988bcd2f6aa235267d812ba
 Requires: Rcpp
 
 Package: png
@@ -238,13 +248,13 @@ Hash: 77da8f1df873a4b91e5c4a68fe2fb1b6
 Package: purrr
 Source: CRAN
 Version: 0.2.2
-Hash: 883eb391742d94eb62d05aa8c5055211
-Requires: BH, Rcpp, lazyeval, magrittr, dplyr
+Hash: 2abb7e5ba67651deec2c634b551ffde2
+Requires: BH, Rcpp, dplyr, lazyeval, magrittr
 
 Package: reshape2
 Source: CRAN
 Version: 1.4.2
-Hash: fd2714b51cb380c30fec1687005587a2
+Hash: 3dfad2a93c1d785083646f38625ea63e
 Requires: Rcpp, plyr, stringr
 
 Package: rex
@@ -256,7 +266,7 @@ Requires: lazyeval, magrittr
 Package: roxygen2
 Source: CRAN
 Version: 5.0.1
-Hash: fd554bf7b028b1e8a65f2b9adcafa4f6
+Hash: 5ee0f4f01aa1d3737d2a1cff03f9c294
 Requires: Rcpp, brew, digest, stringi, stringr
 
 Package: rstudioapi
@@ -267,7 +277,7 @@ Hash: fd256f8bfb9a64cc35f98b0decb1a79f
 Package: scales
 Source: CRAN
 Version: 0.4.1
-Hash: cf658953d600d4736b058df1558df481
+Hash: 8e1872cc56f79fe8b0b08504854cd604
 Requires: RColorBrewer, Rcpp, dichromat, labeling, munsell, plyr
 
 Package: stringi
@@ -290,13 +300,13 @@ Requires: R6, crayon, digest, magrittr, praise
 Package: tibble
 Source: CRAN
 Version: 1.2
-Hash: ee28ae66deec042f19aff6fa10f5f8d5
+Hash: 1a2179609b11133aeaaf526cc2a9c66c
 Requires: Rcpp, assertthat, lazyeval
 
 Package: tidyr
 Source: CRAN
-Version: 0.6.0
-Hash: 55b2d458dcd3407abb74732c82be146c
+Version: 0.6.1
+Hash: 14478f6f08bb29a5c8a10249199bd4ff
 Requires: Rcpp, dplyr, lazyeval, magrittr, stringi, tibble
 
 Package: visualTest

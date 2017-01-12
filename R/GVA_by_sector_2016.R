@@ -7,8 +7,8 @@
 #'
 #' @format A tibble with 54 rows and 3 variables: \describe{ \item{sector}{DCMS
 #'   sector, one of: \code{ c('Creative Industries','Cultural Sector','Digital
-#'   Sector','Gambling','Sport','Telecoms','Tourism', 'UK', 'all_sectors') },
-#'   note that \code{all_sectors} is not the sum of the other sectors, due to
+#'   Sector','Gambling','Sport','Telecoms','Tourism', 'UK', 'all_dcms') },
+#'   note that \code{all_dcms} is not the sum of the other sectors, due to
 #'   overlap between sectors.} \item{year}{calendar year.} \item{GVA}{gross value
 #'   added (GBP millions).}}.
 #' @source
