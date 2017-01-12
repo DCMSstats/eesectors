@@ -37,7 +37,7 @@ test_that(
       sort(as.character(unique(exports_by_sector_2016$sector))),
       sort(
         c('creative',
-        'cultural',
+        'culture',
         'digital',
         'gambling',
         'sport',

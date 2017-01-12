@@ -27,7 +27,7 @@ test_that(
     expect_equal(
       sort(as.character(unique(GVA_by_sector_2016$sector))),
       sort(c('creative',
-          'cultural',
+          'culture',
           'digital',
           'gambling',
           'sport',
