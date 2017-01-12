@@ -100,7 +100,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
 
   sectors_set <- c(
     "creative"    = "Creative Industries",
-    "cultural"    = "Cultural Sector",
+    "culture"    = "Cultural Sector",
     "digital"     = "Digital Sector",
     "gambling"    = "Gambling",
     "sport"       = "Sport",

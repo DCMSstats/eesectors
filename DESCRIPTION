@@ -1,7 +1,7 @@
 Package: eesectors
 Type: Package
 Title: Back End Functions to Support RAP
-Version: 0.0.0.9011
+Version: 0.0.0.9012
 Authors@R: c(
     person("Matthew", "Upson", , "matthew.upson@digital.cabinet-office.gov.uk", c("aut", "cre"))
     )
