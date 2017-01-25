@@ -56,7 +56,10 @@ figure3.1 <- function(x, ...) {
           palette = 'Blues'
           ) +
         ggplot2::ylab('Gross Value Added (\u00a3bn)') +
-        ggplot2::theme(legend.position = 'right') +
+        ggplot2::theme(
+	  legend.position = 'right',
+	  legend.key = ggplot2::element_blank()
+	  ) +
         ggplot2::scale_y_continuous(labels = scales::comma)
 
       return(p)

@@ -65,7 +65,8 @@ figure3.2 <- function(x, ...) {
         ) +
         ggplot2::ylab('GVA Index: 2010=100') +
         ggplot2::theme(
-          legend.position = 'bottom'
+          legend.position = 'bottom',
+	  legend.key = ggplot2::element_blank()
         ) +
         ggplot2::ylim(c(80, 130))
 
