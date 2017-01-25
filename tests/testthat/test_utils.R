@@ -109,23 +109,23 @@ test_that(
     # Check that messages and warnings trigger for passes and fails
     # respectively.
 
-    expect_warning(integrity_check('.'))
-    expect_warning(integrity_check('a'))
-    expect_warning(integrity_check(c(1,'a')))
-    expect_warning(integrity_check(c(1,2,3,'a')))
-    expect_message(integrity_check('1'))
-    expect_message(integrity_check(NA))
-    expect_message(integrity_check(c(1, 1.1, 1.2)))
-    expect_message(integrity_check(c(1, 1.1, 1.2, NA)))
+    expect_silent(integrity_check('.'))
+    expect_silent(integrity_check('a'))
+    expect_silent(integrity_check(c(1,'a')))
+    expect_silent(integrity_check(c(1,2,3,'a')))
+    expect_silent(integrity_check('1'))
+    expect_silent(integrity_check(NA))
+    expect_silent(integrity_check(c(1, 1.1, 1.2)))
+    expect_silent(integrity_check(c(1, 1.1, 1.2, NA)))
 
     # Check what actual content is returned. Supressing the warning messages may
     # not be the best approach here, but the test will still fail if it needs
     # to.
 
-    suppressMessages(expect_null(case1 <- integrity_check('1')))
-    suppressWarnings(expect_equal(case2 <- integrity_check(c(1, 1.2, NA, '.')), c(FALSE, FALSE, FALSE, TRUE)))
-    suppressWarnings(expect_equal(case3 <- integrity_check('fail'), TRUE))
-    suppressWarnings(expect_equal(case4 <- integrity_check(c('.','fail')), c(TRUE, TRUE)))
+    expect_equal(case1 <- integrity_check('1'), FALSE)
+    expect_equal(case2 <- integrity_check(c(1, 1.2, NA, '.')), c(FALSE, FALSE, FALSE, TRUE))
+    expect_equal(case3 <- integrity_check('fail'), TRUE)
+    expect_equal(case4 <- integrity_check(c('.','fail')), c(TRUE, TRUE))
 
     }
 )

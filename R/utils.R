@@ -76,10 +76,17 @@ roundf <- function(x, fmt = '%.1f') {
 #'   why. This function checks in advance which values will be converted to
 #'   \code{NA} so we can confirm that it is nothing to worry about.
 #'
+#'   IT WILL ONLY RAISE A WARNING IF: there are new NAs, and any of these NAs,
+#'   can cleanly be converted to numeric (wihtout turning to \code{NA}) - i.e.
+#'   they are actually numbers, and not characters, which is what we would
+#'   expect.
+#'
 #' @param x vector of \code{length(x) > 1} and of nominally of
 #'   \code{is.character(x) == TRUE}.
-#' @return Returns a list of the entries which created an NA during type
-#'   conversion.
+#' @return Returns the \code{conversion_issues} vector, with following
+#'   attribites: \code{length(x) == length(conversion_issues)} and
+#'   \code{is.logical(conversion_issues) == TRUE}.
+#' @export
 
 integrity_check <- function(x) {
 
@@ -98,21 +105,36 @@ integrity_check <- function(x) {
 
   conversion_issues <- NA_before & NA_after
 
-  if (sum(conversion_issues) > 0 ) {
+  # Check that there are actually some issues
 
-    warning('WARNING: produced by the integrity_check() function (usually called in the extract_ABS_data.R script).
+  if (sum(conversion_issues) > 0) {
+
+    # Can these issues be cleanly converted to numeric? If so they are numeric,
+    # and this is a problem, as they should not be creating NAs during the
+    # original type conversion, hence raise a warning.
+
+    numeric_attempt <- suppressWarnings(as.numeric(x[conversion_issues]))
+    numeric_attempt <- all(!is.na(numeric_attempt))
+
+    if (numeric_attempt) {
+
+      warning('WARNING: produced by the integrity_check() function (usually called in the extract_ABS_data.R script).
             Unmatched NAs created when coercing x to to numeric in integrity_check().
             Returning values that caused this error:
             ',
-            x[conversion_issues],
-            '.
+              x[conversion_issues],
+              '.
             If the values returned above are full stops or other characters,
             i.e. anything but real numbers, then you can safely ignore this warning.')
 
-    return(conversion_issues)
+    }
 
-  } else message('No conversion issues detected.')
+  }
 
+  # Whatever happens, return a logical vector corresponding to values of x where
+  # conversions from character to numeric resulted in NA
+
+  return(conversion_issues)
 
 }
 
@@ -125,6 +147,7 @@ integrity_check <- function(x) {
 #' @param x A character vector of SIC codes.
 #'
 #' @return A cleaned character vector of SIC codes.
+#' @export
 
 clean_sic <- function(x) {
 
@@ -151,6 +174,7 @@ clean_sic <- function(x) {
 #' @param df A dataframe.
 #'
 #' @return characvter vector containing the names of columns which contain \code{NA}.
+#' @export
 
 na_cols <- function(df) {
 
