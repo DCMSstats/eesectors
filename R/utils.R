@@ -98,7 +98,7 @@ integrity_check <- function(x) {
 
   conversion_issues <- NA_before & NA_after
 
-  if (length(conversion_issues) > 0 ) {
+  if (sum(conversion_issues) > 0 ) {
 
     warning('WARNING: produced by the integrity_check() function (usually called in the extract_ABS_data.R script).
             Unmatched NAs created when coercing x to to numeric in integrity_check().
@@ -154,8 +154,8 @@ clean_sic <- function(x) {
 
 na_cols <- function(df) {
 
-
   contains_NA <- apply(df, MARGIN = 2, FUN = anyNA)
   contains_NA <-  colnames(df)[contains_NA]
   return(contains_NA)
+
 }

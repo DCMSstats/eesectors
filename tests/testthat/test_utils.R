@@ -67,14 +67,14 @@ test_that(
 test_that(
   'clean_sic works as expected.',
   {
-    
+
     expect_identical(clean_sic(1234), "12.34")
     expect_identical(clean_sic(c(1234,1234)), c("12.34","12.34"))
     expect_identical(clean_sic(NA), NA)
     expect_identical(clean_sic(12), 12)
     expect_identical(clean_sic(12345), 12345)
     expect_identical(clean_sic(c(12,123,1234,12345, NA)), c('12', '12.3', '12.34', 12345, NA))
-    
+
   }
 )
 
@@ -83,20 +83,49 @@ test_that(
   'na_cols works as expected.',
   {
     # Check it works when there are no NAs
-    
+
     expect_equal(character(0), na_cols(mtcars))
-    
+
     # Create test dataframe:
-    
+
     df <- data.frame(
       a = c(1:10, NA),
       b = NA,
       c = 1:11
       )
-    
+
     # Check that we only see NAs in a and b
-    
+
     expect_equal(c('a','b'), na_cols(df))
-    
+
   }
+)
+
+
+test_that(
+  'integrity_check() works as expected.',
+  {
+
+    # Check that messages and warnings trigger for passes and fails
+    # respectively.
+
+    expect_warning(integrity_check('.'))
+    expect_warning(integrity_check('a'))
+    expect_warning(integrity_check(c(1,'a')))
+    expect_warning(integrity_check(c(1,2,3,'a')))
+    expect_message(integrity_check('1'))
+    expect_message(integrity_check(NA))
+    expect_message(integrity_check(c(1, 1.1, 1.2)))
+    expect_message(integrity_check(c(1, 1.1, 1.2, NA)))
+
+    # Check what actual content is returned. Supressing the warning messages may
+    # not be the best approach here, but the test will still fail if it needs
+    # to.
+
+    suppressMessages(expect_null(case1 <- integrity_check('1')))
+    suppressWarnings(expect_equal(case2 <- integrity_check(c(1, 1.2, NA, '.')), c(FALSE, FALSE, FALSE, TRUE)))
+    suppressWarnings(expect_equal(case3 <- integrity_check('fail'), TRUE))
+    suppressWarnings(expect_equal(case4 <- integrity_check(c('.','fail')), c(TRUE, TRUE)))
+
+    }
 )
