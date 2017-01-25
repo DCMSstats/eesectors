@@ -61,7 +61,8 @@ figure3.3 <- function(x, ...) {
         ggplot2::scale_colour_brewer(palette = 'Set1') +
         ggplot2::ylab('GVA Index: 2010=100') +
         ggplot2::theme(
-          legend.position = 'right'
+          legend.position = 'right',
+	  legend.key = ggplot2::element_blank()
         ) +
         ggplot2::ylim(c(80, 150))
 
