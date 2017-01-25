@@ -62,3 +62,41 @@ test_that(
 
   }
 )
+
+
+test_that(
+  'clean_sic works as expected.',
+  {
+    
+    expect_identical(clean_sic(1234), "12.34")
+    expect_identical(clean_sic(c(1234,1234)), c("12.34","12.34"))
+    expect_identical(clean_sic(NA), NA)
+    expect_identical(clean_sic(12), 12)
+    expect_identical(clean_sic(12345), 12345)
+    expect_identical(clean_sic(c(12,123,1234,12345, NA)), c('12', '12.3', '12.34', 12345, NA))
+    
+  }
+)
+
+
+test_that(
+  'na_cols works as expected.',
+  {
+    # Check it works when there are no NAs
+    
+    expect_equal(character(0), na_cols(mtcars))
+    
+    # Create test dataframe:
+    
+    df <- data.frame(
+      a = c(1:10, NA),
+      b = NA,
+      c = 1:11
+      )
+    
+    # Check that we only see NAs in a and b
+    
+    expect_equal(c('a','b'), na_cols(df))
+    
+  }
+)
