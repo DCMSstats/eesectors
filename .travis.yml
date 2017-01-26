@@ -10,8 +10,6 @@ git:
 
 r_github_packages:
   - jimhester/covr
-#  - MangoTheCat/visualTest
-#  - UKGov-Data-Science/govstyle@v0.1.1
 
 install:
 #  - R -e "0" --args --bootstrap-packrat
@@ -22,3 +20,4 @@ cache:
 
 after_success:
   - Rscript -e 'covr::codecov()'
+

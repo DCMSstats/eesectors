@@ -5,3 +5,7 @@
 packrat/lib*/
 GITHUB_PAT
 .Renviron
+
+# Ignore files created by figure tests
+
+tests/testthat/figures/test_figure*_test.png
