@@ -134,7 +134,7 @@ test_that(
   "save_rds works as expected.",
   {
 
-    full_path = file.path('testdata', 'mtcars.Rds')
+    full_path = 'mtcars.Rds'
 
     if (file.exists(full_path)) file.remove(full_path)
 

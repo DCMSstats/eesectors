@@ -193,6 +193,7 @@ na_cols <- function(df) {
 #' @param full_path Path to which Rds file will be saved.
 #'
 #' @return Returns nothing
+#' @export
 
 save_rds <- function(x, full_path) {
 
