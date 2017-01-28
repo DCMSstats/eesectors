@@ -1,0 +1,23 @@
+#' DCMS sectors in 2016.
+#'
+#' These data are essentially a list of all United Nations Standard Industrial
+#' Codes, with along with an indication of which broad sector the code belongs
+#' to, and whether it was used by DCMS in the sectors economic estimates
+#' released in 2016. These data are also provided in the the methodology note
+#' that accompanies the 2016 Statistical First Release
+#' (https://www.gov.uk/government/publications/dcms-sectors-economic-estimates-methodology),
+#' although this particular dataset was extracted from the 'Working sheet'
+#' worksheet of the \code{working_file_dcms_V13.xlsm} spreadsheet using the
+#' \code{extract_DCMS_sectors} function.
+#'
+#' @format A tibble with 552 rows and 5 variables: \describe{ \item{SIC}{Four
+#'   digit United Nations Standard Industrial Code (SIC).}}
+#'   \item{description}{Description of the four digit SIC code.}
+#'   \item{sector}{DCMS sector to which the particular SIC code belongs.}
+#'   \item{present}{Is the particular SIC code present in the relevant DCMS
+#'   sector?} \item{SIC2}{Two digit SIC code.}
+#' @source
+#' \url{https://www.gov.uk/government/publications/dcms-sectors-economic-estimates-methodology}
+#'
+#' @keywords Economic Estimates Sectors DCMS
+"DCMS_sectors"

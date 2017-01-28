@@ -2,12 +2,13 @@
 #'
 #' @description The data which underlies the Economic Sectors for DCMS sectors
 #'   data is typically provided to DCMS as a spreadsheet from the Office for
-#'   National Statistics. This function extracts the data from that spreadsheet.
+#'   National Statistics. This function extracts the ABS data from that
+#'   spreadsheet.
 #'
 #' @details The best way to understand what happens when you run this function
 #'   is to look at the source code, which is available at
-#'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}.
-#'   The code is relatively transparent and well documented. I give a brief
+#'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}. The
+#'   code is relatively transparent and well documented. I give a brief
 #'   explanation of what the function does here:
 #'
 #'   1. The function calls \code{readxl::read_excel} to load the appropriate
@@ -150,13 +151,14 @@ extract_GVA_data <- function(
 
   full_path <- file.path(output_path, 'OFFICIAL_ABS.Rds')
 
-  saveRDS(x, full_path)
+  save_rds(x, full_path = full_path)
 
-  if (file.exists(full_path)) {
-
-    message('ABS data saved to ', full_path)
-    message('File is ', file.info(full_path)$size, ' bytes')
-
-    } else warning(full_path, 'was not created.')
+  message(
+    '################################# WARNING ############################
+    The data produced by this function may contain OFFICIAL information.
+    Ensure that the data are not committed to a github repository.
+    Tools to prevent the accidental committing of data are available at:
+    https://github.com/ukgovdatascience/dotfiles.'
+    )
 
 }
