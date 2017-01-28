@@ -88,9 +88,9 @@ The best way to understand what happens when you run this function
 
 \dontrun{
 library(eesectors)
-extract_ABS_data(
+extract_DCMS_sectors(
 x = 'OFFICIAL_working_file_dcms_V13.xlsm',
-sheet_name = 'New ABS Data',
+sheet_name = 'Working File',
 output_path = '../OFFICIAL/'
 )
 }

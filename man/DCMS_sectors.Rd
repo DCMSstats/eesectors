@@ -17,11 +17,11 @@
 DCMS_sectors
 }
 \description{
-These data are essentially a list of all United Nations Standard Industrial
-Codes, with along with an indication of which broad sector the code belongs
-to, and whether it was used by DCMS in the sectors economic estimates
-released in 2016. These data are also provided in the the methodology note
-that accompanies the 2016 Statistical First Release
+These data are essentially a list of all United Nations (UN) Standard
+Industrial Codes (SIC), along with an indication of which broad sector the
+code belongs to, and whether it was used by DCMS in the sectors economic
+estimates released in 2016. These data are provided in the the methodology
+note that accompanies the 2016 Statistical First Release
 (https://www.gov.uk/government/publications/dcms-sectors-economic-estimates-methodology),
 although this particular dataset was extracted from the 'Working sheet'
 worksheet of the \code{working_file_dcms_V13.xlsm} spreadsheet using the
