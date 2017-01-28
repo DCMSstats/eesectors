@@ -1,6 +1,19 @@
 language: r
-cache: packages
-sudo: required
+cache:
+  directories: $TRAVIS_BUILD_DIR/packrat/
+  packages: true
+
+matrix:
+  include:
+    - os: linux
+      dist: precise
+      sudo: required
+    - os: osx
+      osx_image: xcode7.3.13.13.1
+      latex: false
+    - os: osx
+      osx_image: xcode8.3
+      latex: false
 
 r_packages:
   - knitr
@@ -13,10 +26,6 @@ r_github_packages:
 
 install:
 #  - R -e "0" --args --bootstrap-packrat
-
-cache:
-  directories: $TRAVIS_BUILD_DIR/packrat/
-  packages: true
 
 after_success:
   - Rscript -e 'covr::codecov()'
