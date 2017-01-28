@@ -1,6 +1,6 @@
 PackratFormat: 1.4
 PackratVersion: 0.4.8.1
-RVersion: 3.3.0
+RVersion: 3.3.2
 Repos: BioCsoft=https://bioconductor.org/packages/3.4/bioc,
     BioCann=https://bioconductor.org/packages/3.4/data/annotation,
     BioCexp=https://bioconductor.org/packages/3.4/data/experiment,
@@ -43,6 +43,11 @@ Source: CRAN
 Version: 0.1
 Hash: 0afb92b59b02593c70ff8046700ba9d3
 
+Package: brew
+Source: CRAN
+Version: 1.0-6
+Hash: 931f9972deae0f205e1c78a51f33149b
+
 Package: colorspace
 Source: CRAN
 Version: 1.3-2
@@ -72,8 +77,8 @@ Hash: 08eed0c80510af29bb15f840ccfe37ce
 
 Package: digest
 Source: CRAN
-Version: 0.6.10
-Hash: 87165608ca8aeb0958835c3c5b52b6b7
+Version: 0.6.11
+Hash: e959a80e637182a39f4f865ef4fc51cc
 
 Package: dplyr
 Source: CRAN
@@ -217,13 +222,26 @@ Hash: 77da8f1df873a4b91e5c4a68fe2fb1b6
 Package: purrr
 Source: CRAN
 Version: 0.2.2
+Hash: 883eb391742d94eb62d05aa8c5055211
 Requires: BH, Rcpp, dplyr, lazyeval, magrittr
+
+Package: readxl
+Source: CRAN
+Version: 0.1.1
+Hash: a80e2ef94a7228ec43d840fcb2792bc6
+Requires: Rcpp
 
 Package: reshape2
 Source: CRAN
 Version: 1.4.2
 Hash: fd2714b51cb380c30fec1687005587a2
 Requires: Rcpp, plyr, stringr
+
+Package: roxygen2
+Source: CRAN
+Version: 5.0.1
+Hash: fd554bf7b028b1e8a65f2b9adcafa4f6
+Requires: Rcpp, brew, digest, stringi, stringr
 
 Package: rstudioapi
 Source: CRAN
