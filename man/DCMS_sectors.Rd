@@ -5,11 +5,11 @@
 \alias{DCMS_sectors}
 \title{DCMS sectors in 2016.}
 \format{A tibble with 552 rows and 5 variables: \describe{ \item{SIC}{Four
-  digit United Nations Standard Industrial Code (SIC).}}
+  digit United Nations Standard Industrial Code (SIC).}
   \item{description}{Description of the four digit SIC code.}
   \item{sector}{DCMS sector to which the particular SIC code belongs.}
   \item{present}{Is the particular SIC code present in the relevant DCMS
-  sector?} \item{SIC2}{Two digit SIC code.}}
+  sector?} \item{SIC2}{Two digit SIC code.}}}
 \source{
 \url{https://www.gov.uk/government/publications/dcms-sectors-economic-estimates-methodology}
 }

@@ -5,11 +5,11 @@
 \alias{GVA_by_sector_2016}
 \title{GVA data for 2010:2015.}
 \format{A tibble with 54 rows and 3 variables: \describe{ \item{sector}{DCMS
-  sector, one of: \code{ c('Creative Industries','Cultural Sector','Digital
-  Sector','Gambling','Sport','Telecoms','Tourism', 'UK', 'all_dcms') },
-  note that \code{all_dcms} is not the sum of the other sectors, due to
-  overlap between sectors.} \item{year}{calendar year.} \item{GVA}{gross value
-  added (GBP millions).}}.}
+  sector, one of: \code{
+  c('creative','culture','digital','gambling','sport','telecoms','tourism',
+  'UK', 'all_dcms') }, note that \code{all_dcms} is not the sum of the other
+  sectors, due to overlap between sectors.} \item{year}{calendar year.}
+  \item{GVA}{gross value added (GBP millions).}}}
 \source{
 \url{https://www.gov.uk/government/statistics/dcms-sectors-economic-estimates-2016}
 }

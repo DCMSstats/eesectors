@@ -3,13 +3,19 @@
 #' @description The data which underlies the Economic Sectors for DCMS sectors
 #'   data is typically provided to DCMS as a spreadsheet from the Office for
 #'   National Statistics. This function extracts the ABS data from that
-#'   spreadsheet.
+#'   spreadsheet, and saves it to .Rds format.
+#'
+#'   IT IS HIGHLY ADVISEABLE TO ENSURE THAT THE DATA WHICH ARE CREATED BY THIS
+#'   FUNCTION ARE NOT STORED IN A FOLDER WHICH IS A GITHUB REPOSITORY TO
+#'   MITIGATE AGAINST ACCIDENTAL COMMITTING OF OFFICIAL DATA TO GITHUB. TOOLS TO
+#'   FURTHER HELP MITIGATE THIS RISK ARE AVAILABLE AT
+#'   https://github.com/ukgovdatascience/dotfiles.
 #'
 #' @details The best way to understand what happens when you run this function
 #'   is to look at the source code, which is available at
 #'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}. The
-#'   code is relatively transparent and well documented. I give a brief
-#'   explanation of what the function does here:
+#'   code is relatively transparent and well documented. A brief explanation of
+#'   what the function does here:
 #'
 #'   1. The function calls \code{readxl::read_excel} to load the appropriate
 #'   page from the underlying spreadsheet.
@@ -51,7 +57,7 @@
 #' @param output_path The directory in which the output data is to be stored.
 #'   Defaults to \code{.}.
 #'
-#' @return The function returns \code{NULL}, but saves the extracted dataset to
+#' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
 #'   object, which retains the column types which would be lost if converted to
 #'   a flat format like CSV.

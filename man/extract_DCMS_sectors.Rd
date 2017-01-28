@@ -17,10 +17,17 @@ Defaults to \code{New ABS Data}.}
 
 \item{output_path}{The directory in which the output data is to be stored.
 Defaults to \code{.}.}
+
+\item{skip}{Number of lines to skip when reading the worksheet, inherits from
+\code{readxl::read_excel}.}
+
+\item{sectors}{A character vector of the sectors for which DCMS is
+responsible, currently: \code{c('creative', 'digital', 'culture',
+'telecoms', 'gambling', 'sport', 'tourism', 'all_dcms')}.}
 }
 \value{
-The function returns \code{NULL}, but saves the extracted dataset to
-  \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
+The function returns nothing, but saves the extracted dataset to
+  \code{file.path(output_path, 'DCMS_sectors.Rds')}. This is an R data
   object, which retains the column types which would be lost if converted to
   a flat format like CSV.
 }
@@ -28,51 +35,54 @@ The function returns \code{NULL}, but saves the extracted dataset to
 The data which underlies the Economic Sectors for DCMS sectors
   data is typically provided to DCMS as a spreadsheet from the Office for
   National Statistics. This function extracts the list of sectors that DCMS
-  are responsible for. This information is recorded in the methodology note
-  which accompanies the publication at
+  are responsible for from the working_file_dcms_V13.xlsm spreadsheet. This
+  information is also recorded in the methodology note which accompanies the
+  publication at
   \url{https://www.gov.uk/government/publications/dcms-sectors-economic-estimates-methodology}
-  and a version correct at the time of the 2016 release is included in the
-  package as \code{eesectors::DCMS_sectors}.
+   and a version correct at the time of the 2016 release is included in the
+  package as \code{eesectors::DCMS_sectors}. Hence, it is not necessary to
+  run this function every time - only if changes to the DCMS sectors are
+  made.
 }
 \details{
 The best way to understand what happens when you run this function
   is to look at the source code, which is available at
-  \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}. The
-  code is relatively transparent and well documented. I give a brief
+  \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}. A brief
   explanation of what the function does here:
 
   1. The function calls \code{readxl::read_excel} to load the appropriate
   page from the underlying spreadsheet.
 
-  2. In the 2016 version of the working file spreadhseet, there were a number
-  of replicated columns. These are removed, however it is at present a
-  relatively dumb exercise. The function simply looks for columns with teh
-  same name, and retains only the first one.
+  2. The column names are sanitised and cleaned to remove extraneous
+  characters, and are made all lower case
 
-  3. The column names are cleaned to make selection of variables easier using
-  \code{make.names}.
+  3. The dataframe is limited to the columns: \code{'sic'},
+  \code{'description'}, and those contained in the \code{sector} argument:
+  \code{c('creative', 'digital', 'culture', 'telecoms', 'gambling', 'sport',
+  'tourism', 'all_dcms')}.
 
   4. The data are pivoted into long form using \code{tidyr::gather_}. This
-  converts the data from a wide dataframe with year as column headers, into a
-  long dataframe with year included in a year column. This makes the data
-  much easier to subset.
+  converts the data from a wide dataframe with \code{'sector'} as the key
+  column, and \code{present} as the value column (i.e. present in DCMS
+  sector?). The result is a much longer dataframe which is much easier to
+  subset.
 
-  5. All the abs values are combined into a column called \code{abs}. In the
-  2016 spreadsheet there were a number of full stops (\code{.}) in the
-  \code{abs} column, which will be coerced to \code{NA} when the the column
-  is converted to numeric using \code{as.numeric} (the next step). The
-  internal function \code{eesectors::integrity_check} runs a quick check to
-  make sure that the only NAs creeping into the \code{abs} column are from
-  full stops in the original data. The full stops are then converted to
-  zeros.
+  5. For consistency with later steps, the \code{'sic'} column is renamed to
+  \code{'SIC'}.
 
-  6. The internal function \code{eesectors::clean_sic} is run on the
-  \code{DOMVAL} column to ensure that all 3 and 4 digit SIC codes are
-  formatted properly.
+  6. The asterisks used in teh spreadsheet to denote presence in a DCMS
+  sector are replaced by a binary variable with \code{TRUE} and \code{FALSE}
+  in place of \code{*} and \code{NA}.
 
-  7. The data are written out to disk using the provided \code{output_path}
-  and the filename, which is fixed as \code{OFFICIAL_ABS.Rds}. The success of
-  this procedure is reported, and a file size given if successful.
+  7. \code{NA} values created by step 6 are removed from the dataframe.
+
+  8. The tourism entry which is formatted differently in the 'working file'
+  worksheet in working_file_dcms_V13.xlsm is fixed to ensure that it has both
+  a description and a SIC (where previously it just had a SIC), and 'tourism'
+  is labelled as a DCMS sector under tourism and all_dcms.
+
+  9. The data are saved out to a .Rds file, and a check run to ensure that
+  the file exists. The size of the new file is reported in bytes.
 }
 \examples{
 
@@ -84,6 +94,5 @@ sheet_name = 'New ABS Data',
 output_path = '../OFFICIAL/'
 )
 }
-
 }
 
