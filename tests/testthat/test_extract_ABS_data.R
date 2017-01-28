@@ -1,7 +1,7 @@
-context("extract_ABS_data works as expected")
+context("extract_DCMS_sectors works as expected")
 
 test_that(
-  "extract_ABS_data can extract data from a dummy spreadsheet",
+  "extract_DCMS_sectors can extract data from a dummy spreadsheet",
   {
     skip('Tests not yet implemented')
 

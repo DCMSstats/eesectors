@@ -136,10 +136,10 @@ test_that(
 
     full_path = file.path('testdata', 'mtcars.Rds')
 
+    if (file.exists(full_path)) file.remove(full_path)
+
     expect_message(save_rds(mtcars, full_path))
     expect_true(file.exists(full_path))
-
-    file.remove(full_path)
 
   }
 )
