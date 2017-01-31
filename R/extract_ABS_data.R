@@ -56,6 +56,8 @@
 #'   Defaults to \code{New ABS Data}.
 #' @param output_path The directory in which the output data is to be stored.
 #'   Defaults to \code{.}.
+#' @param test To be used for testing purposes. Removes the 'OFFICIAL' prefix
+#'   from the output filename.
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
@@ -78,7 +80,8 @@
 extract_ABS_data <- function(
   x,
   sheet_name = 'New ABS Data',
-  output_path = '.'
+  output_path = '.',
+  test = FALSE
 ) {
 
   # Use readxl to load the data directly from the spreadsheet.
@@ -130,7 +133,7 @@ extract_ABS_data <- function(
   # to numeric
 
   testthat::expect_is(x$abs[check_na], 'character')
-  testthat::expect_equal(unique(x$abs[check_na]), '.')
+  #testthat::expect_equal(unique(x$abs[check_na]), '.')
 
   # Lots of full stops... After examining the data, it looks like these values
   # should be zeros. But will chase up with DCMS. Convert them to zeros here:
@@ -155,7 +158,9 @@ extract_ABS_data <- function(
 
   # Save the data out as an R serialisation object
 
-  full_path <- file.path(output_path, 'OFFICIAL_ABS.Rds')
+  file_name<- if (test) 'test_output_ABS.Rds' else 'OFFICIAL_ABS.Rds'
+
+  full_path <- file.path(output_path, file_name)
 
   save_rds(x, full_path = full_path)
 

@@ -4,7 +4,8 @@
 \alias{extract_ABS_data}
 \title{extract ABS data from ONS working file spreadsheet}
 \usage{
-extract_ABS_data(x, sheet_name = "New ABS Data", output_path = ".")
+extract_ABS_data(x, sheet_name = "New ABS Data", output_path = ".",
+  test = FALSE)
 }
 \arguments{
 \item{x}{Location of the input spreadsheet file. Named something like
@@ -15,6 +16,9 @@ Defaults to \code{New ABS Data}.}
 
 \item{output_path}{The directory in which the output data is to be stored.
 Defaults to \code{.}.}
+
+\item{test}{To be used for testing purposes. Removes the 'OFFICIAL' prefix
+from the output filename.}
 }
 \value{
 The function returns nothing, but saves the extracted dataset to

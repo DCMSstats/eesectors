@@ -70,7 +70,7 @@ The best way to understand what happens when you run this function
   5. For consistency with later steps, the \code{'sic'} column is renamed to
   \code{'SIC'}.
 
-  6. The asterisks used in teh spreadsheet to denote presence in a DCMS
+  6. The asterisks used in the spreadsheet to denote presence in a DCMS
   sector are replaced by a binary variable with \code{TRUE} and \code{FALSE}
   in place of \code{*} and \code{NA}.
 
