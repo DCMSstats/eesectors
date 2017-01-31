@@ -75,7 +75,7 @@
 #'
 #' @export
 
-extract_GVA_data <- function(
+extract_ABS_data <- function(
   x,
   sheet_name = 'New ABS Data',
   output_path = '.'
@@ -160,7 +160,7 @@ extract_GVA_data <- function(
   save_rds(x, full_path = full_path)
 
   message(
-    '################################# WARNING ############################
+    '################################# WARNING #################################
     The data produced by this function may contain OFFICIAL information.
     Ensure that the data are not committed to a github repository.
     Tools to prevent the accidental committing of data are available at:

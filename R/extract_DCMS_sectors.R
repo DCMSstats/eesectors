@@ -143,4 +143,13 @@ extract_DCMS_sectors <- function(
 
   save_rds(x, full_path = full_path)
 
+  message(
+    '################################# NOTE #################################
+    DCMS sectors as were at publication of the 2016 Economics Estimates for
+    DCMS sectors have been included as a dataset withing the eesectors
+    package, and should be used in preference to recreating the data from
+    the spreadsheet (assuming no changes have occurred). These data can
+    be accessed with eesectors::DCMS_sectors.'
+  )
+
 }
