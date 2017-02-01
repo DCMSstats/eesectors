@@ -92,7 +92,7 @@ test_that(
       a = c(1:10, NA),
       b = NA,
       c = 1:11
-      )
+    )
 
     # Check that we only see NAs in a and b
 
@@ -127,5 +127,20 @@ test_that(
     expect_equal(case3 <- integrity_check('fail'), TRUE)
     expect_equal(case4 <- integrity_check(c('.','fail')), c(TRUE, TRUE))
 
-    }
+  }
 )
+
+full_path = file.path('testdata','mtcars.Rds')
+if (file.exists(full_path)) file.remove(full_path)
+
+test_that(
+  "save_rds works as expected.",
+  {
+
+    expect_message(save_rds(mtcars, full_path))
+    expect_true(file.exists(full_path))
+
+  }
+)
+
+file.remove(full_path)

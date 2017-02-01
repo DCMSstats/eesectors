@@ -1,4 +1,5 @@
 ^.*\.Rproj$
+^.*\.gitkeep$
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^packrat/
@@ -7,3 +8,4 @@
 ^README\_files$
 ^README\.Rmd$
 ^\.codecov\.yml$
+

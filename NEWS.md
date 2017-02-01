@@ -1,6 +1,6 @@
 # NEWS
 
-## v0.1.0
+## v0.0.0.9013
 
-Add a number of functions designed to extract data directly from the spreadsheets in which the data are provided (extract_*_data functions).
-
+* Added `extract_DCMS_sectors()` function.
+* Added `DCMS_sectors` as an in-built dataset (obviating the need to run `extract_DCMS_sectors()` except when there are changes to the DCMS sectors).

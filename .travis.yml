@@ -2,19 +2,11 @@ language: r
 cache:
   directories: $TRAVIS_BUILD_DIR/packrat/
   packages: true
-
-matrix:
-  include:
-    - os: linux
-      dist: precise
-      sudo: required
-    - os: osx
-      osx_image: xcode7.3.13.13.1
-      latex: false
-    - os: osx
-      osx_image: xcode8.3
-      latex: false
-
+sudo: false
+os:
+  - linux
+#  - osx
+ 
 r_packages:
   - knitr
 

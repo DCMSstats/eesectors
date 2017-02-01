@@ -2,13 +2,20 @@
 #'
 #' @description The data which underlies the Economic Sectors for DCMS sectors
 #'   data is typically provided to DCMS as a spreadsheet from the Office for
-#'   National Statistics. This function extracts the data from that spreadsheet.
+#'   National Statistics. This function extracts the ABS data from that
+#'   spreadsheet, and saves it to .Rds format.
+#'
+#'   IT IS HIGHLY ADVISEABLE TO ENSURE THAT THE DATA WHICH ARE CREATED BY THIS
+#'   FUNCTION ARE NOT STORED IN A FOLDER WHICH IS A GITHUB REPOSITORY TO
+#'   MITIGATE AGAINST ACCIDENTAL COMMITTING OF OFFICIAL DATA TO GITHUB. TOOLS TO
+#'   FURTHER HELP MITIGATE THIS RISK ARE AVAILABLE AT
+#'   https://github.com/ukgovdatascience/dotfiles.
 #'
 #' @details The best way to understand what happens when you run this function
 #'   is to look at the source code, which is available at
-#'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}.
-#'   The code is relatively transparent and well documented. I give a brief
-#'   explanation of what the function does here:
+#'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}. The
+#'   code is relatively transparent and well documented. A brief explanation of
+#'   what the function does here:
 #'
 #'   1. The function calls \code{readxl::read_excel} to load the appropriate
 #'   page from the underlying spreadsheet.
@@ -49,8 +56,10 @@
 #'   Defaults to \code{New ABS Data}.
 #' @param output_path The directory in which the output data is to be stored.
 #'   Defaults to \code{.}.
+#' @param test To be used for testing purposes. Removes the 'OFFICIAL' prefix
+#'   from the output filename.
 #'
-#' @return The function returns \code{NULL}, but saves the extracted dataset to
+#' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
 #'   object, which retains the column types which would be lost if converted to
 #'   a flat format like CSV.
@@ -68,10 +77,11 @@
 #'
 #' @export
 
-extract_GVA_data <- function(
+extract_ABS_data <- function(
   x,
   sheet_name = 'New ABS Data',
-  output_path = '.'
+  output_path = '.',
+  test = FALSE
 ) {
 
   # Use readxl to load the data directly from the spreadsheet.
@@ -123,7 +133,7 @@ extract_GVA_data <- function(
   # to numeric
 
   testthat::expect_is(x$abs[check_na], 'character')
-  testthat::expect_equal(unique(x$abs[check_na]), '.')
+  #testthat::expect_equal(unique(x$abs[check_na]), '.')
 
   # Lots of full stops... After examining the data, it looks like these values
   # should be zeros. But will chase up with DCMS. Convert them to zeros here:
@@ -148,15 +158,18 @@ extract_GVA_data <- function(
 
   # Save the data out as an R serialisation object
 
-  full_path <- file.path(output_path, 'OFFICIAL_ABS.Rds')
+  file_name<- if (test) 'test_output_ABS.Rds' else 'OFFICIAL_ABS.Rds'
 
-  saveRDS(x, full_path)
+  full_path <- file.path(output_path, file_name)
 
-  if (file.exists(full_path)) {
+  save_rds(x, full_path = full_path)
 
-    message('ABS data saved to ', full_path)
-    message('File is ', file.info(full_path)$size, ' bytes')
-
-    } else warning(full_path, 'was not created.')
+  message(
+    '################################# WARNING #################################
+    The data produced by this function may contain OFFICIAL information.
+    Ensure that the data are not committed to a github repository.
+    Tools to prevent the accidental committing of data are available at:
+    https://github.com/ukgovdatascience/dotfiles.'
+    )
 
 }

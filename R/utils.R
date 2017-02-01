@@ -173,7 +173,7 @@ clean_sic <- function(x) {
 #'
 #' @param df A dataframe.
 #'
-#' @return characvter vector containing the names of columns which contain \code{NA}.
+#' @return Character vector containing the names of columns which contain \code{NA}.
 #' @export
 
 na_cols <- function(df) {
@@ -181,5 +181,29 @@ na_cols <- function(df) {
   contains_NA <- apply(df, MARGIN = 2, FUN = anyNA)
   contains_NA <-  colnames(df)[contains_NA]
   return(contains_NA)
+
+}
+
+#' @title Save and check Rds files
+#'
+#' @description Saves a dataframe \code{x} to an Rds file, checks that the file
+#'   was produced, and raises a warning if it was not.
+#'
+#' @param x Input dataframe.
+#' @param full_path Path to which Rds file will be saved.
+#'
+#' @return Returns nothing
+#' @export
+
+save_rds <- function(x, full_path) {
+
+  saveRDS(x, full_path)
+
+  if (file.exists(full_path)) {
+
+    message('Saved to ', full_path)
+    message('File is ', file.info(full_path)$size, ' bytes')
+
+  } else warning(full_path, 'was not created.')
 
 }

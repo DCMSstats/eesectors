@@ -10,7 +10,7 @@ na_cols(df)
 \item{df}{A dataframe.}
 }
 \value{
-characvter vector containing the names of columns which contain \code{NA}.
+Character vector containing the names of columns which contain \code{NA}.
 }
 \description{
 Looks through a \code{data.frame} and returns a character vector
