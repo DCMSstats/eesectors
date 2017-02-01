@@ -1,4 +1,5 @@
 language: r
+cran: https://cran.rstudio.com
 sudo: false
 
 cache:
@@ -9,12 +10,18 @@ cache:
 
 os:
   - linux
-#  - osx
- 
+  - osx
+
 r:
   - oldrel
   - release
 
+matrix:
+  allow_failures:
+    - os: osx 
+    - r: oldrel
+  fast_finish: true
+ 
 r_packages:
   - knitr
 
