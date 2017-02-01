@@ -1,10 +1,13 @@
-#' @title extract toursim Data ONS working file spreadsheet
+#' @title extract SIC 91 Sales Data from ONS working file spreadsheet
 #'
 #' @description The data which underlies the Economic Sectors for DCMS sectors
 #'   data is typically provided to DCMS as a spreadsheet from the Office for
-#'   National Statistics. This function extracts the tourism data from that
-#'   spreadsheet, and saves it to .Rds format. These data are provided as the
-#'   usual tourism values in the GVA dataset cannot be used.
+#'   National Statistics. This function extracts the SIC Sales Data from that
+#'   spreadsheet, and saves it to .Rds format. These data are used in place of
+#'   the usual GVA values. An explanation of why can be found in the methodology
+#'   note that accompanies the statistical first release
+#'   (\url{https://www.gov.uk/government/publications/dcms-sectors-economic-estimates-methodology}).
+#'
 #'
 #'   IT IS HIGHLY ADVISEABLE TO ENSURE THAT THE DATA WHICH ARE CREATED BY THIS
 #'   FUNCTION ARE NOT STORED IN A FOLDER WHICH IS A GITHUB REPOSITORY TO
@@ -21,15 +24,12 @@
 #'   1. The function calls \code{readxl::read_excel} to load the appropriate
 #'   page from the underlying spreadsheet.
 #'
-#'   2. Sanitise the \code{colnames} using a user-supplied vector in
-#'   \code{new_colnames}. If there are no changes to the 2016 spreadhseet, in
-#'   future years, then the default vector should work in future years. If there
-#'   have been changes, this is likely to be a cause of errors.
+#'   2. Columns of interest are subset using \code{x[, c('SIC', 'year', 'gva')]}
 #'
 #'   3. Empty rows (containing all \code{NA}s) are removed.
 #'
 #'   4. The data are saved out to an R serialisation object
-#'   \code{OFFICIAL_tourism.Rds} in the specified folder.
+#'   \code{OFFICIAL_SIC91.Rds} in the specified folder.
 #'
 #' @param x Location of the input spreadsheet file. Named something like
 #'   "working_file_dcms_VXX.xlsm".
@@ -37,8 +37,8 @@
 #'   Defaults to \code{New ABS Data}.
 #' @param output_path The directory in which the output data is to be stored.
 #'   Defaults to \code{.}.
-#' @param test Only to be used for testing purposes. Removes the 'OFFICIAL' prefix
-#'   from the output filename. USE WITH CAUTION!
+#' @param test Only to be used for testing purposes. Removes the 'OFFICIAL'
+#'   prefix from the output filename. USE WITH CAUTION!
 #' @param col_names character vector used to rename the column names from the
 #'   imported spreadsheet. Defaults to
 #'   \code{c('year','gva','total','perc','overlap')}.
@@ -62,12 +62,12 @@
 #'
 #' @export
 
-extract_tourism_data <- function(
+extract_SIC91_data <- function(
   x,
-  sheet_name = 'Tourism',
+  sheet_name = 'SIC 91 Sales Data',
   output_path = '.',
   test = FALSE,
-  col_names = c('year','gva','total','perc','overlap'),
+  col_names = c('SIC','description','year','gva','blank','code'),
   ...
 ) {
 
@@ -76,19 +76,19 @@ extract_tourism_data <- function(
 
   x <- readxl::read_excel(path = x, sheet = sheet_name, col_names = col_names, ...)
 
-  # Standardise the column names.
+  # Extract columns of interest
 
-  colnames(x) <- col_names
+  x <- x[, c('SIC', 'year', 'gva')]
 
-  # Remove the extraneous rows, byt first checking whether they are all NA.
+  # Drop rows that are completely NA from the bottom of the dataset/
 
-  mask <- !(is.na(x$year) & is.na(x$gva) & is.na(x$total) & is.na(x$perc) & is.na(x$overlap))
+  mask <- !(is.na(x$SIC) & is.na(x$year) & is.na(x$gva))
 
-  x <- x[mask,]
+  x <- x[mask, ]
 
   # Save the data out as an R serialisation object
 
-  file_name<- if (test) 'test_output_tourism.Rds' else 'OFFICIAL_tourism.Rds'
+  file_name<- if (test) 'test_output_SIC91.Rds' else 'OFFICIAL_SIC91.Rds'
 
   full_path <- file.path(output_path, file_name)
 
