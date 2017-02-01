@@ -6,8 +6,13 @@ cache:
 sudo: false
 os:
   - linux
-#  - osx
- 
+  - osx
+
+matrix:
+  allow_failures:
+    - os: osx 
+  fast_finish: true
+
 r_packages:
   - knitr
 
