@@ -18,4 +18,6 @@ GITHUB_PAT
 
 tests/testthat/figures/test_figure*_test.png
 tests/testthat/testdata/mtcars.Rds
+tests/testthat/testdata/test_output*
+
 .~*
