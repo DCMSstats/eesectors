@@ -1,5 +1,5 @@
 language: r
-cran: http://cran.rstudio.com
+cran: https://cran.rstudio.com
 cache:
   directories: $TRAVIS_BUILD_DIR/packrat/
   packages: true
