@@ -19,6 +19,7 @@ r:
 matrix:
   allow_failures:
     - os: osx 
+    -r: oldrel
   fast_finish: true
  
 r_packages:
