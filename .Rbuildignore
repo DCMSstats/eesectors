@@ -1,6 +1,11 @@
 ^.*\.Rproj$
+^.*\.gitkeep$
 ^\.Rproj\.user$
-^\.travis.yml$
+^\.travis\.yml$
 ^packrat/
 ^\.Rprofile$
 ^appveyor\.yml$
+^README\_files$
+^README\.Rmd$
+^\.codecov\.yml$
+

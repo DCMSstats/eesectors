@@ -1,8 +1,27 @@
+# RStudio files
+
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+
+# Compiled packrat libraries
+
 packrat/lib*/
+
+# Environmental variables
+
 GITHUB_PAT
 .Renviron
+
 inst/doc
+
+
+# Ignore files created by tests
+
+tests/testthat/figures/test_figure*_test.png
+tests/testthat/testdata/mtcars.Rds
+tests/testthat/testdata/test_output*
+
+.~*
+

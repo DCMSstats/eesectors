@@ -31,19 +31,6 @@ format_table.long_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
   out <- tryCatch(
     expr = {
 
-    x$sector_levels <- c(
-      "Creative Industries",
-      "Cultural Sector",
-      "Digital Sector",
-      "Gambling",
-      "Sport",
-      "Telecoms",
-      "Tourism",
-      "all_sectors",
-      "perc_of_UK",
-      "UK"
-    )
-
     max_year <- max(x$year)
     measure <- x$type
 
@@ -82,24 +69,24 @@ format_table.long_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
 
     # Calculate the percentage of UK ----
 
-    df_sectors_perc <- dplyr::filter_(x$df, ~sector %in% c('all_sectors', 'UK'))
-    df_all_sectors_perc <- tidyr::spread_(df_sectors_perc, 'sector', 'GVA')
-    df_all_sectors_perc <- dplyr::mutate_(df_all_sectors_perc, perc_of_UK = ~all_sectors/UK)
-    df_all_sectors_perc <- dplyr::select_(df_all_sectors_perc, ~perc_of_UK, ~year)
-    df_all_sectors_perc <- tidyr::spread_(df_all_sectors_perc, 'year', 'perc_of_UK')
-    df_all_sectors_perc <- df_all_sectors_perc * 100
-    df_all_sectors_perc <- data.frame(
-      sector = factor('perc_of_UK', levels = x$sector_levels),
-      df_all_sectors_perc
+    df_sectors_perc <- dplyr::filter_(x$df, ~sector %in% c('all_dcms', 'UK'))
+    df_all_dcms_perc <- tidyr::spread_(df_sectors_perc, 'sector', 'GVA')
+    df_all_dcms_perc <- dplyr::mutate_(df_all_dcms_perc, perc_of_UK = ~all_dcms / UK)
+    df_all_dcms_perc <- dplyr::select_(df_all_dcms_perc, ~perc_of_UK, ~year)
+    df_all_dcms_perc <- tidyr::spread_(df_all_dcms_perc, 'year', 'perc_of_UK')
+    df_all_dcms_perc <- df_all_dcms_perc * 100
+    df_all_dcms_perc <- data.frame(
+      sector = factor('perc_of_UK', levels = names(x$sectors_set)),
+      df_all_dcms_perc
     )
 
     # Normalise the factor levels in df_wide, and
 
-    df_wide <- dplyr::mutate_(df_wide, sector = ~factor(sector, levels = x$sector_levels))
+    df_wide <- dplyr::mutate_(df_wide, sector = ~factor(sector, levels = names(x$sectors_set)))
 
     df_table <- dplyr::bind_rows(
       df_wide,
-      df_all_sectors_perc
+      df_all_dcms_perc
     )
 
     # Arrange in the order of the factors
@@ -112,6 +99,10 @@ format_table.long_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
 
       df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)] <- roundf(df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)], fmt)
       df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)] <- sprintf(fmt, as.numeric(df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)]))
+
+      # Finally set
+
+      df_table$sector <- factor(unname(x$sectors_set[df_table$sector]))
 
       # Print to html or as dataframe ----
 

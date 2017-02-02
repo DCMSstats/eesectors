@@ -1,0 +1,531 @@
+---
+title: "Calculate aggregated GVA figures"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+This notebook does two things:
+
+* Extracts the data from the [../../OFFICIAL/OFFICIAL_working_file_dcms_V13.xlsm](../../OFFICIAL/OFFICIAL_working_file_dcms_V13.xlsm) and saves them out into `*.Rds` files.
+* Combines data from the several data sources into a single dataset.
+* Tests this single dataset for consistency with the existing 2016 figues, and makes multiple tests throughout the process.
+
+### Setup
+
+```{r setup, echo=FALSE}
+
+source('../utils.R')
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
+)
+
+```
+
+```{r load_packages}
+
+# Note that in places I used :: to avoid confusion: there are duplicated
+# functions with common sames like select and filter
+
+library(dplyr)
+library(tidyr)
+library(testthat)
+
+```
+
+First, load the data extracted from the spreadsheet `OFFICIAL_working_file_dcms_V13.xlsm`. These are stored as `*.Rds` files within the `../../OFFICIAL/cleaned/` folder.
+Note that you must remove the password from this file for this to work.
+
+```{r load_data}
+
+# These data come from the worksheets `1997 Use`:`2015 Use`.
+
+gva <- readRDS('../../OFFICIAL/cleaned/OFFICIAL_gva.Rds') %>%
+  dplyr::rename(SIC2 = SIC)
+
+# These data are from the `New ABS Data` worksheet.
+
+ABS <- readRDS('../../OFFICIAL/cleaned/OFFICIAL_ABS.Rds')
+
+# These data are extracted from the `Working File` worksheet.
+
+sectors <- readRDS('../../OFFICIAL/cleaned/OFFICIAL_dcms_sectors.Rds')
+
+# These data are from the `Tourism` worksheet.
+
+tourism <- readRDS('../../OFFICIAL/cleaned/OFFICIAL_tourism_data.Rds')
+
+# These data come from the `SIC 91 Sales Data` worksheet. Arrange the columns to
+# match the ABS data, to make merging easier.
+
+SIC91 <- readRDS('../../OFFICIAL/cleaned/OFFICIAL_SIC91_data.Rds')  %>%
+  dplyr::select(year, abs = gva, SIC)
+
+```
+
+# Recreating the Working File worksheet 
+
+To recreate the working file as it appears in the spreadsheet we must:
+
+1. Deal with the SIC 91 data (i.e. remove SIC 91 data from `ABS` and swap in values from `SIC91)
+2. Duplicate the 2014 ABS values to use for 2015 (2015 values not being available)
+3. Merge the DCMS `sectors` to `ABS_2015` to get the 2 digit SIC.
+4. Calculate sums across sectors and years.
+5. Add in total UK GVA from `gva`.
+6. Match in Tourism data.
+7. Add tourism overlap.
+8. Build the `GVA_by_sector` dataframe expected by the `eesectors` package.
+9. Test the dataframe against the `eesectors::GVA_by_sector_2015`.
+10. Print differences between `GVA_by_sector` and `eesectors::GVA_by_sector_2015`.
+
+## 1. Deal with SIC 91
+
+The `SIC91` data needs to be merged into `ABS` as the first operation. 
+This replaces the SIC 91 data from the Annual Business Survey (ABS) with sales data.
+
+```{r merge_SIC91_and_ABS}
+
+# Remove all the rows that correspond to SIC 91 based on the unique SIC codes in
+# SIC91.
+
+ABS_no91 <- ABS %>%
+  dplyr::filter(!SIC %in% unique(SIC91$SIC))
+
+```
+Our expectation is now that there are not any 91 SIC codes in the ABS dataset that are also classed as DCMS sectors. 
+
+Test this here:
+
+```{r test_merge_SIC91_and_ABS}
+test_that(
+  'sectors with 91 SIC 2 will match properly.',
+  {
+    
+    # Create objects that contain just the rows which have SIC codes beginning
+    # with 91 (there are some remaining even after the above step)
+    
+    sectors_91 <- sectors$SIC[grepl('^91', sectors$SIC)]
+    ABS_91 <- ABS_no91$SIC[grepl('^91', ABS_no91$SIC)]
+    
+    # Check that none of the remaining 91 values in ABS are going to get matched
+    # against DCMS sectors in sectors:
+    
+    expect_equal(0, sum(sectors_91 %in% ABS_91))
+    
+    # Check that when we merge ABS with SIC91, the new SIC91 entries are going 
+    # to match the SIC codes for DMCS sectors that are in sectors. Note that not
+    # all of the SIC4 codes in SIC91 are present in DCMS sectors, so check the 
+    # other way, i.e. all SIC codes starting 91 in sectors$SIC are present in 
+    # SIC91$SIC
+    
+    expect_equal(length(sectors_91), sum(sectors_91 %in% SIC91$SIC))
+    
+    }
+  )
+
+```
+
+Now merge `ABS_no91` with `SIC91`.
+
+```{r merge_ABS_without_91_and_SIC91}
+ABS_91 <- dplyr::full_join(
+  ABS_no91,
+  SIC91
+)
+
+```
+
+Test that this merge worked.
+
+```{r test_merge_ABS_without_91_and_SIC91}
+
+test_that(
+  'merge of ABS_91 and SIC91 worked as expected.',
+  {
+    
+    # Our expectation is that there should now be the same number of rows in
+    # ABS91 as ABS, since we have replaced the 91 codes.
+    
+    expect_equal(nrow(SIC91), nrow(ABS) - nrow(ABS_no91))
+    expect_equal(nrow(ABS), nrow(ABS_91))
+    
+    # Also we expect that there are valid abs values for these rows!
+    
+    expect_true(all(!is.na(ABS_91$abs[grepl('^91\\.',ABS_91$SIC)])))
+    expect_true(all(ABS_91$abs[grepl('^91\\.',ABS_91$SIC)] > 0))
+    
+    }
+  )
+
+
+```
+
+### 2. Duplicate 2014 ABS data for 2015
+
+Since the `ABS_91` data only run to 2014, first duplicate the 2014 to be used for 2015:
+
+```{r duplicate_2014_ABS}
+# duplicate the 2014 data for 2015
+
+ABS_2015 <- ABS_91 %>%
+  dplyr::filter(year == 2014) %>%
+  dplyr::mutate(year = 2015) %>%
+  dplyr::bind_rows(ABS_91)
+
+```
+
+```{r test_duplicate_2014_ABS}
+test_that(
+  '2014 ABS data was replicated as 2015.',
+  {
+    
+    # Check that the 2014 and 2015 ABS GVA are identical for 2014 and 2015
+    
+    GVA_2014 <- ABS_2015 %>%
+      dplyr::filter(year == 2014)
+    
+    GVA_2015 <- ABS_2015 %>%
+      dplyr::filter(year == 2015)
+    
+    expect_equal(GVA_2014$ABS_ind_GVA, GVA_2015$ABS_ind_GVA)
+    
+  }
+)
+
+```
+
+### 3. Merge sectors and ABS datasets
+
+```{r merge_sectors_and_ABS_2015}
+
+GVA <- sectors %>%
+  dplyr::left_join(ABS_2015) %>%
+  dplyr::rename(ABS_ind_GVA = abs)
+
+```
+
+```{r test_merge_sectors_and_ABS_2015}
+
+test_that(
+  'merge of sectors and ABS_2015 worked as expected',
+  {
+    
+    # Check that all of the columns from sectors are now in GVA
+    
+    expect_true(all(colnames(sectors) %in% colnames(GVA)))
+    
+    # Check that all of the columns from ABS_2015 are now in GVA. Note
+    # that we renamed abs, so we should check for that too.
+    
+    expect_equal(sum(colnames(ABS_2015) %in% colnames(GVA)), 3)
+    
+    # Check that there aren't a crazy amount of NAs in the dataframe
+    
+    expect_equal(c('DOMVAL', 'abs', 'SIC'), na_cols(ABS_2015))
+    
+    # Check the proportion of these cols that are NA. NOte that these values are
+    # somewhat arbitrary. In future years these will need to be reset.
+    
+    expect_lt(sum(is.na(ABS_2015$SIC))/nrow(ABS_2015), 0.01)
+    
+    expect_lt(sum(is.na(ABS_2015$DOMVAL))/nrow(ABS_2015), 0.01)
+    
+    expect_lt(sum(is.na(ABS_2015$abs))/nrow(ABS_2015), 0.2)
+    
+  }
+)
+
+
+```
+
+Then calculate the 2 digit SIC total GVA (from `ABS_91`) for each of the DCMS sectors.
+Extract unique 2 digit SICs:
+
+```{r get_SIC2_unique}
+
+# Extract all the unique 2 digit SICs
+
+SIC2_unique <- GVA %>%
+  dplyr::filter(!is.na(SIC2)) %$%
+  SIC2 %>%
+  unique
+
+```
+
+We expect there to be 23 of these, so run a quick check:
+
+```{r test_get_SIC2_unique}
+
+test_that(
+  'there are the right number of unique SIC2s',
+  {
+expect_equal(length(SIC2_unique), 23)
+  }
+)
+```
+
+Next we use `SIC2_unique` to extract the 2 digit SIC totals from `ABS_91`.
+
+```{r calculate_SIC_2_totals_from_ABS}
+
+# This will form the denominator in our division
+
+denom <- ABS_2015 %>%
+  dplyr::filter(SIC %in% SIC2_unique) %>%
+  dplyr::mutate(ABS_2digit_GVA = abs) %>%
+  dplyr::select(year, SIC2 = SIC, ABS_2digit_GVA)
+
+```
+
+Now join this back into `GVA`.
+
+```{r merge_SIC_2_totals_into_GVA}
+
+# Join back into GVA for division
+
+GVA <- GVA %>% 
+  dplyr::filter(present) %>%
+  dplyr::left_join(denom) %>%
+  dplyr::mutate(
+    perc_split = ABS_ind_GVA / ABS_2digit_GVA
+  )
+
+# At this point there will be two rows that contain NAs, both as a result of
+# tourism, so check for and drop these.
+
+GVA <- GVA %>% 
+  dplyr::filter(!(is.na(year) & is.na(ABS_ind_GVA)))
+
+```
+
+Test that this worked correctly.
+
+```{r test_merge_GVA_with_denom}
+
+test_that(
+  'there are no unexpectedly missing values in GVA.',
+  {
+    
+    # See http://stackoverflow.com/questions/10574061/show-columns-with-nas-in-a-data-frame
+    
+    na_cols <- function(df) colnames(df)[unlist(lapply(df, function(x) any(is.na(x))))]
+    
+    # We only expect NAs in DOMVAL at this point
+    
+    expect_equal('DOMVAL', na_cols(GVA))
+  }
+)
+
+```
+
+Now, multiply `perc_split` by `GVA` after joining with `gva` to get the `BB16_GVA` (column Q in `Working File` worksheet). 
+
+```{r create_BB16_GVA}
+
+GVA <- GVA %>%
+  dplyr::left_join(
+    gva
+  ) %>%
+  dplyr::mutate(
+    BB16_GVA = perc_split * gva
+  )
+
+```
+
+### 4. Calculate sums across sectors and years
+
+Finally calculate the sums across all sectors and years.
+
+```{r calc_SIC2_sums}
+
+GVA_by_sector <- GVA %>%
+  group_by(year, sector) %>%
+  dplyr::summarise(
+    gva = sum(BB16_GVA)
+    )
+
+```
+
+Total UK GVA is included in the `gva` dataset, this can be added to the data here:
+
+### 5. Add in total UK GVA from `gva`
+
+```{r extract_UK_GVA}
+
+# Quick lookup table to convert SIC2 to Sector
+
+lookup <- c(
+  'total intermediate comsumption' = 'UK'
+)
+
+# Use create a table to merge in with GVA_by_sector
+
+GVA_UK <- gva %>%
+  dplyr::filter(SIC2 == names(lookup)) %>%
+  dplyr::transmute(
+    year, 
+    sector = lookup[SIC2], 
+    gva
+  )
+
+```
+
+Merge this into `GVA_by_sector`:
+
+```{r merge_GVA_by_sector_and_GVA_UK}
+
+# Full join it together
+
+GVA_by_sector <- GVA_by_sector %>%
+  dplyr::full_join(GVA_UK)
+
+```
+
+### 6. Match in Tourism data
+
+Tourism data is provided in a separate spreadsheet and imported in the `tourism` object
+
+```{r merge_tourism_data}
+
+GVA_by_sector <- tourism %>%
+  dplyr::transmute(year, sector = 'tourism', gva) %>%
+  dplyr::full_join(GVA_by_sector)
+```
+
+```{r test_merge_tourism_data}
+
+test_that(
+  'GVA_by_sector tourism values match those in tourism',
+  {
+    # Extract tourism gva
+    
+    tourism_gva <- tourism %>% 
+      dplyr::arrange(year)
+    
+    GVA_by_sector_gva <- GVA_by_sector %>% 
+      dplyr::filter(sector == 'tourism') %>% 
+      dplyr::arrange(year)
+        
+    # Check that this merged without error.
+    
+    expect_equal(tourism_gva$gva, GVA_by_sector_gva$gva)
+    
+    }
+  )
+
+```
+
+### 7. Add tourism overlap
+
+Also need to add the `$overlap` from tourism to the `all_dcms` totals in `GVA_by_sector`
+
+```{r remove_tourism_overlap}
+
+GVA_by_sector <- tourism %>%
+  dplyr::transmute(
+    year, sector = 'all_dcms', overlap
+  ) %>%
+  right_join(GVA_by_sector) %>%
+  dplyr::mutate(
+    gva = ifelse(!is.na(overlap), overlap + gva, gva)
+    ) %>%
+  dplyr::select(-overlap)
+
+```
+
+### 8. Build the `GVA_by_sector` dataframe expected by the eesectors package
+
+```{r build_GVA_dataframe}
+
+# Build df to match eesectors::GVA_by_sector_2016
+
+GVA_by_sector <- GVA_by_sector %>%
+  # The 2016 SFR only inc
+  dplyr::filter(
+    year %in% 2010:2015
+  ) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(
+    # Round values
+    GVA = round(gva, 2),
+    # Convert sector to factor
+    sector = factor(sector),
+    # Convert year to integer
+    year = as.integer(year)
+  ) %>%
+  dplyr::select(
+    sector, year, GVA
+  ) %>%
+  dplyr::arrange(year, sector)
+
+```
+
+### 9. Test the dataframe against the `eesectors::GVA_by_sector_2015`
+
+```{r create_2016_test_cases}
+library(eesectors)
+
+# Tourism comes from Tourism tab in excel workbook
+
+# Abs data not sue for some SIC codes (SIC 91)
+
+test_case_2016 <- GVA_by_sector_2016 %>% 
+  dplyr::mutate(GVA = round(GVA)) %>%
+  dplyr::arrange(sector)
+  
+```
+
+```{r test_against_2016}
+
+test_that(
+  'calculated values match those in the SFR.',
+  {
+      # Some general checks about the object
+    
+    expect_is(GVA_by_sector, c("tbl_df", "tbl", "data.frame"))
+    expect_equal(nrow(GVA_by_sector), 54)
+    expect_equal(levels(eesectors::GVA_by_sector_2016$sector), levels(GVA_by_sector$sector))
+    
+    test_case_new <- GVA_by_sector %>%
+      dplyr::arrange(sector, year)
+    
+    test_case_2016 <- eesectors::GVA_by_sector_2016 %>%
+      dplyr::arrange(sector, year)
+    
+    # Check equality of GVA within a given tolerance
+    
+    expect_equal(test_case_new$GVA, test_case_2016$GVA, tolerance = 1)
+    
+    # Check that years are equal
+    
+    expect_equal(test_case_new$year, test_case_2016$year)
+    
+    # Check that sectors are equal
+    
+    expect_equal(test_case_new$sector, test_case_2016$sector)
+    }
+
+  )
+
+# If all good, save the dataframe out
+
+GVA_by_sector %>% saveRDS('../output/GVA_by_sector.Rds')
+```
+
+### 10. Print differences between `GVA_by_sector` and `eesectors::GVA_by_sector_2015`
+
+Create a table of comparisons to see all values which do not match perfectly (due to rounding errors).
+
+```{r print_nonmatching_values}
+
+test <- dplyr::full_join(GVA_by_sector, (eesectors::GVA_by_sector_2016 %>% dplyr::rename(GVA_2016 = GVA)))
+
+test %>%
+  dplyr::mutate(abs_diff = abs(GVA - GVA_2016)) %>%
+  dplyr::filter(abs_diff > 0) %>%
+  knitr::kable()
+```

@@ -1,21 +1,39 @@
 language: r
-cache: packages
-sudo: required
+cran: https://cran.rstudio.com
+sudo: false
 
+cache:
+  directories:
+    - $TRAVIS_BUILD_DIR/packrat/src
+    - $TRAVIS_BUILD_DIR/packrat/lib
+  packages: true
+
+os:
+  - linux
+  - osx
+
+r:
+  - oldrel
+  - release
+
+matrix:
+  allow_failures:
+    - os: osx 
+    - r: oldrel
+  fast_finish: true
+ 
 r_packages:
   - knitr
 
+git:
+  depth: 3
+
 r_github_packages:
   - jimhester/covr
-#  - MangoTheCat/visualTest
-#  - UKGov-Data-Science/govstyle@v0.1.1
 
 install:
-#  - R -e "0" --args --bootstrap-packrat
-
-cache:
-  directories: $TRAVIS_BUILD_DIR/packrat/
-  packages: true
+  - R -e "0" --args --bootstrap-packrat
 
 after_success:
   - Rscript -e 'covr::codecov()'
+

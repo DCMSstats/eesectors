@@ -1,4 +1,4 @@
-context('Test that imported data are in the correct format')
+context('Test that GVA_by_sectors_2016 data are in the correct format')
 
 test_that(
   'GVA_by_sector_2016 contains the expected columns',
@@ -26,16 +26,15 @@ test_that(
   {
     expect_equal(
       sort(as.character(unique(GVA_by_sector_2016$sector))),
-      sort(c(
-        'Creative Industries',
-        'Cultural Sector',
-        'Digital Sector',
-        'Gambling',
-        'Sport',
-        'Telecoms',
-        'Tourism',
-        'UK',
-        'all_sectors'))
+      sort(c('creative',
+          'culture',
+          'digital',
+          'gambling',
+          'sport',
+          'telecoms',
+          'tourism',
+          'UK',
+          'all_dcms'))
     )
   }
 )

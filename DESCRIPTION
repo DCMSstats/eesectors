@@ -1,13 +1,17 @@
 Package: eesectors
 Type: Package
-Title: Back End Functions to Support RAP
-Version: 0.0.0.9007
+Title: Functions to create DCMS Economic Estimates statistics
+Version: 0.0.0.9013
 Authors@R: c(
-    person("Matthew", "Upson", , "matthew.upson@digital.cabinet-office.gov.uk", c("aut", "cre"))
+    person("Matthew", "Upson", email = "matthew.upson@digital.cabinet-office.gov.uk", role = c("aut", "cre")),
+    person("Niall", "Goulding", email = "niall.goulding@culture.gov.uk", role = c("ctb"))
     )
 Maintainer: Matthew Upson <matthew.upson@digital.cabinet-office.gov.uk>
-Description: Provides functions to support production of the Economic
-    Estimates statistical release.
+Description: Provides functions to support production of the Economic Estimates
+    for DCMS Statistical First Release (SFR). The package contains functions both
+    for the extraction of relevant datasets from the spreadsheets provided by the
+    Office for National Statistics (ONS), and functions for wrangling the data 
+    into tables and plots for the final publication.
 License: GPL-3
 Depends:
     R (>= 3.1.0)
@@ -22,8 +26,9 @@ Imports:
     dplyr (>= 0.5.0),
     ggplot2 (>= 2.2.0),
     gh (>= 1.0.0),
-    govstyle (>= 0.1.1),
+    govstyle (>= 0.1.2),
     lazyeval (>= 0.1.0),
+    readxl (>= 0.1.1),
     scales (>= 0.4.0),
     tidyr (>= 0.6.0),
     xtable (>= 1.8-2)

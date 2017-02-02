@@ -28,9 +28,16 @@ figure3.1 <- function(x, ...) {
     expr = {
 
       # Extract the UK GVA
-
+      sectors_set <- x$sectors_set
       x <- dplyr::filter_(x$df, ~sector != 'UK')
       x <- dplyr::mutate_(x, year = ~factor(year, levels=c(2016:2010)))
+
+      # Convert to long form of sector, and arrange factor levels for plot
+
+      x$sector <- factor(
+        x = unname(sectors_set[as.character(x$sector)]),
+        levels = rev(as.character(unname(sectors_set[levels(x$sector)])))
+        )
 
       p <- ggplot2::ggplot(x) +
         ggplot2::aes_(
@@ -49,7 +56,10 @@ figure3.1 <- function(x, ...) {
           palette = 'Blues'
           ) +
         ggplot2::ylab('Gross Value Added (\u00a3bn)') +
-        ggplot2::theme(legend.position = 'right') +
+        ggplot2::theme(
+	  legend.position = 'right',
+	  legend.key = ggplot2::element_blank()
+	  ) +
         ggplot2::scale_y_continuous(labels = scales::comma)
 
       return(p)

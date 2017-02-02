@@ -17,7 +17,7 @@ test_that(
 
     expect_equal(
       attributes(long_data(GVA_by_sector_2016))$names,
-      c("df", "colnames", "type", "sector_levels", "years")
+      c("df", "colnames", "type", "sector_levels", "sectors_set", "years")
     )
 
   }
@@ -52,7 +52,7 @@ test_that(
 
    gva_outlier <- GVA_by_sector_2016 %>%
      dplyr::mutate(
-       GVA = ifelse(sector == 'Sport' & year == 2015, GVA + 10^4, GVA)
+       GVA = ifelse(sector == 'sport' & year == 2015, GVA + 10^4, GVA)
      )
 
   expect_warning(
