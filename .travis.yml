@@ -1,6 +1,6 @@
 language: r
 cran: https://cran.rstudio.com
-sudo: false
+sudo: required
 
 cache:
   directories:
@@ -10,17 +10,6 @@ cache:
 
 os:
   - linux
-  - osx
-
-r:
-  - oldrel
-  - release
-
-matrix:
-  allow_failures:
-    - os: osx 
-    - r: oldrel
-  fast_finish: true
  
 r_packages:
   - knitr
