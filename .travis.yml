@@ -1,6 +1,6 @@
 language: r
 cran: https://cran.rstudio.com
-sudo: false
+sudo: required
 
 cache:
   directories:
