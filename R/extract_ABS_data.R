@@ -58,6 +58,7 @@
 #'   Defaults to \code{.}.
 #' @param test To be used for testing purposes. Removes the 'OFFICIAL' prefix
 #'   from the output filename.
+#' @param ... passes arguments to read_xl
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
@@ -81,12 +82,13 @@ extract_ABS_data <- function(
   x,
   sheet_name = 'New ABS Data',
   output_path = '.',
-  test = FALSE
+  test = FALSE,
+  ...
 ) {
 
   # Use readxl to load the data directly from the spreadsheet.
 
-  x <- readxl::read_excel(path = x, sheet = sheet_name)
+  x <- readxl::read_excel(path = x, sheet = sheet_name, ...)
 
   # Check for and remove duplicated columns - in the 2016 publication, the 2013
   # and 2014 columns were repeated. Note that this only assumes that the
