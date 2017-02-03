@@ -58,7 +58,8 @@
 #'   Defaults to \code{.}.
 #' @param test To be used for testing purposes. Removes the 'OFFICIAL' prefix
 #'   from the output filename.
-#' @param ... passes arguments to read_xl
+#' @param ... passes arguments to \code{readxl::read_excel()} which is the basis
+#'   of this function.
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
