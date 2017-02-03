@@ -5,7 +5,7 @@
 \title{extract ABS data from ONS working file spreadsheet}
 \usage{
 extract_ABS_data(x, sheet_name = "New ABS Data", output_path = ".",
-  test = FALSE)
+  test = FALSE, ...)
 }
 \arguments{
 \item{x}{Location of the input spreadsheet file. Named something like
@@ -19,6 +19,9 @@ Defaults to \code{.}.}
 
 \item{test}{To be used for testing purposes. Removes the 'OFFICIAL' prefix
 from the output filename.}
+
+\item{...}{passes arguments to \code{readxl::read_excel()} which is the basis
+of this function.}
 }
 \value{
 The function returns nothing, but saves the extracted dataset to
