@@ -1,7 +1,7 @@
 context("extract_SIC91_data works as expected")
 
 testxl <- file.path('testdata', 'SIC91_test.xlsm')
-output <- file.path('testdata', 'test_output_sic91.Rds')
+output <- file.path('testdata', 'test_output_SIC91.Rds')
 reference <- file.path('testdata', 'test_reference_sic91.Rds')
 
 test_that(

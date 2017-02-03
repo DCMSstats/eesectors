@@ -5,10 +5,10 @@ output <- file.path('testdata', 'test_output_tourism.Rds')
 reference <- file.path('testdata', 'test_reference_tourism.Rds')
 
 test_that(
-  "extract_ABS_data can extract data from a dummy spreadsheet",
+  "extract_tourism_data can extract data from a dummy spreadsheet",
   {
 
-    expect_message(extract_tourism_data(testxl, sheet_name = 'Tourism', output_path = 'testdata', test = TRUE))
+    expect_message(extract_tourism_data(testxl, sheet_name = 'Tourism', output_path = 'testdata', test = TRUE, skip = 1))
     expect_true(file.exists(output))
 
     tourism <- readRDS(output)
