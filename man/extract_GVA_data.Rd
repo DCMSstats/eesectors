@@ -5,7 +5,7 @@
 \title{extract GVA data from ONS working file spreadsheet}
 \usage{
 extract_GVA_data(x, sheet_range = paste(paste(1997:2015), "Use"),
-  col_names = FALSE, header_rows = 5:6, slice = 3:122,
+  col_names = FALSE, header_rows = 8:9, slice = 3:122,
   output_path = ".", test = FALSE)
 }
 \arguments{
@@ -20,7 +20,7 @@ default \code{FALSE} will be appropriate, unless major changes occur to the
 udnerlying spreadsheet.}
 
 \item{header_rows}{The rows in the original spreadsheet from which the
-headers (SIC and description) will be taken.}
+headers (SIC and description) will be taken. Defaults to \code{8:9}.}
 
 \item{slice}{The rows of interest as desribed below in 4. Defaults to
 \code{3:122} which captures all the SIC codes for which GVA data are

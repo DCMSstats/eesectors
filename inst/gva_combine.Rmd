@@ -15,8 +15,6 @@ This notebook does two things:
 
 ```{r setup, echo=FALSE}
 
-source('../utils.R')
-
 knitr::opts_chunk$set(
   echo = TRUE,
   message = FALSE,
