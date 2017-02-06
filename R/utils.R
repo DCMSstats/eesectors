@@ -207,3 +207,34 @@ save_rds <- function(x, full_path) {
   } else warning(full_path, 'was not created.')
 
 }
+
+year_split <- function(x) {
+
+  year_ <- function(x) strsplit(x, ' ')[[1]][1]
+  output <- sapply(x, year_)
+  output <- unname(output)
+  output <- as.integer(output)
+  return(output)
+
+}
+
+zero_ <- function(x) {
+
+  # Check whether it can be converted to integer cleanly and whetehr it only has
+  # one character
+
+  if (((nchar(x) == 1) &!suppressWarnings(is.na(as.integer(x))))) x <- paste0(0, x)
+
+  return(x)
+
+}
+
+zero_prepend <- function(x) {
+
+  # Vectorize zero_
+
+  output <- sapply(x, zero_)
+  output <- unname(output)
+  return(output)
+
+}

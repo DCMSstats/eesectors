@@ -4,7 +4,7 @@ testxl <- file.path('testdata', 'DCMS_sectors_test.xlsm')
 output <- file.path('testdata', 'DCMS_sectors.Rds')
 
 test_that(
-  "extract_ABS_data can extract data from a dummy spreadsheet",
+  "extract_DCMS_data can extract data from a dummy spreadsheet",
   {
 
     expect_message(extract_DCMS_sectors(testxl, sheet_name = 'DCMS_sectors_test', skip = 7, output_path = 'testdata'))
