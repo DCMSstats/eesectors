@@ -64,7 +64,7 @@
 #'   default \code{FALSE} will be appropriate, unless major changes occur to the
 #'   udnerlying spreadsheet.
 #' @param header_rows The rows in the original spreadsheet from which the
-#'   headers (SIC and description) will be taken.
+#'   headers (SIC and description) will be taken. Defaults to \code{8:9}.
 #' @param output_path The directory in which the output data is to be stored.
 #'   Defaults to \code{.}.
 #' @param slice The rows of interest as desribed below in 4. Defaults to
@@ -94,7 +94,7 @@ extract_GVA_data <- function(
   x,
   sheet_range = paste(paste(1997:2015), 'Use'),
   col_names = FALSE,
-  header_rows = 5:6,
+  header_rows = 8:9,
   slice = 3:122,
   output_path = '.',
   test = FALSE
