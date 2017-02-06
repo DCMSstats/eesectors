@@ -8,7 +8,7 @@ test_that(
   "extract_ABS_data can extract data from a dummy spreadsheet",
   {
 
-    expect_message(extract_ABS_data(testxl, sheet_name = 'New ABS Data', output_path = 'testdata', test = TRUE))
+    expect_message(extract_ABS_data(testxl, sheet_name = 'New ABS Data', output_path = 'testdata', save = TRUE, test = TRUE))
     expect_true(file.exists(output))
 
     ABS <- readRDS(output)

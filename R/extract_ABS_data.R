@@ -56,10 +56,14 @@
 #'   Defaults to \code{New ABS Data}.
 #' @param output_path The directory in which the output data is to be stored.
 #'   Defaults to \code{.}.
+#' @param save Should the extracted data be saved to '.Rds' file? If
+#'   \code{TRUE}, data will be saved to OFFICIAL_ABS.Rds in the folder specified
+#'   by \code{output_path}.
 #' @param test To be used for testing purposes. Removes the 'OFFICIAL' prefix
 #'   from the output filename.
 #' @param ... passes arguments to \code{readxl::read_excel()} which is the basis
 #'   of this function.
+
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
@@ -83,6 +87,7 @@ extract_ABS_data <- function(
   x,
   sheet_name = 'New ABS Data',
   output_path = '.',
+  save = FALSE,
   test = FALSE,
   ...
 ) {
@@ -161,11 +166,15 @@ extract_ABS_data <- function(
 
   # Save the data out as an R serialisation object
 
-  file_name<- if (test) 'test_output_ABS.Rds' else 'OFFICIAL_ABS.Rds'
+  if (save) {
+
+  file_name <- if (test) 'test_output_ABS.Rds' else 'OFFICIAL_ABS.Rds'
 
   full_path <- file.path(output_path, file_name)
 
   save_rds(x, full_path = full_path)
+
+  } else {
 
   message(
     '################################# WARNING #################################
@@ -174,5 +183,9 @@ extract_ABS_data <- function(
     Tools to prevent the accidental committing of data are available at:
     https://github.com/ukgovdatascience/dotfiles.'
     )
+
+    return(x)
+
+  }
 
 }
