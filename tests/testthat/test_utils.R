@@ -144,3 +144,40 @@ test_that(
 )
 
 file.remove(full_path)
+
+
+test_that(
+  "year_split works as expected.",
+  {
+    year_range <- 1997:2015
+    sheet_range <- paste(year_range, 'Use')
+
+    expect_equal(year_range, year_split(sheet_range))
+    expect_equal(2017, year_split('2017 Use'))
+
+  }
+)
+
+
+test_that(
+  "zero_ works as expected.",
+  {
+
+    expect_equal(zero_('1'), '01')
+    expect_equal(zero_('a'), 'a')
+    expect_equal(zero_('45'), '45')
+    expect_equal(zero_(NA), NA)
+
+  }
+)
+
+test_that(
+  "zero_prepend works as expected.",
+  {
+
+    expect_equal(zero_prepend(1:10), c('01','02','03','04','05','06','07','08','09','10'))
+    expect_equal(zero_prepend(c('0','1','a','45',NA)), c('00','01','a','45',NA))
+
+  }
+)
+
