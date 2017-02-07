@@ -55,8 +55,6 @@
 #'   "working_file_dcms_VXX.xlsm".
 #' @param sheet_name The name of the spreadsheet in which the data are stored.
 #'   Defaults to \code{New ABS Data}.
-#' @param output_path The directory in which the output data is to be stored.
-#'   Defaults to \code{.}.
 #' @param skip Number of lines to skip when reading the worksheet, inherits from
 #'   \code{readxl::read_excel}.
 #' @param sectors A character vector of the sectors for which DCMS is
@@ -84,7 +82,6 @@
 extract_DCMS_sectors <- function(
   x,
   sheet_name = 'Working File',
-  output_path = '.',
   skip = 7,
   sectors = c('creative','digital','culture','telecoms','gambling','sport','tourism','all_dcms')
 ) {
@@ -139,17 +136,15 @@ extract_DCMS_sectors <- function(
         "present" = ~ifelse(SIC == 62.011 & sector %in% c('tourism', 'all_dcms'), TRUE, present)
       )
 
-  full_path <- file.path(output_path, 'DCMS_sectors.Rds')
-
-  save_rds(x, full_path = full_path)
-
-  message(
-    '################################# NOTE #################################
+    message(
+      '################################# NOTE #################################
     DCMS sectors as were at publication of the 2016 Economics Estimates for
     DCMS sectors have been included as a dataset withing the eesectors
     package, and should be used in preference to recreating the data from
     the spreadsheet (assuming no changes have occurred). These data can
     be accessed with eesectors::DCMS_sectors.'
-  )
+    )
+
+    return(x)
 
 }
