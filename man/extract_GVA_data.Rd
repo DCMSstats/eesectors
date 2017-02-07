@@ -5,8 +5,7 @@
 \title{extract GVA data from ONS working file spreadsheet}
 \usage{
 extract_GVA_data(x, sheet_range = paste(paste(1997:2015), "Use"),
-  col_names = FALSE, header_rows = 8:9, slice = 3:122,
-  output_path = ".", test = FALSE)
+  col_names = FALSE, header_rows = 8:9, slice = 3:122)
 }
 \arguments{
 \item{x}{Location of the input spreadsheet file. Named something like
@@ -25,12 +24,6 @@ headers (SIC and description) will be taken. Defaults to \code{8:9}.}
 \item{slice}{The rows of interest as desribed below in 4. Defaults to
 \code{3:122} which captures all the SIC codes for which GVA data are
 supplied in the underlying spreadsheets.}
-
-\item{output_path}{The directory in which the output data is to be stored.
-Defaults to \code{.}.}
-
-\item{test}{To be used for testing purposes. Removes the 'OFFICIAL' prefix
-from the output filename.}
 }
 \value{
 The function returns nothing, but saves the extracted dataset to
@@ -101,8 +94,7 @@ The best way to understand what happens when you run this function
 \dontrun{
 library(eesectors)
 extract_GVA_data(
-x = 'OFFICIAL_working_file_dcms_V13.xlsm',
-output_path = '../OFFICIAL/'
+x = 'OFFICIAL_working_file_dcms_V13.xlsm'
 )
 }
 

@@ -65,13 +65,9 @@
 #'   udnerlying spreadsheet.
 #' @param header_rows The rows in the original spreadsheet from which the
 #'   headers (SIC and description) will be taken. Defaults to \code{8:9}.
-#' @param output_path The directory in which the output data is to be stored.
-#'   Defaults to \code{.}.
 #' @param slice The rows of interest as desribed below in 4. Defaults to
 #'   \code{3:122} which captures all the SIC codes for which GVA data are
 #'   supplied in the underlying spreadsheets.
-#' @param test To be used for testing purposes. Removes the 'OFFICIAL' prefix
-#'   from the output filename.
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
@@ -83,8 +79,7 @@
 #' \dontrun{
 #' library(eesectors)
 #' extract_GVA_data(
-#' x = 'OFFICIAL_working_file_dcms_V13.xlsm',
-#' output_path = '../OFFICIAL/'
+#' x = 'OFFICIAL_working_file_dcms_V13.xlsm'
 #' )
 #' }
 #'
@@ -95,9 +90,7 @@ extract_GVA_data <- function(
   sheet_range = paste(paste(1997:2015), 'Use'),
   col_names = FALSE,
   header_rows = 8:9,
-  slice = 3:122,
-  output_path = '.',
-  test = FALSE
+  slice = 3:122
 ) {
 
   # First extract the header variables (y for brevity) from the last sheet in
@@ -189,12 +182,6 @@ extract_GVA_data <- function(
 
   # Finally save out to a *.Rds file
 
-  file_name<- if (test) 'test_output_GVA.Rds' else 'OFFICIAL_GVA.Rds'
-
-  full_path <- file.path(output_path, file_name)
-
-  save_rds(x, full_path = full_path)
-
   message(
     '################################# WARNING #################################
     The data produced by this function may contain OFFICIAL information.
@@ -203,5 +190,6 @@ extract_GVA_data <- function(
     https://github.com/ukgovdatascience/dotfiles.'
   )
 
+  return(x)
 
 }
