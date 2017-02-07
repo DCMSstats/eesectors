@@ -1,0 +1,130 @@
+---
+title: "Reproducible Analytical Pipelines"
+author: "Matthew Upson matthew.upson@digital.cabinet-office.gov.uk"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This document describes the rationale behind 'Reproducible Analytical Pipelines' (RAP) and the lessons that were learnt in the production of the `eesectors` package, and some guidelines for creating new RAP style packages. This is not meant as a technical manual.
+
+## The Traditional Analytical Pipeline
+
+Many government departments have a statutory obligation to produce Official Statistics about their area of business. In addition, most bodies usually have some sort of requirement to produce statistical summaries for internal consumption.
+
+In many cases these documents are time consuming, with an 'analytical pipeline' consisting of several computer programs, and many manual steps in between. Here, we take analytical pipeline to mean:
+
+> the process of extracting the data, transforming it, conducting analysis, to producing a final report combining commentary with statistical outputs.   
+
+An analytical pipeline might contain some or all of the following steps:
+
+* Extract and transform data from a database using structured query language (SQL) in a proprietary software package
+* Export the data into a flat format (e.g. comma separated values or CSV file) and load or copy and paste data into a proprietary statistical package
+* Manual (or code driven) analysis of the data 
+* Export the data into a flat format (e.g. CSV) and load or copy and paste data into a proprietary spreadsheet package
+* Arrange the data into final tables and charts for publishing
+* Copy and paste the tables and charts into proprietary word processing software
+* Export final report to portable document format (PDF)
+
+## The Reproducible Analytical Pipeline (RAP)
+
+In the last few years a great deal of work has been done in the area of '[reproducible research](https://ropensci.org/blog/2014/06/09/reproducibility/)[^1]', in part due to concern over the 'crisis of reproducibility' facing academia. Reproducible research practices provide a way of combining all the operations in an analytical pipeline into a single (or several) documents, so that every step of the analytical pipeline is documented alongside the text content of the document itself (this sometimes described as literate programming). Continuous testing, and documenting or caching of the dependencies (software packages used in the pipeline) are two important steps which support this process.
+
+[^1]: A good introduction to the subject is provided in this [blog post](https://ropensci.org/blog/2014/06/09/reproducibility/) from the R Open Science group.
+
+A typical Reproducible Analytical Pipeline in the R language might look as follows:
+
+* Extract data from a database or flat files programmatically from within R.
+* Pre-defined R functions run to transform data, and produce tables and charts.
+* Tables and charts rendered into an HTML, PDF, or word processor document.
+
+## Comparing the Two Models
+
+In this section I make a brief assessment of the two models of statistics production on the following three criteria: *cost*, *speed*, and *accuracy*.
+
++-------------+------------------------------------+------------------------------------+
+| Criteria    | Traditional                        | Reproducible                       |
++=============+====================================+====================================+
+| **Cost**    | Typically uses several proprietary | Typically uses open source software|
+|             | programs which may have expensive  | which is free to use.              |
+|             | software licences.                 |                                    |
++-------------+------------------------------------+------------------------------------+
+| **Accuracy**| Two issues in particular are       | Reduces or eliminates the need for |
+|             | potential causes of error:         | manual steps, in particular 'copy  |
+|             |                                    | and paste' operations.             |
+|             | * The large number of manual steps,|                                    |
+|             | in particular copy and paste       | A reliance on code rather than     |
+|             | operations.                        | spreadsheets, ensures that the     |
+|             |                                    | process is much more transparent.  |
+|             | * A reliance on spreadsheets has   |                                    |
+|             | been highlighted as a potential    | Software development practices     |
+|             | source or error, resulting in a    | such as test driven development and|
+|             | number of high profile cases.      | automated testing greatly improve  |
+|             |                                    | accuracy.                          |
++-------------+------------------------------------+------------------------------------+
+| **Speed**   | Statistical releases often take    | A completely automated reproducible|
+|             | weeks or months to produce, and are| analytical pipeline would likely   |
+|             | slowed by extensive quality        | take just minutes to run.          |
+|             | assurance (QA) required to ensure  |                                    |
+|             | process from data extraction to    | Developing the code which underlies|
+|             | high quality.                      | the RAP would require an up-front  |
+|             |                                    | investment of time however.        |
++-------------+------------------------------------+------------------------------------+
+
+### Using Open Source
+
+The approach outlined in this document relies almost entirely on the use of open-source software, in particular the [R statistical environment](https://www.r-project.org/), and the [Rstudio](https://www.rstudio.org) integrated development environemnt (IDE). The reasons for focussing on this software over an alternative open source technology (for example Python) are threefold:
+
+* R already has mature frameworks for reproducible reporting, driven in part by its popularity in academia.
+
+* Many government departments already have access to R, and at present it seems to be more popular than Python.
+
+* Whilst available in a completely open source form (indeed this is the format used for the creation of the RAP referred to in this document), the 2016 release of MS SQL Server is integrated with R.
+
+## A Detailed Outline of RAP
+
+### Importing data
+
+#### SQL 
+
+At present there exist two approaches to importing R data from SQL. The first leverages the power of the Rstudio IDE which allows SQL code to be executed directly from from a document 
+
+A wide variety of R packages libraries exist which allow the import of data from a wide variety of database types. A (non-exhaustive) summary is given below:
+
+* [Execute SQL code directly from Rmarkdown](https://support.rstudio.com/hc/en-us/articles/233066128-Do-Notebooks-support-other-languages-)
+
+#### Flat formats
+
+#### Other database formats
+
+## RAP Benefits in Detail
+
+In this section I expand the benefits of the RAP approach in more detail
+
+### Cost
+
+### Accuracy
+
+
+
+#### Automated Testing Tools
+### Speed
+### Other Benefits
+
+#### Documentation and Knowledge Management
+
+##### Version Control
+
+##### Knowledge Management
+
+## Designing a New Reproducible Analytical Pipeline
+
+### Choice of Technology
+
+### Developing Unit Tests
+
+### Writing A Package
+

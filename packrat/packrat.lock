@@ -48,10 +48,26 @@ Source: CRAN
 Version: 1.0.5
 Hash: 8b835bdc5447f2c76fda198e17d6bda4
 
+Package: base64enc
+Source: CRAN
+Version: 0.1-3
+Hash: c590d29e555926af053055e23ee79efb
+
+Package: bitops
+Source: CRAN
+Version: 1.0-6
+Hash: 67d0775189fd0041d95abca618c5c07e
+
 Package: brew
 Source: CRAN
 Version: 1.0-6
 Hash: 931f9972deae0f205e1c78a51f33149b
+
+Package: caTools
+Source: CRAN
+Version: 1.17.1
+Hash: 97cb6f6293cd18d17df77a6383cc6763
+Requires: bitops
 
 Package: colorspace
 Source: CRAN
@@ -86,6 +102,12 @@ Hash: bbad95109ae75cbb14099281cda43af2
 Requires: digest, git2r, httr, jsonlite, memoise, rstudioapi, whisker,
     withr
 
+Package: diagram
+Source: CRAN
+Version: 1.6.3
+Hash: 17146ef7c010361f8f2db11c2ab37047
+Requires: shape
+
 Package: dichromat
 Source: CRAN
 Version: 2.0-0
@@ -107,6 +129,11 @@ Source: CRAN
 Version: 0.10
 Hash: c3601a10c987d439e0c63ec635234a76
 Requires: stringr
+
+Package: formatR
+Source: CRAN
+Version: 1.4
+Hash: b2a47a2b91737978cf50ba95825a9cd1
 
 Package: ggplot2
 Source: CRAN
@@ -148,6 +175,12 @@ Package: highr
 Source: CRAN
 Version: 0.6
 Hash: aa3d5b7912b5fed4b546ed5cd2a1760b
+
+Package: htmltools
+Source: CRAN
+Version: 0.3.5
+Hash: 49415ab4718e9d37c7ddf74988493c23
+Requires: Rcpp, digest
 
 Package: httr
 Source: CRAN
@@ -253,6 +286,25 @@ Version: 1.4.2
 Hash: 85d9947f8a5e187dff7f18265b96cb13
 Requires: Rcpp, plyr, stringr
 
+Package: rex
+Source: CRAN
+Version: 1.1.1
+Hash: 69e208c6283398d235e507a658ba8079
+Requires: lazyeval, magrittr
+
+Package: rmarkdown
+Source: CRAN
+Version: 1.3
+Hash: d8f0cf248116dbdfc23f35991d0ed3f7
+Requires: base64enc, caTools, evaluate, htmltools, jsonlite, knitr,
+    rprojroot, yaml
+
+Package: roxygen2
+Source: CRAN
+Version: 5.0.1
+Hash: fd554bf7b028b1e8a65f2b9adcafa4f6
+Requires: Rcpp, brew, digest, stringi, stringr
+
 Package: rprojroot
 Source: CRAN
 Version: 1.2
@@ -269,6 +321,11 @@ Source: CRAN
 Version: 0.4.1
 Hash: bc8d2233a63b068b0f60b18303d60c55
 Requires: RColorBrewer, Rcpp, dichromat, labeling, munsell, plyr
+
+Package: shape
+Source: CRAN
+Version: 1.4.2
+Hash: 0bd79a294121e87cf8a0bc0e2c6bb12c
 
 Package: stringi
 Source: CRAN
