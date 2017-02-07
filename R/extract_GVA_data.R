@@ -187,8 +187,11 @@ extract_GVA_data <- function(
     The data produced by this function may contain OFFICIAL information.
     Ensure that the data are not committed to a github repository.
     Tools to prevent the accidental committing of data are available at:
-    https://github.com/ukgovdatascience/dotfiles.'
+    https://github.com/ukgovdatascience/dotfiles. Pay special attention
+    to .Rdata files, and .Rhistory files produced by Rstudio. Best practice
+    is to disable the creation of such files.'
   )
+
 
   return(x)
 
