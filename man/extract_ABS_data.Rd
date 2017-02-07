@@ -4,8 +4,7 @@
 \alias{extract_ABS_data}
 \title{extract ABS data from ONS working file spreadsheet}
 \usage{
-extract_ABS_data(x, sheet_name = "New ABS Data", output_path = ".",
-  test = FALSE, ...)
+extract_ABS_data(x, sheet_name = "New ABS Data", ...)
 }
 \arguments{
 \item{x}{Location of the input spreadsheet file. Named something like
@@ -13,12 +12,6 @@ extract_ABS_data(x, sheet_name = "New ABS Data", output_path = ".",
 
 \item{sheet_name}{The name of the spreadsheet in which the data are stored.
 Defaults to \code{New ABS Data}.}
-
-\item{output_path}{The directory in which the output data is to be stored.
-Defaults to \code{.}.}
-
-\item{test}{To be used for testing purposes. Removes the 'OFFICIAL' prefix
-from the output filename.}
 
 \item{...}{passes arguments to \code{readxl::read_excel()} which is the basis
 of this function.}
@@ -77,9 +70,8 @@ The best way to understand what happens when you run this function
   \code{DOMVAL} column to ensure that all 3 and 4 digit SIC codes are
   formatted properly.
 
-  7. The data are written out to disk using the provided \code{output_path}
-  and the filename, which is fixed as \code{OFFICIAL_ABS.Rds}. The success of
-  this procedure is reported, and a file size given if successful.
+  7. The data are printed to console, and can be saved out using the normal
+  methods, for instance \code{saveRDS}, or \code{write.csv}.
 }
 \examples{
 

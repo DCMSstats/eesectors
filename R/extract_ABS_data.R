@@ -46,21 +46,13 @@
 #'   \code{DOMVAL} column to ensure that all 3 and 4 digit SIC codes are
 #'   formatted properly.
 #'
-#'   7. The data are written out to disk using the provided \code{output_path}
-#'   and the filename, which is fixed as \code{OFFICIAL_ABS.Rds}. The success of
-#'   this procedure is reported, and a file size given if successful.
+#'   7. The data are printed to console, and can be saved out using the normal
+#'   methods, for instance \code{saveRDS}, or \code{write.csv}.
 #'
 #' @param x Location of the input spreadsheet file. Named something like
 #'   "working_file_dcms_VXX.xlsm".
 #' @param sheet_name The name of the spreadsheet in which the data are stored.
 #'   Defaults to \code{New ABS Data}.
-#' @param output_path The directory in which the output data is to be stored.
-#'   Defaults to \code{.}.
-#' @param save Should the extracted data be saved to '.Rds' file? If
-#'   \code{TRUE}, data will be saved to OFFICIAL_ABS.Rds in the folder specified
-#'   by \code{output_path}.
-#' @param test To be used for testing purposes. Removes the 'OFFICIAL' prefix
-#'   from the output filename.
 #' @param ... passes arguments to \code{readxl::read_excel()} which is the basis
 #'   of this function.
 
@@ -86,9 +78,6 @@
 extract_ABS_data <- function(
   x,
   sheet_name = 'New ABS Data',
-  output_path = '.',
-  save = FALSE,
-  test = FALSE,
   ...
 ) {
 
@@ -103,14 +92,19 @@ extract_ABS_data <- function(
 
   x <- x[, !duplicated(colnames(x))]
 
-  # Create sensible column names, to make selection easier
+  # Identify which columns we are interested in (i.e. ones that look like years)
 
+  year_mask <- suppressWarnings(!is.na(as.numeric(colnames(x))))
+  year_cols <- colnames(x)[year_mask]
+  year_cols <- make.names(year_cols)
+
+  # Create sensible column names, to make selection easier
   colnames(x) <- make.names(colnames(x))
 
-  # In case there are othe extraneos columns, such as ``, select out only the
+  # In case there are other extraneous columns, such as ``, select out only the
   # columns that we are interested in.
 
-  x <- dplyr::select_(x, 'DOMVAL', 'X2008', 'X2009', 'X2010', 'X2011', 'X2012', 'X2013', 'X2014')
+  x <- dplyr::select_(x, 'DOMVAL', lazyeval::interp(~dplyr::matches(x), x = '^X[19]|[20]\\d{2}$'))
 
   # Pivot the data into long form. In doing so, I discovered that some of the
   # values in the original data were not being cleanly converted into an integer.
@@ -125,7 +119,7 @@ extract_ABS_data <- function(
     data = x,
     key = 'year',
     value = 'abs',
-    gather_cols = c('X2008', 'X2009', 'X2010', 'X2011', 'X2012', 'X2013', 'X2014')
+    gather_cols = year_cols
   )
 
   # Then strip out the X in the year column, and conver to integer
@@ -164,28 +158,16 @@ extract_ABS_data <- function(
 
   x$DOMVAL <- eesectors::clean_sic(x$DOMVAL)
 
-  # Save the data out as an R serialisation object
-
-  if (save) {
-
-  file_name <- if (test) 'test_output_ABS.Rds' else 'OFFICIAL_ABS.Rds'
-
-  full_path <- file.path(output_path, file_name)
-
-  save_rds(x, full_path = full_path)
-
-  } else {
-
   message(
     '################################# WARNING #################################
     The data produced by this function may contain OFFICIAL information.
     Ensure that the data are not committed to a github repository.
     Tools to prevent the accidental committing of data are available at:
-    https://github.com/ukgovdatascience/dotfiles.'
+    https://github.com/ukgovdatascience/dotfiles. Pay special attention
+    to .Rdata files, and .Rhistory files produced by Rstudio. Best practice
+    is to disable the creation of such files.'
     )
 
     return(x)
-
-  }
 
 }
