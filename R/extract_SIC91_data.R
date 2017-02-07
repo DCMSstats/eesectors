@@ -89,7 +89,6 @@ extract_SIC91_data <- function(
     is to disable the creation of such files.'
   )
 
-
   return(x)
 
 }
