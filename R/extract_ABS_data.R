@@ -33,12 +33,12 @@
 #'   long dataframe with year included in a year column. This makes the data
 #'   much easier to subset.
 #'
-#'   5. All the abs values are combined into a column called \code{abs}. In the
+#'   5. All the ABS values are combined into a column called \code{ABS}. In the
 #'   2016 spreadsheet there were a number of full stops (\code{.}) in the
-#'   \code{abs} column, which will be coerced to \code{NA} when the the column
+#'   \code{ABS} column, which will be coerced to \code{NA} when the the column
 #'   is converted to numeric using \code{as.numeric} (the next step). The
 #'   internal function \code{eesectors::integrity_check} runs a quick check to
-#'   make sure that the only NAs creeping into the \code{abs} column are from
+#'   make sure that the only NAs creeping into the \code{ABS} column are from
 #'   full stops in the original data. The full stops are then converted to
 #'   zeros.
 #'
@@ -117,7 +117,7 @@ extract_ABS_data <- function(
   x <- tidyr::gather_(
     data = x,
     key = 'year',
-    value = 'abs',
+    value = 'ABS',
     gather_cols = year_cols
   )
 
@@ -128,12 +128,12 @@ extract_ABS_data <- function(
 
   # Run the integrity check function to check for conversion issues.
 
-  check_na <- eesectors::integrity_check(x$abs)
+  check_na <- eesectors::integrity_check(x$ABS)
 
   # Check that there are no unexpected failures to convert numbers from character
   # to numeric
 
-  testthat::expect_is(x$abs[check_na], 'character')
+  testthat::expect_is(x$ABS[check_na], 'character')
   #testthat::expect_equal(unique(x$abs[check_na]), '.')
 
   # Lots of full stops... After examining the data, it looks like these values
@@ -141,14 +141,14 @@ extract_ABS_data <- function(
 
   x <- dplyr::mutate_(
     x,
-    abs = ~ifelse(check_na, 0, abs),
-    abs = ~as.numeric(abs)
+    ABS = ~ifelse(check_na, 0, ABS),
+    ABS = ~as.numeric(ABS)
   )
 
   # Now check again that they were successfully removed.
 
-  testthat::expect_is(x$abs[check_na], 'numeric')
-  testthat::expect_equal(sum(x$abs[check_na]), 0)
+  testthat::expect_is(x$ABS[check_na], 'numeric')
+  testthat::expect_equal(sum(x$ABS[check_na]), 0)
 
   # Yes... they have been converted to zeros as expected
 
