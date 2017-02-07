@@ -4,9 +4,9 @@
 \alias{extract_DCMS_sectors}
 \title{extract list of DCMS sectors from ONS working file spreadsheet}
 \usage{
-extract_DCMS_sectors(x, sheet_name = "Working File", output_path = ".",
-  skip = 7, sectors = c("creative", "digital", "culture", "telecoms",
-  "gambling", "sport", "tourism", "all_dcms"))
+extract_DCMS_sectors(x, sheet_name = "Working File", skip = 7,
+  sectors = c("creative", "digital", "culture", "telecoms", "gambling",
+  "sport", "tourism", "all_dcms"))
 }
 \arguments{
 \item{x}{Location of the input spreadsheet file. Named something like
@@ -14,9 +14,6 @@ extract_DCMS_sectors(x, sheet_name = "Working File", output_path = ".",
 
 \item{sheet_name}{The name of the spreadsheet in which the data are stored.
 Defaults to \code{New ABS Data}.}
-
-\item{output_path}{The directory in which the output data is to be stored.
-Defaults to \code{.}.}
 
 \item{skip}{Number of lines to skip when reading the worksheet, inherits from
 \code{readxl::read_excel}.}

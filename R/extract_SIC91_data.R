@@ -35,10 +35,6 @@
 #'   "working_file_dcms_VXX.xlsm".
 #' @param sheet_name The name of the spreadsheet in which the data are stored.
 #'   Defaults to \code{New ABS Data}.
-#' @param output_path The directory in which the output data is to be stored.
-#'   Defaults to \code{.}.
-#' @param test Only to be used for testing purposes. Removes the 'OFFICIAL'
-#'   prefix from the output filename. USE WITH CAUTION!
 #' @param col_names character vector used to rename the column names from the
 #'   imported spreadsheet. Defaults to
 #'   \code{c('year','gva','total','perc','overlap')}.
@@ -55,8 +51,7 @@
 #' library(eesectors)
 #' extract_toursim_data(
 #' x = 'OFFICIAL_working_file_dcms_V13.xlsm',
-#' sheet_name = 'Tourism',
-#' output_path = '../OFFICIAL/'
+#' sheet_name = 'Tourism'
 #' )
 #' }
 #'
@@ -65,8 +60,6 @@
 extract_SIC91_data <- function(
   x,
   sheet_name = 'SIC 91 Sales Data',
-  output_path = '.',
-  test = FALSE,
   col_names = c('SIC','description','year','gva','blank','code'),
   ...
 ) {
@@ -86,20 +79,16 @@ extract_SIC91_data <- function(
 
   x <- x[mask, ]
 
-  # Save the data out as an R serialisation object
-
-  file_name<- if (test) 'test_output_SIC91.Rds' else 'OFFICIAL_SIC91.Rds'
-
-  full_path <- file.path(output_path, file_name)
-
-  save_rds(x, full_path = full_path)
-
   message(
     '################################# WARNING #################################
     The data produced by this function may contain OFFICIAL information.
     Ensure that the data are not committed to a github repository.
     Tools to prevent the accidental committing of data are available at:
-    https://github.com/ukgovdatascience/dotfiles.'
+    https://github.com/ukgovdatascience/dotfiles. Pay special attention
+    to .Rdata files, and .Rhistory files produced by Rstudio. Best practice
+    is to disable the creation of such files.'
   )
+
+  return(x)
 
 }

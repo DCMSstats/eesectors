@@ -4,9 +4,8 @@
 \alias{extract_tourism_data}
 \title{extract toursim Data ONS working file spreadsheet}
 \usage{
-extract_tourism_data(x, sheet_name = "Tourism", output_path = ".",
-  test = FALSE, col_names = c("year", "gva", "total", "perc", "overlap"),
-  ...)
+extract_tourism_data(x, sheet_name = "Tourism", col_names = c("year", "gva",
+  "total", "perc", "overlap"), ...)
 }
 \arguments{
 \item{x}{Location of the input spreadsheet file. Named something like
@@ -14,12 +13,6 @@ extract_tourism_data(x, sheet_name = "Tourism", output_path = ".",
 
 \item{sheet_name}{The name of the spreadsheet in which the data are stored.
 Defaults to \code{New ABS Data}.}
-
-\item{output_path}{The directory in which the output data is to be stored.
-Defaults to \code{.}.}
-
-\item{test}{Only to be used for testing purposes. Removes the 'OFFICIAL' prefix
-from the output filename. USE WITH CAUTION!}
 
 \item{col_names}{character vector used to rename the column names from the
 imported spreadsheet. Defaults to
@@ -72,8 +65,7 @@ The best way to understand what happens when you run this function
 library(eesectors)
 extract_toursim_data(
 x = 'OFFICIAL_working_file_dcms_V13.xlsm',
-sheet_name = 'Tourism',
-output_path = '../OFFICIAL/'
+sheet_name = 'Tourism'
 )
 }
 
