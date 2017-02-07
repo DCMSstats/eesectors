@@ -5,7 +5,7 @@
 \title{extract SIC 91 Sales Data from ONS working file spreadsheet}
 \usage{
 extract_SIC91_data(x, sheet_name = "SIC 91 Sales Data", col_names = c("SIC",
-  "description", "year", "gva", "blank", "code"), ...)
+  "description", "year", "ABS", "blank", "code"), ...)
 }
 \arguments{
 \item{x}{Location of the input spreadsheet file. Named something like
@@ -16,7 +16,7 @@ Defaults to \code{New ABS Data}.}
 
 \item{col_names}{character vector used to rename the column names from the
 imported spreadsheet. Defaults to
-\code{c('year','gva','total','perc','overlap')}.}
+\code{c('year','ABS','total','perc','overlap')}.}
 
 \item{...}{additional arguments to be passed to \code{readxl::read_excel}.}
 }
@@ -52,7 +52,7 @@ The best way to understand what happens when you run this function
   1. The function calls \code{readxl::read_excel} to load the appropriate
   page from the underlying spreadsheet.
 
-  2. Columns of interest are subset using \code{x[, c('SIC', 'year', 'gva')]}
+  2. Columns of interest are subset using \code{x[, c('SIC', 'year', 'ABS')]}
 
   3. Empty rows (containing all \code{NA}s) are removed.
 

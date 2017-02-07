@@ -24,7 +24,7 @@
 #'   1. The function calls \code{readxl::read_excel} to load the appropriate
 #'   page from the underlying spreadsheet.
 #'
-#'   2. Columns of interest are subset using \code{x[, c('SIC', 'year', 'gva')]}
+#'   2. Columns of interest are subset using \code{x[, c('SIC', 'year', 'ABS')]}
 #'
 #'   3. Empty rows (containing all \code{NA}s) are removed.
 #'
@@ -37,7 +37,7 @@
 #'   Defaults to \code{New ABS Data}.
 #' @param col_names character vector used to rename the column names from the
 #'   imported spreadsheet. Defaults to
-#'   \code{c('year','gva','total','perc','overlap')}.
+#'   \code{c('year','ABS','total','perc','overlap')}.
 #' @param ... additional arguments to be passed to \code{readxl::read_excel}.
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
@@ -60,7 +60,7 @@
 extract_SIC91_data <- function(
   x,
   sheet_name = 'SIC 91 Sales Data',
-  col_names = c('SIC','description','year','gva','blank','code'),
+  col_names = c('SIC','description','year','ABS','blank','code'),
   ...
 ) {
 
@@ -71,11 +71,11 @@ extract_SIC91_data <- function(
 
   # Extract columns of interest
 
-  x <- x[, c('SIC', 'year', 'gva')]
+  x <- x[, c('SIC', 'year', 'ABS')]
 
   # Drop rows that are completely NA from the bottom of the dataset/
 
-  mask <- !(is.na(x$SIC) & is.na(x$year) & is.na(x$gva))
+  mask <- !(is.na(x$SIC) & is.na(x$year) & is.na(x$ABS))
 
   x <- x[mask, ]
 
