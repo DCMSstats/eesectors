@@ -79,8 +79,7 @@ The best way to understand what happens when you run this function
 library(eesectors)
 extract_ABS_data(
 x = 'OFFICIAL_working_file_dcms_V13.xlsm',
-sheet_name = 'New ABS Data',
-output_path = '../OFFICIAL/'
+sheet_name = 'New ABS Data'
 )
 }
 

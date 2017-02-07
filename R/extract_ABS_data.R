@@ -68,8 +68,7 @@
 #' library(eesectors)
 #' extract_ABS_data(
 #' x = 'OFFICIAL_working_file_dcms_V13.xlsm',
-#' sheet_name = 'New ABS Data',
-#' output_path = '../OFFICIAL/'
+#' sheet_name = 'New ABS Data'
 #' )
 #' }
 #'
@@ -156,7 +155,7 @@ extract_ABS_data <- function(
   # Finally, clean up the sic code by adding a full stop to cases when it is a
   # three or four character codes.
 
-  x$DOMVAL <- eesectors::clean_sic(x$DOMVAL)
+  x$SIC <- eesectors::clean_sic(x$DOMVAL)
 
   message(
     '################################# WARNING #################################
