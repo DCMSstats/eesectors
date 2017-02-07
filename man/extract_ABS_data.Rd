@@ -57,12 +57,12 @@ The best way to understand what happens when you run this function
   long dataframe with year included in a year column. This makes the data
   much easier to subset.
 
-  5. All the abs values are combined into a column called \code{abs}. In the
+  5. All the ABS values are combined into a column called \code{ABS}. In the
   2016 spreadsheet there were a number of full stops (\code{.}) in the
-  \code{abs} column, which will be coerced to \code{NA} when the the column
+  \code{ABS} column, which will be coerced to \code{NA} when the the column
   is converted to numeric using \code{as.numeric} (the next step). The
   internal function \code{eesectors::integrity_check} runs a quick check to
-  make sure that the only NAs creeping into the \code{abs} column are from
+  make sure that the only NAs creeping into the \code{ABS} column are from
   full stops in the original data. The full stops are then converted to
   zeros.
 
