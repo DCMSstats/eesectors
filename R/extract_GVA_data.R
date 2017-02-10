@@ -176,9 +176,11 @@ extract_GVA_data <- function(
   x <- tidyr::gather_(
     data = x,
     key = 'SIC',
-    value = 'gva',
+    value = 'GVA',
     gather_cols = y$SIC
   )
+
+  x$GVA <- as.double(x$GVA)
 
   # Finally save out to a *.Rds file
 

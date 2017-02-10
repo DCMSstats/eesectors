@@ -15,12 +15,17 @@ test_that(
     # object.
 
     expect_is(GVA, c('data.frame', 'tbl', 'tbl_df'))
+
+    # Although this test passes locally, it seems to fail on linux builds on
+    # travis for some reason:
+
     #expect_equal_to_reference(GVA, reference)
 
     # Additionally check that all of the columns from the test spreadsheet have
     # been properly picked up and transposed
 
-    expect_equal(unique(GVA$gva), paste0(1:120))
+    expect_equal(unique(GVA$GVA), 1:120)
+
 
   }
 )
