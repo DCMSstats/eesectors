@@ -60,14 +60,14 @@
 extract_tourism_data <- function(
   x,
   sheet_name = 'Tourism',
-  col_names = c('year','gva','total','perc','overlap'),
+  col_names = c('year','GVA','total','perc','overlap'),
   ...
 ) {
 
   # Load the data using readr. Note that additional arguments (e.g. skip, and
   # colnames) can be passed to read_excel using the ... operator
 
-  x <- readxl::read_excel(path = x, sheet = sheet_name, col_names = col_names, ...)
+  x <- readxl::read_excel(path = x, sheet = sheet_name, col_names = TRUE, ...)
 
   # Standardise the column names.
 
@@ -75,7 +75,7 @@ extract_tourism_data <- function(
 
   # Remove the extraneous rows, byt first checking whether they are all NA.
 
-  mask <- !(is.na(x$year) & is.na(x$gva) & is.na(x$total) & is.na(x$perc) & is.na(x$overlap))
+  mask <- !(is.na(x$year) & is.na(x$GVA) & is.na(x$total) & is.na(x$perc) & is.na(x$overlap))
 
   x <- x[mask,]
 

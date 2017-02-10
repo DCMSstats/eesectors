@@ -4,7 +4,7 @@
 \alias{extract_tourism_data}
 \title{extract toursim Data ONS working file spreadsheet}
 \usage{
-extract_tourism_data(x, sheet_name = "Tourism", col_names = c("year", "gva",
+extract_tourism_data(x, sheet_name = "Tourism", col_names = c("year", "GVA",
   "total", "perc", "overlap"), ...)
 }
 \arguments{
@@ -16,7 +16,7 @@ Defaults to \code{New ABS Data}.}
 
 \item{col_names}{character vector used to rename the column names from the
 imported spreadsheet. Defaults to
-\code{c('year','gva','total','perc','overlap')}.}
+\code{c('year','GVA','total','perc','overlap')}.}
 
 \item{...}{additional arguments to be passed to \code{readxl::read_excel}.}
 }
