@@ -15,8 +15,9 @@ This notebook does two things:
 
 ```{r setup, echo=FALSE}
 
-#devtools::install_github('ukgovdatascience/eesectors')
-devtools::load_all()
+devtools::install_github('ukgovdatascience/eesectors')
+library(eesectors)
+#devtools::load_all()
 
 
 knitr::opts_chunk$set(
@@ -84,7 +85,11 @@ This replaces the SIC 91 data from the Annual Business Survey (ABS) with sales d
 
 SIC91_mask <- unique(SIC91$SIC)
 
+SIC91_mask
+
 ABS_no91 <- ABS %>% dplyr::filter(!SIC %in% SIC91_mask)
+
+ABS_no91 
 
 ```
 Our expectation is now that there are not any 91 SIC codes in the ABS dataset that are also classed as DCMS sectors. 
@@ -128,6 +133,8 @@ ABS_91 <- dplyr::full_join(
   SIC91
 )
 
+ABS_91
+
 ```
 
 Test that this merge worked.
@@ -170,6 +177,8 @@ ABS_2015 <- ABS_91 %>%
   dplyr::mutate(year = 2015) %>%
   dplyr::bind_rows(ABS_91)
 
+ABS_2015 
+
 ```
 
 ```{r test_duplicate_2014_ABS}
@@ -199,6 +208,8 @@ test_that(
 GVA_sectors <- DCMS_sectors %>%
   dplyr::left_join(ABS_2015) %>%
   dplyr::rename(ABS_ind_GVA = ABS)
+
+GVA_sectors
 
 ```
 
@@ -247,6 +258,8 @@ SIC2_unique <- GVA_sectors %>%
   SIC2 %>%
   unique
 
+SIC2_unique
+
 ```
 
 We expect there to be 23 of these, so run a quick check:
@@ -272,6 +285,8 @@ denom <- ABS_2015 %>%
   dplyr::mutate(ABS_2digit_GVA = ABS) %>%
   dplyr::select(year, SIC2 = SIC, ABS_2digit_GVA)
 
+denom
+
 ```
 
 Now join this back into `GVA`.
@@ -292,6 +307,8 @@ GVA_sectors <- GVA_sectors %>%
 
 GVA_sectors <- GVA_sectors %>% 
   dplyr::filter(!(is.na(year) & is.na(ABS_ind_GVA)))
+
+GVA_sectors
 
 ```
 
@@ -319,8 +336,6 @@ Now, multiply `perc_split` by `GVA` after joining with `GVA` to get the `BB16_GV
 
 ```{r create_BB16_GVA}
 
-# Issues first manifests here - the join between GVA_sectors and GVA fails, leaving multiple NAs
-
 GVA_sectors <- GVA_sectors %>%
    dplyr::left_join(
      GVA, by = c('SIC2' = 'SIC', 'year')
@@ -328,6 +343,8 @@ GVA_sectors <- GVA_sectors %>%
   dplyr::mutate(
     BB16_GVA = perc_split * GVA
   )
+
+GVA_sectors
 
 ```
 
@@ -342,6 +359,8 @@ GVA_by_sector <- GVA_sectors %>%
   dplyr::summarise(
     GVA = sum(BB16_GVA)
     )
+
+GVA_by_sector 
 
 ```
 
@@ -367,6 +386,8 @@ GVA_UK <- GVA %>%
     GVA
   )
 
+GVA_UK
+
 ```
 
 Merge this into `GVA_by_sector`:
@@ -377,6 +398,8 @@ Merge this into `GVA_by_sector`:
 
 GVA_by_sector <- GVA_by_sector %>%
   dplyr::full_join(GVA_UK)
+
+GVA_by_sector
 
 ```
 
@@ -389,6 +412,8 @@ Tourism data is provided in a separate spreadsheet and imported in the `tourism`
 GVA_by_sector <- tourism %>%
   dplyr::transmute(year, sector = 'tourism', GVA) %>%
   dplyr::full_join(GVA_by_sector)
+
+GVA_by_sector 
 ```
 
 ```{r test_merge_tourism_data}
@@ -430,6 +455,9 @@ GVA_by_sector <- tourism %>%
     ) %>%
   dplyr::select(-overlap)
 
+
+GVA_by_sector
+
 ```
 
 ### 8. Build the `GVA_by_sector` dataframe expected by the eesectors package
@@ -456,6 +484,8 @@ GVA_by_sector <- GVA_by_sector %>%
     sector, year, GVA
   ) %>%
   dplyr::arrange(year, sector)
+
+GVA_by_sector
 
 ```
 
