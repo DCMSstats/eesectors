@@ -1,5 +1,4 @@
 language: r
-cran: https://cran.rstudio.com
 sudo: false
 
 cache:
@@ -8,28 +7,17 @@ cache:
     - $TRAVIS_BUILD_DIR/packrat/lib
   packages: true
 
-os:
-  - linux
-#  - osx
-
-#r:
-#  - oldrel
-#  - release
-
-#matrix:
-#  allow_failures:
-#    - os: osx 
-#    - r: oldrel
-#  fast_finish: true
- 
-r_packages:
-  - knitr
-
 git:
   depth: 3
 
-r_github_packages:
-  - jimhester/covr
+os:
+  - linux
+
+r_packages:
+  - knitr
+
+#r_github_packages:
+#  - jimhester/covr
 
 install:
   - R -e "0" --args --bootstrap-packrat
