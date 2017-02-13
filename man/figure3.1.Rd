@@ -7,7 +7,7 @@
 figure3.1(x, ...)
 }
 \arguments{
-\item{x}{Object of class \code{long_data()}.}
+\item{x}{Object of class \code{year_sector_data()}.}
 
 \item{...}{Passes arguments to \code{ggplot}.}
 }
@@ -27,8 +27,7 @@ Creates Figure 3.1 from
 
 library(eesectors)
 
-gva <- long_data(GVA_by_sector_2016)
+gva <- year_sector_data(GVA_by_sector_2016)
 figure3.1(gva)
 
 }
-

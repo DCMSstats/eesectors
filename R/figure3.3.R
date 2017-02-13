@@ -16,7 +16,7 @@
 #'
 #' library(eesectors)
 #'
-#' gva <- long_data(GVA_by_sector_2016)
+#' gva <- year_sector_data(GVA_by_sector_2016)
 #' figure3.3(gva)
 #'
 #' @export

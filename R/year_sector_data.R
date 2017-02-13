@@ -1,12 +1,12 @@
 #' @title long data class
 #'
-#' @description \code{long_data} is the class used for the creation of tables
+#' @description \code{year_sector_data} is the class used for the creation of tables
 #'   3.1, 4.1, 4.5, and 5.1 of the DCMS Sectors Economic Estimate
 #'   (\url{https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544103/DCMS_Sectors_Economic_Estimates_-_August_2016.pdf}).
 #'
 #'
 #'
-#' @details The \code{long_data} class expects a \code{data.frame} with three
+#' @details The \code{year_sector_data} class expects a \code{data.frame} with three
 #'   columns: sector, year, and measure, where measure is one of GVA, exports,
 #'   or enterprises. The \code{data.frame} should include historical data, which
 #'   is used for checks on the quality of this year\'s data, and for producing
@@ -30,21 +30,21 @@
 #'
 #' library(eesectors)
 #'
-#' GVA <- long_data(GVA_by_sector_2016)
+#' GVA <- year_sector_data(GVA_by_sector_2016)
 #'
 #' @export
 
 
-long_data <- function(x, log_issues = FALSE) {
+year_sector_data <- function(x, log_issues = FALSE) {
 
-  message('Initiating long_data class.
+  message('Initiating year_sector_data class.
 \n\nExpects a data.frame with three columns: sector, year, and measure, where
 measure is one of GVA, exports, or enterprises. The data.frame should include
 historical data, which is used for checks on the quality of this year\'s data,
 and for producing tables and plots. More information on the format expected by
-this class is given by ?long_data().')
+this class is given by ?year_sector_data().')
 
-  # Integrity checks on incoming long table ----
+  # Integrity checks on incoming data ----
 
   # Check the structure of the data is as expected: data.frame containing no
   # missing values and three columns, containing sector, year, and one
@@ -183,5 +183,5 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
       sectors_set = sectors_set,
       years = unique(x$year)
     ),
-    class = "long_data")
+    class = "year_sector_data")
 }

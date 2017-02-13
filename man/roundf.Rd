@@ -22,4 +22,3 @@ Prepares values for publication in wide tables by dividing by
 \seealso{
 \code{\link{sprintf}}.
 }
-

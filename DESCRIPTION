@@ -40,4 +40,4 @@ BugReports: https://github.com/ukgovdatascience/eesectors/issues
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0

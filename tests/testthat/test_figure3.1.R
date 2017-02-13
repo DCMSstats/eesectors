@@ -4,7 +4,7 @@ test_that(
   "figure3.1 runs without errors",
   {
 
-    gva <- long_data(GVA_by_sector_2016)
+    gva <- year_sector_data(GVA_by_sector_2016)
 
     expect_silent(figure3.1(gva))
 
@@ -32,7 +32,7 @@ test_that(
 
     # Create a new figure as png
 
-    a <- long_data(GVA_by_sector_2016)
+    a <- year_sector_data(GVA_by_sector_2016)
     b <- figure3.1(a)
 
     ggplot2::ggsave(

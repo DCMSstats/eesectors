@@ -3,7 +3,7 @@
 #' @description Combines datasets exracted from the underlying spreadsheet using
 #'   the \code{extract_XXX} functions. A notebook version of this function
 #'   (which may be easier to debug) can be downloaded using the
-#'   \code{get_gva_combine()} function. Note that this function in its current
+#'   \code{get_GV_combine()} function. Note that this function in its current
 #'   form will only work to reproduce the 2016 SFR, and requires adjustment to
 #'   generalise it over new years.
 #'
@@ -18,10 +18,10 @@
 #'   https://github.com/ukgovdatascience/dotfiles.
 #'
 #' @details The best way to understand what happens when you run this function
-#'   is to look at the \code{inst/gva_combine.Rmd} notebook, which can be
-#'   downloaded automatically using the \code{get_gva_combine()} function, or by
+#'   is to look at the \code{inst/combine_GVA.Rmd} notebook, which can be
+#'   downloaded automatically using the \code{get_GV_combine()} function, or by
 #'   visiting
-#'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/inst/gva_combine.Rmd}.
+#'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/inst/combine_GVA.Rmd}.
 #'    A brief explanation of what the function does here:
 #'
 #'   1. Remove SIC 91 data from \code{ABS} and swap in values from \code{SIC91})
@@ -31,7 +31,7 @@
 #'   3. Calculate sums across sectors and years. 4. Add in total UK GVA from
 #'   \code{GVA}. 5. Match in \code{tourism} data. 6. Add \code{tourism} overlap.
 #'   7. Build the dataframe into a format that is expected by the
-#'   \code{long_data} class.
+#'   \code{year_sector_data} class.
 #'
 #' @param ABS ABS data as extracted by \code{eesectors::extract_ABS_data()}.
 #' @param GVA ABS data as extracted by \code{eesectors::extract_GVA_data()}.
@@ -41,7 +41,7 @@
 #'   \code{eesectors::DCMS_sectors} in-built dataset.
 #' @param tourism ABS data as extracted by \code{eesectors::extract_tourism_data()}.
 #'
-#' @return A \code{data.frame} as expected by the \code{long_data} class.
+#' @return A \code{data.frame} as expected by the \code{year_sector_data} class.
 #'
 #' @examples
 #'

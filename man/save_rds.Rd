@@ -18,4 +18,3 @@ Returns nothing
 Saves a dataframe \code{x} to an Rds file, checks that the file
   was produced, and raises a warning if it was not.
 }
-
