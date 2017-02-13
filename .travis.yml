@@ -23,5 +23,6 @@ install:
   - R -e "0" --args --bootstrap-packrat
 
 after_success:
+  - Rscript -e 'devtools::install_github("jimhester/covr")'
   - Rscript -e 'covr::codecov()'
 

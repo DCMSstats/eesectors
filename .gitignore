@@ -21,3 +21,4 @@ tests/testthat/testdata/mtcars.Rds
 tests/testthat/testdata/test_output*
 ._*
 .~*
+*.swp
