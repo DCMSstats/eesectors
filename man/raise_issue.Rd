@@ -50,4 +50,3 @@ The default behaviour of \code{assertr::insist_} of generating an
   \code{title} are not \code{NULL} an issue is created in the given github
   \code{repo} with \code{title} and additional arguments given by \code{...}.
 }
-

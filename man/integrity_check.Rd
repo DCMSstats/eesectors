@@ -32,4 +32,3 @@ The spreadsheets which come from the Office for National Statistics
   they are actually numbers, and not characters, which is what we would
   expect.
 }
-

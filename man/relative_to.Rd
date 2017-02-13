@@ -24,4 +24,3 @@ Calculates the percentage difference in
 Calculates the percentage difference in
   \code{y}, relative to \code{x}
 }
-

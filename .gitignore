@@ -4,6 +4,7 @@
 .Rhistory
 .RData
 .Ruserdata
+*.nb.html
 
 # Compiled packrat libraries
 
@@ -22,3 +23,5 @@ tests/testthat/testdata/test_output*
 ._*
 .~*
 *.swp
+
+inst/GVA_by_sector.Rds

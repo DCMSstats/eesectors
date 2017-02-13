@@ -1,10 +1,10 @@
-#' @title format_table()
+#' @title year_sector_table()
 #'
 #' @description Generic method to convert tables into wide format
 #'
 #' @details Generic method to convert tables into wide format
 #'
-#' @param x Object of \code{class(x) == 'long_data'}.
+#' @param x Object of \code{class(x) == 'year_sector_data'}.
 #' @param html Should the output be an R \code{data.frame} (and \code{tbl} and
 #'   \code{tbl_df}) or as html using \code{xtable}.
 #' @param fmt Format for values in the table to be displayed as, following
@@ -19,14 +19,14 @@
 #' @export
 
 # Define as a method
-format_table <- function(x, html, fmt, ...) UseMethod('format_table')
+year_sector_table <- function(x, html, fmt, ...) UseMethod('year_sector_table')
 
-# Define the method for long_data() class
+# Define the method for year_sector_data() class
 
-#' @describeIn format_table Create wide table from long_data() class
+#' @describeIn year_sector_table Create wide table from year_sector_data() class
 #' @export
 
-format_table.long_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
+year_sector_table.year_sector_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
 
   out <- tryCatch(
     expr = {
@@ -129,12 +129,12 @@ format_table.long_data <- function(x, html = FALSE, fmt = '%.1f', ...) {
     warning = function(w) {
 
       w <- warnings()
-      warning('Warning produced format_table.long_data method:', w)
+      warning('Warning produced year_sector_table.year_sector_data method:', w)
 
     },
     error = function(e)  {
 
-      stop('Error produced format_table.long_data method:', e)
+      stop('Error produced year_sector_table.year_sector_data method:', e)
 
     },
     finally = {}

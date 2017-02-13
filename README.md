@@ -9,8 +9,10 @@ tag](https://img.shields.io/github/tag/ukgovdatascience/eesectors.svg)](https://
 eesectors
 =========
 
-Functions for producing the Economic Estimates for DCMS Sectors First Statistical Release
------------------------------------------------------------------------------------------
+Functions for producing the Economic Estimates for DCMS Sectors
+---------------------------------------------------------------
+
+First Statistical Release
 
 **This is a prototype and subject to constant development**
 
@@ -18,7 +20,8 @@ This package provides functions used in the creation of a Reproducible
 Analytical Pipeline (RAP) for the Economic Estimates for DCMS sectors
 publication.
 
-See the [RAP-demo-md](https://github.com/ukgovdatascience/RAP-demo-md)
+See the
+[eesectorsmarkdown](https://github.com/ukgovdatascience/eesectorsmarkdown)
 repository for an example of implementing these functions in the context
 of a Statistical First Release (SFR).
 
@@ -32,56 +35,111 @@ of network security settings. If this is the case, `eesectors` can be
 installed by downloading the [zip of the
 repository](https://github.com/ukgovdatascience/govstyle/archive/master.zip)
 and installing the package locally using
-devtools::install\_local(<path to zip file>).
+`devtools::install_local(<path to zip file>)`.
 
 Quick start
 -----------
 
-This package provides functions to recreate Chapter three of the
-[Economic estimates of DCMS
+This package provides functions to recreate Chapter three -- Gross Value
+Added (GVA) of the [Economic estimates of DCMS
 Sectors](https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544103/DCMS_Sectors_Economic_Estimates_-_August_2016.pdf).
 
-The package is built around the `long_data` class. To create a
-`long_data` object, a `data.frame` must be passed to it which contains
-all the data required to produce the tables and charts in Chapter three.
+### Extracting data from underlying spreadsheets
+
+The data are provided to DCMS as spreadsheets provided by the Office for
+National Statistics (ONS). Hence, the first set of functions in the
+package are designed to extract the data from these spreadsheets, and
+combine the data into a single dataset, ready to be checked, and
+converted into tables and figures.
+
+There are four `extract_` functions:
+
+-   `extract_ABS_data` \* `extract_DCMS_sectors` \* `extract_GVA_data` *
+    `extract_SIC91_data` * `extract_tourism_data`
+
+------------------------------------------------------------------------
+
+**Note: that with the exception of `extract_DCMS_sectors`, the data
+extracted by these functions is potentially disclosive, and should
+therefore be handled with care and considered to be OFFICIAL-SENSITIVE.
+Steps must be taken to prevent the accidental disclosure of these
+data.**
+
+**These should include (but not be limited to):** \* Not storing the
+output of these functions in git repositories \* Labelling of official
+data with a prefix/suffix of 'OFFICIAL' \* The use of githooks to search
+for potentially disclosive files at time of commit and push (e.g.
+<https://github.com/ukgovdatascience/dotfiles>) \* Suitable 2i/QA steps
+
+------------------------------------------------------------------------
+
+The extract functions will return a `data.frame`, and can be called as
+follows (see individual function documentation for more information
+about each of the arguments).
+
+
+    # Where working_file.xlsm is the spreadsheet containing the underlying data 
+
+    input <- 'working_file.xlsm' 
+
+    extract_ABS_data(input) 
+
+The various datasets used in the GVA chapter can be combined with the
+`combine_GVA()` function, which will return a `data.frame` of the
+combined data.
+
+
+    combine_GVA(
+      ABS = extract_ABS_data(input),
+      GVA = extract_GVA_data(input),
+      SIC91 = extract_SIC91_data(input),
+      tourism = extract_tourism_data(input)
+    )
+
+### Automated checking
+
+The GVA chapter is built around the `year_sector_data` class. To create
+a `year_sector_data` object, a `data.frame` must be passed to it which
+contains all the data required to produce the tables and charts in
+Chapter three.
 
 An example of how this dataset will need to look is bundled with the
 package: `GVA_by_sector_2016`. These data were extracted directly from
 the 2016 SFR which is in the public domain, and provide a test case for
 evaluating the data.
 
-    library(eesectors)
-    GVA_by_sector_2016
+    library(eesectors) 
+    GVA_by_sector_2016 
 
     ## # A tibble: 54 × 3
     ##      sector  year    GVA
     ##      <fctr> <int>  <dbl>
     ## 1  creative  2010  65188
-    ## 2  cultural  2010  20291
+    ## 2   culture  2010  20291
     ## 3   digital  2010  97303
     ## 4  gambling  2010   8407
     ## 5     sport  2010   7016
     ## 6  telecoms  2010  24738
     ## 7   tourism  2010  49150
     ## 8  creative  2011  69398
-    ## 9  cultural  2011  20954
+    ## 9   culture  2011  20954
     ## 10  digital  2011 102966
     ## # ... with 44 more rows
 
-When an object is instantiated into the `long_data` class, a number of
-checks are run on the data passed as the first argument. These are
-explained in more detail in the help `?long_data()`
+When an object is instantiated into the `year_sector_data` class, a
+number of checks are run on the data passed as the first argument. These
+are explained in more detail in the help `?year_sector_data()`
 
-    gva <- long_data(GVA_by_sector_2016)
+    gva <- year_sector_data(GVA_by_sector_2016) 
 
-    ## Initiating long_data class.
+    ## Initiating year_sector_data class.
     ## 
     ## 
     ## Expects a data.frame with three columns: sector, year, and measure, where
     ## measure is one of GVA, exports, or enterprises. The data.frame should include
     ## historical data, which is used for checks on the quality of this year's data,
     ## and for producing tables and plots. More information on the format expected by
-    ## this class is given by ?long_data().
+    ## this class is given by ?year_sector_data().
 
     ## 
     ## *** Running integrity checks on input dataframe (x):
@@ -119,7 +177,7 @@ explained in more detail in the help `?long_data()`
 
     ## Checking sector timeseries: creative
 
-    ## Checking sector timeseries: cultural
+    ## Checking sector timeseries: culture
 
     ## Checking sector timeseries: digital
 
@@ -141,7 +199,7 @@ explained in more detail in the help `?long_data()`
 
     ## Checking sector timeseries: creative
 
-    ## Checking sector timeseries: cultural
+    ## Checking sector timeseries: culture
 
     ## Checking sector timeseries: digital
 
@@ -169,7 +227,7 @@ this functionality to work.
 Tables and charts for Chapter three can be reproduced simply by running
 the relevant functions:
 
-    format_table(gva)
+    year_sector_table(gva) 
 
     ## # A tibble: 10 × 10
     ##                 sector  X2010  X2011  X2012  X2013  X2014  X2015
@@ -187,7 +245,7 @@ the relevant functions:
     ## # ... with 3 more variables: since_2014 <dbl>, since_2010 <dbl>,
     ## #   UK_perc <dbl>
 
-    figure3.1(gva)
+    figure3.1(gva) 
 
 ![](README_files/figure-markdown_strict/figure3.1-1.png)
 
@@ -196,14 +254,15 @@ be edited in the following way:
 
     p <- figure3.2(gva)
 
-    p
+    p 
 
 ![](README_files/figure-markdown_strict/figure3.2-1.png)
 
+Titles, and other layers can then be added simply:
+
     library(ggplot2)
 
-    p + 
-      ggtitle('Figure 3.2')
+    p + ggtitle('Figure 3.2: Indexed growth in GVA (2010 =100)\n in DCMS sectors and UK: 2010-2015') 
 
 ![](README_files/figure-markdown_strict/figure3.2edited-1.png)
 

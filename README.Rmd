@@ -1,61 +1,125 @@
----
-output: md_document
+--- 
+output: md_document 
 ---
 
-[![Build Status](https://travis-ci.org/ukgovdatascience/eesectors.svg?branch=master)](https://travis-ci.org/ukgovdatascience/eesectors)
-[![Build status](https://ci.appveyor.com/api/projects/status/vulmerft4p30339l/branch/master?svg=true)](https://ci.appveyor.com/project/ivyleavedtoadflax/eesectors/branch/master)
+[![Build
+Status](https://travis-ci.org/ukgovdatascience/eesectors.svg?branch=master)](https://travis-ci.org/ukgovdatascience/eesectors)
+[![Build
+status](https://ci.appveyor.com/api/projects/status/vulmerft4p30339l/branch/master?svg=true)](https://ci.appveyor.com/project/ivyleavedtoadflax/eesectors/branch/master)
 [![codecov.io](http://codecov.io/github/ukgovdatascience/eesectors/coverage.svg?branch=master)](http://codecov.io/github/ukgovdatascience/eesectors?branch=master)
-[![GitHub tag](https://img.shields.io/github/tag/ukgovdatascience/eesectors.svg)](https://github.com/ukgovdatascience/eesectors/releases)
+[![GitHub
+tag](https://img.shields.io/github/tag/ukgovdatascience/eesectors.svg)](https://github.com/ukgovdatascience/eesectors/releases)
 
 ```{r setup, echo=FALSE, include=FALSE}
 
-knitr::opts_chunk$set(
-  echo = TRUE,
-  warning = FALSE,
-  message = FALSE,
-  error = FALSE
-  )
+# Note to compile this file to README.mb, run the following:
+# rmarkdown::render('README.Rmd',output_format = 'md_document')
+
+knitr::opts_chunk$set( echo = TRUE, warning = FALSE, message = FALSE, error =
+FALSE )
 
 ```
 
-# eesectors
-## Functions for producing the Economic Estimates for DCMS Sectors First Statistical Release
+# eesectors 
+
+## Functions for producing the Economic Estimates for DCMS Sectors
+First Statistical Release
 
 **This is a prototype and subject to constant development**
 
-This package provides functions used in the creation of a Reproducible Analytical Pipeline (RAP) for the Economic Estimates for DCMS sectors publication.
+This package provides functions used in the creation of a Reproducible
+Analytical Pipeline (RAP) for the Economic Estimates for DCMS sectors
+publication.
 
-See the [RAP-demo-md](https://github.com/ukgovdatascience/RAP-demo-md) repository for an example of implementing these functions in the context of a Statistical First Release (SFR).
+See the [eesectorsmarkdown](https://github.com/ukgovdatascience/eesectorsmarkdown) repository for an example of implementing these functions in the context of a Statistical First Release (SFR).
 
 ## Installation
 
 The package can then be installed using `devtools::install_github('ukgovdatascience/eesectors')`. 
 Some users may not be able to use the `devtools::install_github()` commands as a result of network security settings. 
-If this is the case, `eesectors` can be installed by downloading the [zip of the repository](https://github.com/ukgovdatascience/govstyle/archive/master.zip) and installing the package locally using devtools::install_local(<path to zip file>).
+If this is the case, `eesectors` can be installed by downloading the [zip of the repository](https://github.com/ukgovdatascience/govstyle/archive/master.zip) and installing the package locally using `devtools::install_local(<path to zip file>)`.
 
 ## Quick start
 
-This package provides functions to recreate Chapter three of the [Economic estimates of DCMS Sectors](https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544103/DCMS_Sectors_Economic_Estimates_-_August_2016.pdf).
+This package provides functions to recreate Chapter three -- Gross Value Added
+(GVA) of the [Economic estimates of DCMS Sectors](https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544103/DCMS_Sectors_Economic_Estimates_-_August_2016.pdf).
 
-The package is built around the `long_data` class.
-To create a `long_data` object, a `data.frame` must be passed to it which contains all the data required to produce the tables and charts in Chapter three.
+### Extracting data from underlying spreadsheets
 
-An example of how this dataset will need to look is bundled with the package: `GVA_by_sector_2016`.
-These data were extracted directly from the 2016 SFR which is in the public domain, and provide a test case for evaluating the data.
+The data are provided to DCMS as spreadsheets provided by the Office for
+National Statistics (ONS). Hence, the first set of functions in the package are
+designed to extract the data from these spreadsheets, and combine the data into
+a single dataset, ready to be checked, and converted into tables and figures.
 
-```{r}
-library(eesectors)
-GVA_by_sector_2016
+There are four `extract_` functions:
+
+* `extract_ABS_data` * `extract_DCMS_sectors` * `extract_GVA_data` *
+`extract_SIC91_data` * `extract_tourism_data`
+
+---
+
+**Note: that with the exception of `extract_DCMS_sectors`, the data extracted by these functions is potentially disclosive, and should therefore be handled with care and considered to be OFFICIAL-SENSITIVE. Steps must be taken to prevent the accidental disclosure of these data.**
+
+**These should include (but not be limited to):** 
+* Not storing the output of these functions in git repositories 
+* Labelling of official data with a prefix/suffix of 'OFFICIAL' 
+* The use of githooks to search for potentially disclosive files at time of commit and push (e.g. https://github.com/ukgovdatascience/dotfiles) 
+* Suitable 2i/QA steps
+
+---
+
+The extract functions will return a `data.frame`, and can be called as follows (see individual function documentation for more information about each of the arguments).
+
+```r
+
+# Where working_file.xlsm is the spreadsheet containing the underlying data 
+
+input <- 'working_file.xlsm' 
+
+extract_ABS_data(input) 
+
 ```
 
-When an object is instantiated into the `long_data` class, a number of checks are run on the data passed as the first argument.
-These are explained in more detail in the help `?long_data()`
+The various datasets used in the GVA chapter can be combined with the `combine_GVA()` function, which will return a `data.frame` of the combined data.
 
-```{r warning=TRUE, message=TRUE}
-gva <- long_data(GVA_by_sector_2016)
+```r
+
+combine_GVA(
+  ABS = extract_ABS_data(input),
+  GVA = extract_GVA_data(input),
+  SIC91 = extract_SIC91_data(input),
+  tourism = extract_tourism_data(input)
+)
+
 ```
 
-Any failed checks are raised as warnings, not errors, and so the user is able to continue.
+### Automated checking
+
+The GVA chapter is built around the `year_sector_data` class. To create a
+`year_sector_data` object, a `data.frame` must be passed to it which contains
+all the data required to produce the tables and charts in Chapter three.
+
+An example of how this dataset will need to look is bundled with the package:
+`GVA_by_sector_2016`. These data were extracted directly from the 2016 SFR which
+is in the public domain, and provide a test case for evaluating the data.
+
+```{r} 
+
+library(eesectors) 
+GVA_by_sector_2016 
+```
+
+When an object is instantiated into the `year_sector_data` class, a number of checks
+are run on the data passed as the first argument. These are explained in more
+detail in the help `?year_sector_data()`
+
+```{r warning=TRUE, message=TRUE} 
+
+gva <- year_sector_data(GVA_by_sector_2016) 
+
+```
+
+Any failed checks are raised as warnings, not errors, and so the user is able to continue. 
 However it is also possible to log these warnings as github issues by setting `log_issues=TRUE`.
 This is a prototype feature that needs additional work to increase the usefulness of these issues, see below for details on environmental variables that are required for this functionality to work.
 
@@ -63,42 +127,55 @@ This is a prototype feature that needs additional work to increase the usefulnes
 
 Tables and charts for Chapter three can be reproduced simply by running the relevant functions:
 
-```{r}
-format_table(gva)
+```{r} 
+
+year_sector_table(gva) 
+
 ```
 
-```{r figure3.1}
-figure3.1(gva)
+```{r figure3.1} 
+
+figure3.1(gva) 
+
 ```
 
-Note that figures produced remain `ggplot2` objects, and can therefore be edited in the following way:
+Note that figures produced remain `ggplot2` objects, and can therefore be edited
+in the following way:
 
-```{r figure3.2}
+```{r figure3.2} 
+
 p <- figure3.2(gva)
 
-p
+p 
+
 ```
 
+Titles, and other layers can then be added simply:
 
+```{r figure3.2edited} 
 
-```{r figure3.2edited}
 library(ggplot2)
 
-p + 
-  ggtitle('Figure 3.2')
+p + ggtitle('Figure 3.2: Indexed growth in GVA (2010 =100)\n in DCMS sectors and UK: 2010-2015') 
+
 ```
 
-Note that figures make use of the [govstyle](https://github.com/ukgovdatascience/govstyle) package.
-See the [vignette](https://github.com/ukgovdatascience/govstyle/blob/master/vignettes/absence_statistics.md) for more information on how to use this package.
+Note that figures make use of the [govstyle](https://github.com/ukgovdatascience/govstyle) package. 
+See the
+[vignette](https://github.com/ukgovdatascience/govstyle/blob/master/vignettes/absence_statistics.md) for more information on how to use this package.
 
 ### Logging data issues to github
 
-In order to use this functionality, it is necessary to set the three following environmental variables:
+In order to use this functionality, it is necessary to set the three following
+environmental variables:
 
-|Name|Example|Description|
-|---|---|---|
-|GITHUB_PAT|_|A github personal access token with the necessary permissions.|
-|LOG_REPO|RAP-demo-md|The name of a github repository where data issues can be logged.|
+|Name|Example|Description| 
+|---|---|---| 
+|GITHUB_PAT|_|A github personal access token with the necessary permissions.| 
+|LOG_REPO|RAP-demo-md|The name of a github repository where data issues can be logged.| 
 |LOG_OWNER|ukgovdatascience|The owner of the repository referred to in LOG_REPO.|
 
-Environmental variables can be set interactively using `Sys.setenv()`, or more permanently by settin gteh variables in an `.Renviron` file which will be sourced when the project is loading (assuming you are using projects within Rstudio).
+Environmental variables can be set interactively using `Sys.setenv()`, or more
+permanently by settin gteh variables in an `.Renviron` file which will be
+sourced when the project is loading (assuming you are using projects within
+Rstudio).

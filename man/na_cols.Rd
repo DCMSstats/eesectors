@@ -16,4 +16,3 @@ Character vector containing the names of columns which contain \code{NA}.
 Looks through a \code{data.frame} and returns a character vector
   of column names corresponding to columns which contain \code{NA}.
 }
-

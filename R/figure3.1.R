@@ -8,7 +8,7 @@
 #'   frame, and uses \code{ggplot} and \code{govstyle} to format a pretty(ish) plot.
 #' @param ... Passes arguments to \code{ggplot}.
 #'
-#' @param x Object of class \code{long_data()}.
+#' @param x Object of class \code{year_sector_data()}.
 #'
 #' @return Figure 3.1
 #'
@@ -16,7 +16,7 @@
 #'
 #' library(eesectors)
 #'
-#' gva <- long_data(GVA_by_sector_2016)
+#' gva <- year_sector_data(GVA_by_sector_2016)
 #' figure3.1(gva)
 #'
 #' @export

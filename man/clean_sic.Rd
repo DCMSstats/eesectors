@@ -17,4 +17,3 @@ Converts 3 or 4 digit SIC codes from format \code{123} or
   \code{1234} into \code{12.3} and \code{12.34} respectively. Codes with
   length of 2 or greater than 4 are ignored, and returned as is.
 }
-

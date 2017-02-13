@@ -16,7 +16,7 @@ Defaults to \code{New ABS Data}.}
 
 \item{col_names}{character vector used to rename the column names from the
 imported spreadsheet. Defaults to
-\code{c('year','GVA','total','perc','overlap')}.}
+\code{c('year','gva','total','perc','overlap')}.}
 
 \item{...}{additional arguments to be passed to \code{readxl::read_excel}.}
 }
@@ -70,4 +70,3 @@ sheet_name = 'Tourism'
 }
 
 }
-

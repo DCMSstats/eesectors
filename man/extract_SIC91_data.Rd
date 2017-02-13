@@ -70,4 +70,3 @@ sheet_name = 'Tourism'
 }
 
 }
-
