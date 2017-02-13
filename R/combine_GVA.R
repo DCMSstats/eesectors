@@ -61,7 +61,7 @@
 #'
 #' @export
 
-combine_data <- function(
+combine_GVA <- function(
   ABS = NULL,
   GVA = NULL,
   SIC91 = NULL,

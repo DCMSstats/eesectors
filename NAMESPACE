@@ -2,7 +2,7 @@
 
 S3method(year_sector_table,year_sector_data)
 export(clean_sic)
-export(combine_data)
+export(combine_GVA)
 export(extract_ABS_data)
 export(extract_DCMS_sectors)
 export(extract_GVA_data)

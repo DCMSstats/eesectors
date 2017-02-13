@@ -1,7 +1,7 @@
 Package: eesectors
 Type: Package
 Title: Functions to create DCMS Economic Estimates statistics
-Version: 0.0.0.9013
+Version: 0.1.0
 Authors@R: c(
     person("Matthew", "Upson", email = "matthew.upson@digital.cabinet-office.gov.uk", role = c("aut", "cre")),
     person("Niall", "Goulding", email = "niall.goulding@culture.gov.uk", role = c("ctb"))
