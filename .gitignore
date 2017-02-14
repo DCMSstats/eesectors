@@ -4,6 +4,7 @@
 .Rhistory
 .RData
 .Ruserdata
+*.Rapp.history
 *.nb.html
 
 # Compiled packrat libraries

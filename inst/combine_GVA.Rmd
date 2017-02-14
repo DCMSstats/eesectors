@@ -48,7 +48,7 @@ Note that you must remove the password from this file for this to work.
 
 # These data come from the worksheets `1997 Use`:`2015 Use`.
 
-input <- '~/Remote_documents/eesectors_data/OFFICIAL/dcms/OFFICIAL_working_file_dcms_V13.xlsm'
+input <- '~/Documents/DSprojects/eesectors_working/working_file_dcms_V13.xlsm'
 
 ABS <- extract_ABS_data(input)
 # DCMS_sectors <- extract_DCMS_sectors(input): for now use data built into package
@@ -370,19 +370,13 @@ Total UK GVA is included in the `gva` dataset, this can be added to the data her
 
 ```{r extract_UK_GVA}
 
-# Quick lookup table to convert SIC2 to Sector
-
-lookup <- c(
-  'total intermediate comsumption' = 'UK'
-)
-
 # Use create a table to merge in with GVA_by_sector
 
 GVA_UK <- GVA %>%
-  dplyr::filter(SIC == names(lookup)) %>%
+  dplyr::filter(grepl("total.*intermediate.*", SIC)) %>%
   dplyr::transmute(
     year, 
-    sector = lookup[SIC], 
+    sector = "UK", 
     GVA
   )
 
