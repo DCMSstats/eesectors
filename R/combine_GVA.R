@@ -137,14 +137,11 @@ combine_GVA <- function(
 
   #### 5. Add in total UK GVA from gva ----
 
-  # Quick lookup table to convert SIC2 to Sector
-
-  lookup <- c('total intermediate comsumption' = 'UK')
 
   # Use create a table to merge in with GVA_by_sector
 
-  GVA_UK <- GVA[GVA$SIC == names(lookup),]
-  GVA_UK$sector <- lookup[GVA_UK$SIC]
+  GVA_UK <- GVA[which(grepl('total.*intermediate.*',GVA$SIC)),]
+  GVA_UK$sector <- 'UK'
   GVA_UK <- GVA_UK[,c('year', 'sector', 'GVA')]
 
   # Merge this into `GVA_by_sector` by full join
