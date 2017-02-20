@@ -22,6 +22,7 @@ Suggests:
     visualTest (>= 1.0.0)
 Imports:
     assertr (>= 1.0.2),
+    curl (>=2.3),
     dplyr (>= 0.5.0),
     ggplot2 (>= 2.2.0),
     gh (>= 1.0.0),
