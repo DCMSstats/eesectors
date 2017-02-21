@@ -4,29 +4,10 @@
 \alias{raise_issue}
 \title{Warn when assertr checks fail and raise issue on github}
 \usage{
-raise_issue(err_str, log_issues = FALSE, owner = NULL, repo = NULL,
-  title = "Data quality issue", body = NULL)
+raise_issue(err_str)
 }
 \arguments{
 \item{err_str}{Error string arising from an \code{assert::insist_}.}
-
-\item{log_issues}{Allow logging of issues to github? Defaults to
-\code{FALSE}.}
-
-\item{owner}{github username of the owner of the repository where issues will
-be raised following each test fail. If not specified, this will be set by
-the environmental variable 'LOG_OWNER'.}
-
-\item{repo}{github repository where issues will be raised following each test
-fail. If not specified, this will be set by the environmental variable
-'LOG_REPO'.}
-
-\item{title}{Title of the issue to be raised in the \code{owner}'s github
-repository \code{repo}. Defaults to \code{'Data quality issue'} but in
-future should be set dynamically depending on the issue.}
-
-\item{body}{Body test of the issue to be raised in the \code{owner}'s github
-repository \code{repo}.}
 }
 \value{
 \code{err_str} as warning.

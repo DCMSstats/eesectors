@@ -10,7 +10,7 @@ Maintainer: Matthew Upson <matthew.upson@digital.cabinet-office.gov.uk>
 Description: Provides functions to support production of the Economic Estimates
     for DCMS Statistical First Release (SFR). The package contains functions both
     for the extraction of relevant datasets from the spreadsheets provided by the
-    Office for National Statistics (ONS), and functions for wrangling the data 
+    Office for National Statistics (ONS), and functions for wrangling the data
     into tables and plots for the final publication.
 License: GPL-3
 Depends:
@@ -22,11 +22,8 @@ Suggests:
     visualTest (>= 1.0.0)
 Imports:
     assertr (>= 1.0.2),
-    curl (>= 2.3),
     dplyr (>= 0.5.0),
     ggplot2 (>= 2.2.0),
-    gh (>= 1.0.0),
-    httr (>= 1.2.1),
     govstyle (>= 0.1.2),
     lazyeval (>= 0.1.0),
     readxl (>= 0.1.1),
@@ -35,8 +32,7 @@ Imports:
     xtable (>= 1.8-2)
 Remotes:
     github::ukgovdatascience/govstyle,
-    github::mangothecat/visualTest,
-    github::r-pkgs/gh
+    github::mangothecat/visualTest
 BugReports: https://github.com/ukgovdatascience/eesectors/issues
 VignetteBuilder: knitr
 Encoding: UTF-8
