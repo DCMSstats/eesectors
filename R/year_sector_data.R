@@ -164,7 +164,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
         x,
         assertr::maha_dist,
         assertr::within_n_mads(6),
-        dplyr:::everything(),
+        1:3,
         error_fun = raise_issue
       )
     }
