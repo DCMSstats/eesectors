@@ -19,10 +19,3 @@ If the class is instantiated correctly, nothing is returned.
 this is based on \code{assertr::insist_rows} and implements a
   malahanobis distance check using \code{assertr:maha_dist}.
 }
-\examples{
-
-library(eesectors)
-
-    a <- GVA_by_sector_2016 \%>\% dplyr::filter(sector == "all_dcms")
-    b <- maha_check(a)
-}

@@ -9,12 +9,6 @@
 #'
 #' @return If the class is instantiated correctly, nothing is returned.
 #'
-#' @examples
-#'
-#' library(eesectors)
-#'
-#'     a <- GVA_by_sector_2016 %>% dplyr::filter(sector == "all_dcms")
-#'     b <- maha_check(a)
 
 maha_check = function(x) {
 
