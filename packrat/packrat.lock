@@ -305,8 +305,8 @@ Requires: base64enc, caTools, evaluate, htmltools, jsonlite, knitr,
 
 Package: roxygen2
 Source: CRAN
-Version: 6.0.0
-Hash: 9b304dff303d510e9263839227468681
+Version: 6.0.1
+Hash: 3e17305cfd5f3a51f7ca450c08afec94
 Requires: R6, Rcpp, brew, commonmark, desc, digest, stringi, stringr,
     xml2
 
@@ -377,8 +377,8 @@ Hash: 774eb7be9087cdc24b53b74e5359cfac
 
 Package: xml2
 Source: CRAN
-Version: 1.0.0
-Hash: 65e9398e9888d5cd5fbf87921f42a0e7
+Version: 1.1.1
+Hash: b913af17a4e43c2fb83f3b60b5353a27
 Requires: BH, Rcpp
 
 Package: xtable

@@ -54,8 +54,11 @@ converted into tables and figures.
 
 There are four `extract_` functions:
 
--   `extract_ABS_data` \* `extract_DCMS_sectors` \* `extract_GVA_data` *
-    `extract_SIC91_data` * `extract_tourism_data`
+* `extract_ABS_data` 
+* `extract_DCMS_sectors` 
+* `extract_GVA_data` 
+* `extract_SIC91_data` 
+* `extract_tourism_data`
 
 ------------------------------------------------------------------------
 
@@ -65,11 +68,13 @@ therefore be handled with care and considered to be OFFICIAL-SENSITIVE.
 Steps must be taken to prevent the accidental disclosure of these
 data.**
 
-**These should include (but not be limited to):** \* Not storing the
-output of these functions in git repositories \* Labelling of official
-data with a prefix/suffix of 'OFFICIAL' \* The use of githooks to search
-for potentially disclosive files at time of commit and push (e.g.
-<https://github.com/ukgovdatascience/dotfiles>) \* Suitable 2i/QA steps
+**These should include (but not be limited to):** 
+
+* Not storing the output of these functions in git repositories 
+* Labelling of official data with a prefix/suffix of 'OFFICIAL' 
+* The use of githooks to search for potentially disclosive files at time of commit and push (e.g.
+<https://github.com/ukgovdatascience/dotfiles>) 
+* Suitable 2i/QA steps
 
 ------------------------------------------------------------------------
 
