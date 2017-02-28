@@ -53,7 +53,7 @@ roundf <- function(x, fmt = '%.1f') {
   if (is.data.frame(x)) {
 
     x <- mapply(function(z) fmt_value(z, fmt = fmt), x)
-    x <- as.data.frame(x)
+    x <- as.data.frame(x, stringsAsFactors=FALSE)
 
   } else if(is.vector(x)|is.numeric(x)) {
 
