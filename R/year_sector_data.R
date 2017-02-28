@@ -154,20 +154,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
 
   lapply(
     X = series_split,
-    FUN = function(x) {
-
-      # Note that this test will fail on GVA_by_sector_2016 if x < 6 for
-      # within_n_mads(x)
-
-      message('Checking sector timeseries: ', unique(x[['sector']]))
-      assertr::insist_rows(
-        x,
-        assertr::maha_dist,
-        assertr::within_n_mads(6),
-        1:3,
-        error_fun = raise_issue
-      )
-    }
+    FUN = maha_check
   )
 
   message('...passed')
