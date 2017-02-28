@@ -13,9 +13,8 @@
 #'
 #' library(eesectors)
 #'
-#' maha_check(x)
-#'
-#' @export
+#'     a <- GVA_by_sector_2016 %>% dplyr::filter(sector == "all_dcms")
+#'     b <- maha_check(a)
 
 maha_check = function(x) {
 
