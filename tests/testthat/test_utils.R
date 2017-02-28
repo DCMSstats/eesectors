@@ -22,7 +22,7 @@ test_that(
 )
 
 test_that(
-  'Returns expected values',
+  'roundf returns expected values',
   {
 
     expect_is(roundf(pi), 'character')
@@ -33,7 +33,7 @@ test_that(
 )
 
 test_that(
-  'Works on vectors',
+  'roundf works on vectors',
   {
 
     vec <- rep(pi * 10^3, 10)
@@ -44,7 +44,7 @@ test_that(
 )
 
 test_that(
-  'Will do nothing to characters',
+  'roundf will do nothing to characters',
   {
 
     expect_identical(roundf('character vector'), 'character vector')
@@ -53,7 +53,7 @@ test_that(
 )
 
 test_that(
-  'Works for dataframes',
+  'roundf works for dataframes',
   {
 
     expect_is(roundf(mtcars), c('tbl_df','tbl','data.frame'))
