@@ -42,7 +42,8 @@
 extract_APS_data <- function(x){
 
   # Read the APS data
-  APSdata=foreign::read.spss(x, to.data.frame = TRUE, use.value.labels = FALSE)
+  APSdata=memisc::spss.system.file(x,to.lower=FALSE)
+  APSdata <- memisc::as.data.set(APSdata)
 
   # Build an array of the names of the needed columns
   keep_variables=c("INDC07M",      # SIC for main job (4 digits)
