@@ -4,7 +4,7 @@ test_that(
   'maha_check runs without errors',
   {
 
-    a <- GVA_by_sector_2016 %>% dplyr::filter(sector == "all_dcms")
+    a <- dplyr::filter(GVA_by_sector_2016, sector == "all_dcms")
     b <- maha_check(a)
     a_split <- split(GVA_by_sector_2016,GVA_by_sector_2016$sector)
 
