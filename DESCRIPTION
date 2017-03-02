@@ -23,6 +23,7 @@ Suggests:
 Imports:
     assertr (>= 1.0.2),
     dplyr (>= 0.5.0),
+    foreign (>= 0.8-67),
     ggplot2 (>= 2.2.0),
     govstyle (>= 0.1.2),
     lazyeval (>= 0.1.0),
