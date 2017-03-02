@@ -9,13 +9,6 @@
 #'
 #' @return If the class is instantiated correctly, nothing is returned.
 #'
-#' @examples
-#'
-#' library(eesectors)
-#'
-#' maha_check(x)
-#'
-#' @export
 
 maha_check = function(x) {
 
