@@ -238,3 +238,11 @@ zero_prepend <- function(x) {
   return(output)
 
 }
+
+elongate_SIC <- function(x) {
+
+  x <- as.numeric(x) * 100
+  x <- round(x)
+  return(x)
+
+}

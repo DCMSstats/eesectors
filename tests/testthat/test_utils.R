@@ -181,3 +181,12 @@ test_that(
   }
 )
 
+test_that(
+  "elongate_SIC works as expected.",
+  {
+    test_cases <- c(12.34,56.78,90.12)
+    expected_outcome <- c(1234, 5678, 9012)
+    expect_equal(elongate_SIC(test_cases), expected_outcome)
+
+  }
+)
