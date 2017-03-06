@@ -4,28 +4,35 @@
 \alias{appendSectors}
 \title{Append sector membership to APS data extract}
 \usage{
-appendSectors(x)
+appendSectors(x, sectors = eesectors::DCMS_sectors)
 }
 \arguments{
-\item{x}{a data frame as extracted by \code{eesectors::extract_APS_data}}
+\item{x}{a `data.frame` as extracted by \code{eesectors::extract_APS_data}}
+
+\item{sectors}{a `data.frame` as extracted by
+\code{eesectors::extract_DCMS_sectors}. This defaults to the `DCMS_sectors`
+object which is the `extract_DCMS_sectors` function applied to the 2016
+data.}
 }
 \value{
-The function returns the APS data as a dataframe with the sector membership
-variables appended
+The function returns the APS data as a dataframe with the sector
+  membership variables appended
 }
 \description{
 This function appends DCMS sector membership to an APS
-SPSS-extracted data frame.
+  SPSS-extracted data frame.
 }
 \details{
 The function \code{eesectors::extract_APS_data} extracts APS data
-from an APS SPSS file. This function appends DCMS sector membership to an APS
-SPSS-extracted data frame before further analysis, on a first job and second job basis
+  from an APS SPSS file. This function appends DCMS sector membership to an
+  APS SPSS-extracted data frame before further analysis, on a first job and
+  second job basis
 
   1. The function converts the character vector DCMS_sectors$SIC to double
 
-  2. The function loops through the sectors found in DCMS_sectors, and uses DCMS_sectors
-  as a lookup for membership of each person's main and second job in each sector
+  2. The function loops through the sectors found in DCMS_sectors, and uses
+  DCMS_sectors as a lookup for membership of each person's main and second
+  job in each sector
 
   3. The function adds membership in the form of two variables per sector
 
