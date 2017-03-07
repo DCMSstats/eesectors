@@ -7,6 +7,11 @@
 *.Rapp.history
 *.nb.html
 
+# Temporary system files
+.DS_Store
+~$*.xls*
+*.tmp
+
 # Compiled packrat libraries
 
 packrat/lib*/

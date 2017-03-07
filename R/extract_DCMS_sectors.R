@@ -87,6 +87,7 @@ extract_DCMS_sectors <- function(
 ) {
 
   x <- readxl::read_excel(x, sheet = sheet_name, skip = skip)
+  x <- rapply(x, as.character, how="replace")
 
   # Fix the messy column names
 

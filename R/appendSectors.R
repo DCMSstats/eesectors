@@ -54,7 +54,8 @@ appendSectors <- function(x, sectors = eesectors::DCMS_sectors){
 
     # Find the SIC codes that define the sector (where DCMC sectors is =s, and
     # then where that SIC is TRUEly present in that sector)
-    SIC <- sectors$SIC_long[eesectors::DCMS_sectors$sector==s][eesectors::DCMS_sectors$present[eesectors::DCMS_sectors$sector==s]==TRUE]
+    sector_mask <- eesectors::DCMS_sectors$sector==s
+    SIC <- sectors$SIC_long[sector_mask][eesectors::DCMS_sectors$present[sector_mask]==TRUE]
 
     # If a person has a job in that sector, per sector, per main/2nd job then
     # "TRUE"
