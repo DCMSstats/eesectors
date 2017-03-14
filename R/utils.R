@@ -208,6 +208,10 @@ save_rds <- function(x, full_path) {
 
 }
 
+yearfind <- function(x){
+  return(sort(x$REFWKY,decreasing=FALSE)[1])
+  }
+
 year_split <- function(x) {
 
   year_ <- function(x) strsplit(x, ' ')[[1]][1]
@@ -245,4 +249,10 @@ elongate_SIC <- function(x) {
   x <- round(x)
   return(x)
 
+}
+
+simpleCap <- function(x) {
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1,1)), substring(s, 2),
+        sep="", collapse=" ")
 }
