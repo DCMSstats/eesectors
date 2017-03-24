@@ -76,4 +76,5 @@ extract_APS_data <- function(
 
   # Return a data frame of only the data we need
   return(APSdata)
+  return(assign(paste0("aps",eesectors:::yearfind(APSdata)), APSdata, envir = globalenv()))
 }

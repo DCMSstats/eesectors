@@ -46,7 +46,7 @@ jobs_timeseries <- function(...,sectors = eesectors::DCMS_sectors){
   sector_names <- sapply(unique(sectors$sector),eesectors:::simpleCap)
 
   #Add column 1, sector names
-  jobs_ts <- data.frame(Sector <- c(sector_names,"All UK"))
+  jobs_ts <- data.frame(Sector <- c(sector_names))
   jobs_ts[,1] <- gsub(jobs_ts[,1],pattern = "All_dcms",replacement = "All DCMS")
 
   #Add jobs statistics
