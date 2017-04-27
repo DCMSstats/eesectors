@@ -74,7 +74,13 @@ extract_APS_data <- function(
   # Select only the needed data
   APSdata <- APSdata[,keep_variables]
 
+  # Change the variables to things we'll actually find useful
+  APSdata$GORWKR <- eesectors:::regionsRecode(APSdata$GORWKR)
+  APSdata$GORWK2R <- eesectors:::regionsRecode(APSdata$GORWK2R)
+  APSdata$SECJMBR <- eesectors:::secondjobRecode(APSdata$SECJMBR)
+  APSdata$ETHUK11 <- eesectors:::ethnicityRecode(APSdata$ETHUK11)
+
   # Return a data frame of only the data we need
   return(APSdata)
-  return(assign(paste0("aps",eesectors:::yearfind(APSdata)), APSdata, envir = globalenv()))
+  #return(assign(paste0("aps",eesectors:::yearfind(APSdata)), APSdata, envir = globalenv()))
 }

@@ -29,7 +29,7 @@
 #' @export
 #'
 
-jobs_timeseries <- function(...,sectors = eesectors::DCMS_sectors){
+jobs_timeseries <- function(...,tourism=NULL,sectors = eesectors::DCMS_sectors){
 
   #Time seriesify the data and do sector analysis
 
@@ -49,10 +49,21 @@ jobs_timeseries <- function(...,sectors = eesectors::DCMS_sectors){
   jobs_ts <- data.frame(Sector <- c(sector_names))
   jobs_ts[,1] <- gsub(jobs_ts[,1],pattern = "All_dcms",replacement = "All DCMS")
 
+  #If there is Tourism data to read, read it in
+  if  (!is.null(tourism)){
+    tdata<-readxl::read_excel(tourism)
+  }
+
   #Add jobs statistics
   for (year in APS_ts){
-    jobs_count<-sector_jobs_count(year)
+    jobs_count<-eesectors:::sector_jobs_count(year)
     jobs_ts[toString(eesectors:::yearfind(year))]<-NA
+
+    if (!is.null(tourism)){
+      jobs_count["tourism",]<-tdata$`Tourism employment`[tdata$Year==eesectors:::yearfind(year)]
+      jobs_count["all_dcms",]<-jobs_count["all_dcms",]+tdata$`Tourism employment`[tdata$Year==eesectors:::yearfind(year)]-tdata$Overlap[tdata$Year==eesectors:::yearfind(year)]
+    }
+
     jobs_ts[toString(eesectors:::yearfind(year))]<-jobs_count
   }
 
