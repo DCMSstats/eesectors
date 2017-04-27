@@ -2,7 +2,6 @@
 
 S3method(year_sector_table,year_sector_data)
 export(appendSectors)
-export(APS_timeseries)
 export(clean_sic)
 export(combine_GVA)
 export(extract_ABS_data)

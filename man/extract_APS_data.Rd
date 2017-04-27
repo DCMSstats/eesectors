@@ -6,7 +6,8 @@
 \usage{
 extract_APS_data(x, keep_variables = c("INDC07M", "INDC07S", "INDSC07M",
   "INDSC07S", "SOC10M", "SOC10S", "INECAC05", "SECJMBR", "PWTA14", "SEX",
-  "AGES", "ETHUK11", "NATOX7", "FTPT", "HIQUL15D", "GORWKR", "GORWK2R"))
+  "AGES", "ETHUK11", "NATOX7", "FTPT", "HIQUL15D", "GORWKR", "GORWK2R",
+  "REFWKY"))
 }
 \arguments{
 \item{x}{Location of the input spreadsheet file. Named something like
@@ -20,7 +21,8 @@ main job - 4 digits), "INDC07S" (SIC for second job - 4 digits), "INDSC07M"
 (Employment status), "SECJMBR" (Employment status in second job), "PWTA14"
 (Weights), "SEX", "AGES", "ETHUK11", (Ethnicty), "NATOX7" (Nationality),
 "FTPT" (Full time / part time), "HIQUL15D" (Highest qualification),
-"GORWKR" (Region of first job), "GORWK2R" (Region of second job).}
+"GORWKR" (Region of first job), "GORWK2R" (Region of second job),
+"REFWKY" (Reference week year).}
 }
 \value{
 The function returns the APS data as a dataframe.
