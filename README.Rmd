@@ -167,19 +167,3 @@ p + ggtitle('Figure 3.2: Indexed growth in GVA (2010 =100)\n in DCMS sectors and
 Note that figures make use of the [govstyle](https://github.com/ukgovdatascience/govstyle) package. 
 See the
 [vignette](https://github.com/ukgovdatascience/govstyle/blob/master/vignettes/absence_statistics.md) for more information on how to use this package.
-
-### Logging data issues to github
-
-In order to use this functionality, it is necessary to set the three following
-environmental variables:
-
-|Name|Example|Description| 
-|---|---|---| 
-|GITHUB_PAT|_|A github personal access token with the necessary permissions.| 
-|LOG_REPO|RAP-demo-md|The name of a github repository where data issues can be logged.| 
-|LOG_OWNER|ukgovdatascience|The owner of the repository referred to in LOG_REPO.|
-
-Environmental variables can be set interactively using `Sys.setenv()`, or more
-permanently by settin gteh variables in an `.Renviron` file which will be
-sourced when the project is loading (assuming you are using projects within
-Rstudio).
