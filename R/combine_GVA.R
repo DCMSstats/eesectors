@@ -2,10 +2,9 @@
 #'
 #' @description Combines datasets exracted from the underlying spreadsheet using
 #'   the \code{extract_XXX} functions. A notebook version of this function
-#'   (which may be easier to debug) can be downloaded using the
-#'   \code{get_GV_combine()} function. Note that this function in its current
-#'   form will only work to reproduce the 2016 SFR, and requires adjustment to
-#'   generalise it over new years.
+#'   (which may be easier to debug) is available (see below). Note that this
+#'   function in its current form will only work to reproduce the 2016 SFR, and
+#'   requires adjustment to generalise it over new years.
 #'
 #'   NOTE: THIS FUNCTION RELIES ON DATA WHICH ARE CLASSIFIED AS
 #'   OFFICIAL-SENSITIVE. THE OUTPUT OF THIS FUNCTION IS AGGREGATED, AND
@@ -18,10 +17,9 @@
 #'   https://github.com/ukgovdatascience/dotfiles.
 #'
 #' @details The best way to understand what happens when you run this function
-#'   is to look at the \code{inst/combine_GVA.Rmd} notebook, which can be
-#'   downloaded automatically using the \code{get_GV_combine()} function, or by
-#'   visiting
-#'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/inst/combine_GVA.Rmd}.
+#'   is to look at the \code{inst/combine_GVA.Rmd} notebook, which can be seen
+#'   at:
+#'   \url{https://github.com/DCMSstats/eesectors/blob/master/inst/combine_GVA.Rmd}.
 #'    A brief explanation of what the function does here:
 #'
 #'   1. Remove SIC 91 data from \code{ABS} and swap in values from \code{SIC91})
@@ -39,7 +37,10 @@
 #' @param DCMS_sectors ABS data as extracted by
 #'   \code{eesectors::extract_DCMS_sectors()} or matching the
 #'   \code{eesectors::DCMS_sectors} in-built dataset.
-#' @param tourism ABS data as extracted by \code{eesectors::extract_tourism_data()}.
+#' @param tourism ABS data as extracted by
+#'   \code{eesectors::extract_tourism_data()}.
+#' @param data_year The latest year for which data is available. Should be the
+#'   present year -1.
 #'
 #' @return A \code{data.frame} as expected by the \code{year_sector_data} class.
 #'
@@ -55,7 +56,8 @@
 #'   GVA = eesectors::extract_ABS_data(input),
 #'   SIC91 = eesectors::extract_ABS_data(input),
 #'   DCMS_sectors = eesectors::DCMS_sectors,
-#'   tourism = eesectors::extract_ABS_data(input)
+#'   tourism = eesectors::extract_ABS_data(input),
+#'   data_year = 2015
 #' )
 #' }
 #'
@@ -66,7 +68,8 @@ combine_GVA <- function(
   GVA = NULL,
   SIC91 = NULL,
   DCMS_sectors = eesectors::DCMS_sectors,
-  tourism = NULL
+  tourism = NULL,
+  data_year = 2015
 ) {
 
   #### 1. Deal with SIC 91 ----
@@ -90,8 +93,8 @@ combine_GVA <- function(
   # Since the `ABS_91` data only run to 2014, first duplicate the 2014 to be
   # used for 2015: duplicate the 2014 data for 2015
 
-  ABS_2015 <- ABS[ABS$year == 2014,]
-  ABS_2015$year <- 2015
+  ABS_2015 <- ABS[ABS$year == (data_year - 1),]
+  ABS_2015$year <- year
   ABS_2015 <- rbind(ABS_2015, ABS_91)
 
   ### 3. Merge sectors and ABS datasets ----
@@ -179,7 +182,7 @@ combine_GVA <- function(
   # Build df to match eesectors::GVA_by_sector_2016
   # Will need adjusting in future versions
 
-  GVA_by_sector <- GVA_by_sector[GVA_by_sector$year %in% 2010:2015,]
+  GVA_by_sector <- GVA_by_sector[GVA_by_sector$year %in% 2010:data_year,]
   GVA_by_sector <- dplyr::ungroup(GVA_by_sector) # May not be required
   GVA_by_sector$GVA <- round(GVA_by_sector$GVA, 2)
   GVA_by_sector$sector <- factor(GVA_by_sector$sector)
