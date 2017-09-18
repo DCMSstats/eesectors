@@ -31,3 +31,4 @@ tests/testthat/testdata/test_output*
 *.swp
 
 inst/GVA_by_sector.Rds
+eesectors.Rcheck
