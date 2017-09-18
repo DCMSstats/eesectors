@@ -1,10 +1,10 @@
 [![Build
-Status](https://travis-ci.org/ukgovdatascience/eesectors.svg?branch=master)](https://travis-ci.org/ukgovdatascience/eesectors)
+Status](https://travis-ci.org/DCMSstats/eesectors.svg?branch=master)](https://travis-ci.org/DCMSstats/eesectors)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/vulmerft4p30339l/branch/master?svg=true)](https://ci.appveyor.com/project/ivyleavedtoadflax/eesectors/branch/master)
-[![codecov.io](http://codecov.io/github/ukgovdatascience/eesectors/coverage.svg?branch=master)](http://codecov.io/github/ukgovdatascience/eesectors?branch=master)
+[![codecov.io](http://codecov.io/github/DCMSstats/eesectors/coverage.svg?branch=master)](http://codecov.io/github/DCMSstats/eesectors?branch=master)
 [![GitHub
-tag](https://img.shields.io/github/tag/ukgovdatascience/eesectors.svg)](https://github.com/ukgovdatascience/eesectors/releases)
+tag](https://img.shields.io/github/tag/DCMSstats/eesectors.svg)](https://github.com/DCMSstats/eesectors/releases)
 
 eesectors
 =========
