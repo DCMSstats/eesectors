@@ -6,9 +6,9 @@ output: md_document
 Status](https://travis-ci.org/DCMSstats/eesectors.svg?branch=master)](https://travis-ci.org/DCMSstats/eesectors)
 [![Build
 status](https://ci.appveyor.com/api/projects/status/vulmerft4p30339l/branch/master?svg=true)](https://ci.appveyor.com/project/ivyleavedtoadflax/eesectors/branch/master)
-[![codecov.io](http://codecov.io/github/ukgovdatascience/eesectors/coverage.svg?branch=master)](http://codecov.io/github/ukgovdatascience/eesectors?branch=master)
+[![codecov.io](http://codecov.io/github/DCMSstats/eesectors/coverage.svg?branch=master)](http://codecov.io/github/DCMSstats/eesectors?branch=master)
 [![GitHub
-tag](https://img.shields.io/github/tag/ukgovdatascience/eesectors.svg)](https://github.com/ukgovdatascience/eesectors/releases)
+tag](https://img.shields.io/github/tag/DCMSstats/eesectors.svg)](https://github.com/DCMSstats/eesectors/releases)
 
 ```{r setup, echo=FALSE, include=FALSE}
 
@@ -31,13 +31,13 @@ This package provides functions used in the creation of a Reproducible
 Analytical Pipeline (RAP) for the Economic Estimates for DCMS sectors
 publication.
 
-See the [eesectorsmarkdown](https://github.com/ukgovdatascience/eesectorsmarkdown) repository for an example of implementing these functions in the context of a Statistical First Release (SFR).
+See the [eesectorsmarkdown](https://github.com/DCMSstats/eesectorsmarkdown) repository for an example of implementing these functions in the context of a Statistical First Release (SFR).
 
 ## Installation
 
-The package can then be installed using `devtools::install_github('ukgovdatascience/eesectors')`. 
+The package can then be installed using `devtools::install_github('DCMSstats/eesectors')`. 
 Some users may not be able to use the `devtools::install_github()` commands as a result of network security settings. 
-If this is the case, `eesectors` can be installed by downloading the [zip of the repository](https://github.com/ukgovdatascience/eesectors/archive/master.zip) and installing the package locally using `devtools::install_local(<path to zip file>)`.
+If this is the case, `eesectors` can be installed by downloading the [zip of the repository](https://github.com/DCMSstats/eesectors/archive/master.zip) and installing the package locally using `devtools::install_local(<path to zip file>)`.
 
 ## Quick start
 
@@ -168,18 +168,3 @@ Note that figures make use of the [govstyle](https://github.com/ukgovdatascience
 See the
 [vignette](https://github.com/ukgovdatascience/govstyle/blob/master/vignettes/absence_statistics.md) for more information on how to use this package.
 
-### Logging data issues to github
-
-In order to use this functionality, it is necessary to set the three following
-environmental variables:
-
-|Name|Example|Description| 
-|---|---|---| 
-|GITHUB_PAT|_|A github personal access token with the necessary permissions.| 
-|LOG_REPO|RAP-demo-md|The name of a github repository where data issues can be logged.| 
-|LOG_OWNER|ukgovdatascience|The owner of the repository referred to in LOG_REPO.|
-
-Environmental variables can be set interactively using `Sys.setenv()`, or more
-permanently by settin gteh variables in an `.Renviron` file which will be
-sourced when the project is loading (assuming you are using projects within
-Rstudio).
