@@ -77,72 +77,68 @@ combine_GVA <- function(
   # Remove all the rows that correspond to SIC 91 based on the unique SIC codes in
   # SIC91.
 
-  SIC91_mask <- unique(SIC91$SIC)
 
-  ABS_no91 <- ABS[!ABS$SIC %in% SIC91_mask,]
 
-  # Now merge `ABS_no91` with `SIC91`.
+  ABS_91 <- dplyr::filter(ABS, !SIC %in% unique(SIC91$SIC)) %>%
+    dplyr::bind_rows(SIC91)
 
-  ABS_91 <- dplyr::full_join(ABS_no91, SIC91)
 
   #### 2. Duplicate 2014 ABS data for 2015 ----
 
   # Since the `ABS_91` data only run to 2014, first duplicate the 2014 to be
   # used for 2015: duplicate the 2014 data for 2015
 
-  ABS_2015 <- ABS[ABS$year == 2014,]
-  ABS_2015$year <- 2015
-  ABS_2015 <- rbind(ABS_2015, ABS_91)
+  ABS_2015 <- filter(ABS, year == 2014) %>%
+    mutate(year = 2015) %>%
+    bind_rows(ABS_91)
+
 
   ### 3. Merge sectors and ABS datasets ----
 
-  GVA_sectors <- dplyr::left_join(DCMS_sectors, ABS_2015)
-  GVA_sectors$ABS_ind_GVA <- GVA_sectors$ABS
-  GVA_sectors <- GVA_sectors[, !names(GVA_sectors) == 'ABS']
+  GVA_sectors <- dplyr::left_join(DCMS_sectors, ABS_2015) %>%
+    rename(ABS_ind_GVA = ABS)
 
   # Then calculate the 2 digit SIC total GVA (from `ABS_91`) for each of the
   # DCMS sectors. Extract all the unique 2 digit SICs
 
-  SIC2_unique_mask <- !is.na(GVA_sectors$SIC2)
-  SIC2_unique <- GVA_sectors[SIC2_unique_mask, 'SIC2']
+  # there was some code here handling NAs that wasn't actually being used
   SIC2_unique <- unique(GVA_sectors$SIC2)
 
   # Next we use `SIC2_unique` to extract the 2 digit SIC totals from `ABS_91`.
   # This will form the denominator in our division
 
-  denom <- ABS_2015[ABS_2015$SIC %in% SIC2_unique,]
-  denom$ABS_2digit_GVA <- denom$ABS
-  denom$SIC2 <- denom$SIC
-  denom <- denom[,c('year','SIC2', 'ABS_2digit_GVA')]
+  denom <- filter(ABS_2015, SIC %in% SIC2_unique) %>%
+    select(year, ABS, SIC) %>%
+    rename(ABS_2digit_GVA = ABS, SIC2 = SIC)
 
   # Now join this back into `GVA`. Join back into GVA for division.
 
-  GVA_sectors <- GVA_sectors[which(GVA_sectors$present == TRUE),]
-  GVA_sectors <- dplyr::left_join(GVA_sectors, denom, by = c('year', 'SIC2'))
-  GVA_sectors$perc_split <- GVA_sectors$ABS_ind_GVA / GVA_sectors$ABS_2digit_GVA
-  GVA_sectors <- GVA_sectors[!(is.na(GVA_sectors$year) & is.na(GVA_sectors$ABS_ind_GVA)),]
+  GVA_sectors <- filter(GVA_sectors, present == TRUE) %>%
+    left_join(denom, by = c('year', 'SIC2')) %>%
+    mutate(perc_split = ABS_ind_GVA / ABS_2digit_GVA) %>%
+    filter(!(is.na(year) & is.na(ABS_ind_GVA))) %>%
 
   # Now, multiply `perc_split` by `GVA` after joining with `GVA` to get the
   # `BB16_GVA` (column Q in `Working File` worksheet).
 
-  GVA_sectors <- dplyr::left_join(GVA_sectors, GVA, by = c('SIC2' = 'SIC', 'year'))
-  GVA_sectors$BB16_GVA <-  GVA_sectors$perc_split * GVA_sectors$GVA
+    left_join(GVA, by = c('SIC2' = 'SIC', 'year')) %>%
+    mutate(BB16_GVA = perc_split * GVA)
 
   ### 4. Calculate sums across sectors and years ----
 
   # Finally calculate the sums across all sectors and years.
 
-  GVA_by_sector <- dplyr::group_by_(GVA_sectors, ~year, ~sector)
-  GVA_by_sector <- dplyr::summarise_(GVA_by_sector, GVA = ~sum(BB16_GVA))
+  GVA_by_sector <- dplyr::group_by(GVA_sectors, year, sector) %>%
+    summarise(GVA = sum(BB16_GVA))
 
   #### 5. Add in total UK GVA from gva ----
 
 
   # Use create a table to merge in with GVA_by_sector
 
-  GVA_UK <- GVA[which(grepl('total.*intermediate.*',GVA$SIC)),]
-  GVA_UK$sector <- 'UK'
-  GVA_UK <- GVA_UK[,c('year', 'sector', 'GVA')]
+  GVA_UK <- filter(GVA, grepl('total.*intermediate.*',GVA$SIC)) %>%
+    mutate(sector = "UK") %>%
+    select(year, sector, GVA)
 
   # Merge this into `GVA_by_sector` by full join
 
@@ -153,9 +149,9 @@ combine_GVA <- function(
   # Tourism data is provided in a separate spreadsheet and imported in the
   # `tourism` object
 
-  tourism_UK <- tourism
-  tourism_UK$sector <- 'tourism'
-  tourism_UK <- tourism_UK[, c('year', 'sector', 'GVA')]
+  tourism_UK <- mutate(tourism, sector = "tourism") %>%
+    select(year, sector, GVA)
+
   GVA_by_sector <- dplyr::full_join(tourism_UK, GVA_by_sector)
 
   ### 7. Add tourism overlap ----
@@ -163,29 +159,24 @@ combine_GVA <- function(
   # Also need to add the `$overlap` from tourism to the `all_dcms` totals in
   # `GVA_by_sector`
 
-  tourism_all_sectors <- tourism
-  tourism_all_sectors$sector <- 'all_dcms'
-  tourism_all_sectors <- tourism_all_sectors[ ,c('year', 'sector', 'overlap')]
-  GVA_by_sector <- dplyr::right_join(tourism_all_sectors, GVA_by_sector)
-  GVA_by_sector$GVA <- ifelse(
-    !is.na(GVA_by_sector$overlap),
-    GVA_by_sector$overlap + GVA_by_sector$GVA,
-    GVA_by_sector$GVA
-  )
-  GVA_by_sector <- GVA_by_sector[, !names(GVA_by_sector) == 'overlap']
+  tourism_all_sectors <- mutate(tourism, sector = "all_dcms") %>%
+    select(year, sector, overlap)
+
+  GVA_by_sector <- dplyr::right_join(tourism_all_sectors, GVA_by_sector) %>%
+    mutate(GVA = ifelse(!is.na(overlap), overlap + GVA, GVA)) %>%
+    select(-overlap)
 
   #### 8. Build the GVA_by_sector dataframe expected by the eesectors package ----
 
   # Build df to match eesectors::GVA_by_sector_2016
   # Will need adjusting in future versions
 
-  GVA_by_sector <- GVA_by_sector[GVA_by_sector$year %in% 2010:2015,]
-  GVA_by_sector <- dplyr::ungroup(GVA_by_sector) # May not be required
-  GVA_by_sector$GVA <- round(GVA_by_sector$GVA, 2)
-  GVA_by_sector$sector <- factor(GVA_by_sector$sector)
-  GVA_by_sector$year <- as.integer(GVA_by_sector$year)
-  GVA_by_sector <- GVA_by_sector[, c('sector', 'year', 'GVA')]
-  GVA_by_sector <- dplyr::arrange_(GVA_by_sector, ~year, ~sector)
+  GVA_by_sector <- filter(GVA_by_sector, year %in% 2010:2015) %>%
+    mutate(GVA = round(GVA, 2),
+           sector = factor(sector),
+           year = as.integer(year)) %>%
+    select(sector, year, GVA) %>%
+    arrange(year, sector)
 
   return(GVA_by_sector)
 }
