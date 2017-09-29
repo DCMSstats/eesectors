@@ -95,23 +95,25 @@ combine_GVA <- function(
 
   ### 3. Merge sectors and ABS datasets ----
 
-  GVA_sectors <- dplyr::left_join(DCMS_sectors, ABS_2015) %>%
-    rename(ABS_ind_GVA = ABS)
 
   # Then calculate the 2 digit SIC total GVA (from `ABS_91`) for each of the
   # DCMS sectors. Extract all the unique 2 digit SICs
 
   # there was some code here handling NAs that wasn't actually being used
-  SIC2_unique <- unique(GVA_sectors$SIC2)
+  #SIC2_unique <- unique(GVA_sectors$SIC2)
 
   # Next we use `SIC2_unique` to extract the 2 digit SIC totals from `ABS_91`.
   # This will form the denominator in our division
 
-  denom <- filter(ABS_2015, SIC %in% SIC2_unique) %>%
+  denom <- filter(ABS_2015, SIC %in% unique(DCMS_sectors$SIC2)) %>%
     select(year, ABS, SIC) %>%
     rename(ABS_2digit_GVA = ABS, SIC2 = SIC)
 
   # Now join this back into `GVA`. Join back into GVA for division.
+
+  GVA_sectors <- dplyr::left_join(DCMS_sectors, ABS_2015) %>%
+    rename(ABS_ind_GVA = ABS)
+
 
   GVA_sectors <- filter(GVA_sectors, present == TRUE) %>%
     left_join(denom, by = c('year', 'SIC2')) %>%
