@@ -21,8 +21,8 @@ r_packages:
 
 install:
   - R -e "0" --args --bootstrap-packrat
+  - Rscript -e "install.packages('knitr')"
 
 after_success:
   - Rscript -e 'devtools::install_github("jimhester/covr")'
   - Rscript -e 'covr::codecov()'
-
