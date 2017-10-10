@@ -4,10 +4,19 @@
 \alias{year_sector_data}
 \title{long data class}
 \usage{
-year_sector_data(x, log_issues = FALSE)
+year_sector_data(x, log_level = futile.logger::WARN,
+  log_appender = "console", log_issues = FALSE)
 }
 \arguments{
 \item{x}{Input dataframe, see details.}
+
+\item{log_level}{The severity level at which log messages are written from
+least to most serious: TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default is
+level is INFO. See \code{?flog.threshold()} for additional details.}
+
+\item{log_appender}{Defaults to write the log to "console", alternatively you
+can provide a character string to specify a filename to also write to. See
+for additional details \code{?futile.logger::appender.tee()}.}
 
 \item{log_issues}{should issues with the data quality be logged to github?
 See \code{?raise_issue()} for additional details.}
