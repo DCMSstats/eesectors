@@ -27,7 +27,7 @@ r_packages:
 
 before_install:
     - sudo add-apt-repository ppa:no1wantdthisname/ppa -y
-    - sudo apt update && sudo apt install libfreetype6
+    - sudo apt-get update && sudo apt-get install libfreetype6 libfreetype6-dev
 
 install:
   - R -e "0" --args --bootstrap-packrat
