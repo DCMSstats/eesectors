@@ -1,0 +1,49 @@
+---
+title: "Publication Template"
+author: "Max Unsted"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE, include = FALSE)
+```
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+NEED TO RUN DEVTOOLS::LOADALL() IN CONSOLE BEFORE RUNNING THIS
+
+
+
+## Raw Data
+
+#### extract functions
+```{r, eval=FALSE, include=FALSE}
+#read in raw data
+rm(list = ls()[!(ls() %in% c("keep"))])
+#input <- "C:/Users/max.unsted/Documents/working_file_dcms_V13.xlsm"
+
+#testing example data
+input <- example_working_file("example_working_file.xlsx")
+
+ABS = eesectors::extract_ABS_data(input)
+GVA = eesectors::extract_GVA_data(input)
+SIC91 = eesectors::extract_SIC91_data(input)
+tourism = eesectors::extract_tourism_data(input)
+```
+
+
+#### ABS Data
+aunnual business survey data
+SIC calculated from DOMVAL, contains a mixture of SIC and SIC group
+
+```{r, eval=FALSE, include=FALSE}
+library(knitr)
+#kable(head(ABS,3))
+head(ABS,3)
+```
