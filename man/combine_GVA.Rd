@@ -5,7 +5,8 @@
 \title{Combine GVA, ABS, SIC91, and Tourism datasets}
 \usage{
 combine_GVA(ABS = NULL, GVA = NULL, SIC91 = NULL,
-  DCMS_sectors = eesectors::DCMS_sectors, tourism = NULL)
+  DCMS_sectors = eesectors::DCMS_sectors, tourism = NULL,
+  log_level = futile.logger::INFO, log_appender = "console")
 }
 \arguments{
 \item{ABS}{ABS data as extracted by \code{eesectors::extract_ABS_data()}.}
@@ -19,9 +20,18 @@ combine_GVA(ABS = NULL, GVA = NULL, SIC91 = NULL,
 \code{eesectors::DCMS_sectors} in-built dataset.}
 
 \item{tourism}{ABS data as extracted by \code{eesectors::extract_tourism_data()}.}
+
+\item{log_level}{The severity level at which log messages are written from
+least to most serious: TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default is
+level is INFO. See \code{?flog.threshold()} for additional details.}
+
+\item{log_appender}{Defaults to write the log to "console", alternatively you
+can provide a character string to specify a filename to also write to. See
+for additional details \code{?futile.logger::appender.file()}.}
 }
 \value{
 A \code{data.frame} as expected by the \code{year_sector_data} class.
+Can also return an error log to console or write to file.
 }
 \description{
 Combines datasets exracted from the underlying spreadsheet using
