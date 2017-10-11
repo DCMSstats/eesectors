@@ -18,16 +18,17 @@ Depends:
     dplyr (>= 0.5.0),
     R (>= 3.1.0)
 Suggests:
-    knitr (>= 1.15.1),
     testthat (>= 1.0.2),
     purrr (>= 0.2.2),
-    visualTest (>= 1.0.0)
+    visualTest (>= 1.0.0),
+    rmarkdown
 Imports:
     assertr (>= 1.0.2),
     futile.logger (>= 1.4.3),
     ggplot2 (>= 2.2.0),
     govstyle (>= 0.1.2),
     haven (>= 1.0.0),
+    knitr (>= 1.15.1),
     lazyeval (>= 0.1.0),
     readxl (>= 0.1.1),
     scales (>= 0.4.0),
