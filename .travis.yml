@@ -1,5 +1,5 @@
 language: r
-sudo: false
+sudo: true
 
 cache:
   directories:
@@ -24,6 +24,10 @@ warnings_are_errors: false
 
 r_packages:
   - knitr
+
+before_install:
+    - sudo add-apt-repository ppa:no1wantdthisname/ppa
+    - sudo apt update && sudo apt install libfreetype6
 
 install:
   - R -e "0" --args --bootstrap-packrat
