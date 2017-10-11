@@ -6,29 +6,22 @@
 .Ruserdata
 *.Rapp.history
 *.nb.html
-
 # Temporary system files
 .DS_Store
 ~$*.xls*
 *.tmp
-
 # Compiled packrat libraries
-
 packrat/lib*/
-
 # Environmental variables
-
 GITHUB_PAT
 .Renviron
-
 # Ignore files created by tests
-
 tests/testthat/figures/test_figure*_test.png
 tests/testthat/testdata/mtcars.Rds
 tests/testthat/testdata/test_output*
 ._*
 .~*
 *.swp
-
 inst/GVA_by_sector.Rds
 eesectors.Rcheck
+inst/doc
