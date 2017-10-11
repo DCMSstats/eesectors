@@ -14,7 +14,7 @@ os:
   - linux
 
 # Deal with the problems of vignette building on travis: i.e. don't do it!
-# This results in a warning being raises because there vignettes
+# This results in a warning being raised because there are vignettes
 # that are not being built, so make sure that these don't become errors
 # that stop the build!
 
