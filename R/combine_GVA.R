@@ -40,8 +40,15 @@
 #'   \code{eesectors::extract_DCMS_sectors()} or matching the
 #'   \code{eesectors::DCMS_sectors} in-built dataset.
 #' @param tourism ABS data as extracted by \code{eesectors::extract_tourism_data()}.
+#' @param log_level The severity level at which log messages are written from
+#' least to most serious: TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default is
+#' level is INFO. See \code{?flog.threshold()} for additional details.
+#' @param log_appender Defaults to write the log to "console", alternatively you
+#' can provide a character string to specify a filename to also write to. See
+#' for additional details \code{?futile.logger::appender.file()}.
 #'
 #' @return A \code{data.frame} as expected by the \code{year_sector_data} class.
+#' Can also return an error log to console or write to file.
 #'
 #' @examples
 #'
@@ -68,10 +75,24 @@ combine_GVA <- function(
   GVA = NULL,
   SIC91 = NULL,
   DCMS_sectors = eesectors::DCMS_sectors,
-  tourism = NULL
+  tourism = NULL,
+  log_level = futile.logger::INFO,
+  log_appender = "console"
 ) {
 
+  #### 0. Set up error log filename and threshold
+  # Set logger severity threshold, defaults to
+  # mid level use (only flags info, warnings and errors)
+  # Set log_level argument to futile.logger::TRACE for full info
+  futile.logger::flog.threshold(log_level)
 
+  # Set where to write the log to
+  if (log_appender != "console")
+  {
+    # if not the default of console then a file called...
+    futile.logger::flog.appender(futile.logger::appender.file(log_appender))
+  }
+  
   #Annual business survey, duplicate 2014 data for 2015 and
   #then duplicate non SIC91 then add SIC 91 with sales data
   ABS_2015 <- filter(ABS, year == 2014) %>%
@@ -137,4 +158,12 @@ combine_GVA <- function(
            year = as.integer(year)) %>%
     select(sector, year, GVA) %>%
     arrange(year, sector)
+
+
+  ### LOG ISSUE - these might be "changing the world" for the user unexpectedly!
+  # Reset threshold to package default
+  futile.logger::flog.threshold(futile.logger::INFO)
+  # Reset so that log is appended to console (the package default)
+  futile.logger::flog.appender(futile.logger::appender.console())
+
 }

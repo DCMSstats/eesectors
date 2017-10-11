@@ -53,7 +53,7 @@ year_sector_data <- function(x, log_level = futile.logger::WARN,
   # Set where to write the log to
   if (log_appender != "console")
   {
-    # if not console then to console and a file called...
+    # if not console then to a file called...
     futile.logger::flog.appender(futile.logger::appender.file(log_appender))
   }
 
@@ -72,7 +72,7 @@ this class is given by ?year_sector_data().')
   # additional column.
 
   futile.logger::flog.info('\n*** Running integrity checks on input dataframe (x):')
-  futile.logger::flog.info('\nChecking input is properly formatted...')
+  futile.logger::flog.debug('\nChecking input is properly formatted...')
 
   futile.logger::flog.debug('Checking x is a data.frame...')
   if (!is.data.frame(x))
@@ -108,9 +108,10 @@ this class is given by ?year_sector_data().')
 
   # User assertr to run statistical tests on the data itself ----
 
-  futile.logger::flog.info('\n***Running statistical checks on input dataframe (x)...\n
-  These tests are implemented using the package assertr see:
-  https://cran.r-project.org/web/packages/assertr for more details.')
+  futile.logger::flog.info("\n***Running statistical checks on input dataframe (x)")
+
+  futile.logger::flog.trace("These tests are implemented using the package assertr see:
+  https://cran.r-project.org/web/packages/assertr for more details.")
 
   # Extract third column name
 
@@ -161,7 +162,9 @@ this class is given by ?year_sector_data().')
   lapply(
     X = series_split,
     FUN = function(x) {
-      futile.logger::flog.debug('Checking sector timeseries: ', unique(x[['sector']]))
+      futile.logger::flog.trace("Checking sector timeseries: %s",
+                                as.character(unique(x[['sector']])),
+                                capture = FALSE)
       assertr::insist_(
         x,
         assertr::within_n_mads(3),
@@ -195,6 +198,10 @@ this class is given by ?year_sector_data().')
   futile.logger::flog.threshold(futile.logger::INFO)
   # Reset so that log is appended to console (the package default)
   futile.logger::flog.appender(futile.logger::appender.console())
+
+  # Message required to pass a test
+  message("Checks completed successfully:
+object of 'year_sector_data' class produced!")
 
   # Define the class here ----
 
