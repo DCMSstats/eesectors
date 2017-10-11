@@ -15,7 +15,13 @@ maha_check = function(x) {
   # Note that this test will fail on GVA_by_sector_2016 if x < 6 for
   # within_n_mads(x)
 
-  message('Checking sector timeseries: ', unique(x[['sector']]))
+  # This function is called within year_sector_data
+  # We inherit the flog threshold and where to append to from there
+  futile.logger::flog.trace(msg = "Checking sector timeseries: %s",
+                            as.character(unique(x[['sector']])),
+                            capture = FALSE)
+
+
   assertr::insist_rows(
     as.data.frame(x),
     assertr::maha_dist,
