@@ -26,7 +26,7 @@ r_packages:
   - knitr
 
 before_install:
-    - sudo add-apt-repository ppa:no1wantdthisname/ppa
+    - sudo add-apt-repository ppa:no1wantdthisname/ppa -y
     - sudo apt update && sudo apt install libfreetype6
 
 install:
