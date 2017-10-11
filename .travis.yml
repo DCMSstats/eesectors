@@ -13,8 +13,14 @@ git:
 os:
   - linux
 
+# Deal with the problems of vignette building on travis: i.e. don't do it!
+# This results in a warning being raises because there vignettes
+# that are not being built, so make sure that these don't become errors
+# that stop the build!
+
 r_build_args: --no-build-vignettes --no-manual --no-resave-data
 r_check_args: --no-build-vignettes --no-manual
+warnings_are_errors: false
 
 r_packages:
   - knitr
