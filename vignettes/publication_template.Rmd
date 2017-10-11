@@ -11,7 +11,7 @@ vignette: >
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(eval = FALSE, include = FALSE)
 ```
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -23,7 +23,7 @@ NEED TO RUN DEVTOOLS::LOADALL() IN CONSOLE BEFORE RUNNING THIS
 ## Raw Data
 
 #### extract functions
-```{r, include=FALSE}
+```{r, eval=FALSE, include=FALSE}
 #read in raw data
 rm(list = ls()[!(ls() %in% c("keep"))])
 #input <- "C:/Users/max.unsted/Documents/working_file_dcms_V13.xlsm"
@@ -42,155 +42,8 @@ tourism = eesectors::extract_tourism_data(input)
 aunnual business survey data
 SIC calculated from DOMVAL, contains a mixture of SIC and SIC group
 
-```{r}
+```{r, eval=FALSE, include=FALSE}
 library(knitr)
 #kable(head(ABS,3))
 head(ABS,3)
 ```
-
-
-#### GVA Data
-main data containing GVA
-contains a mixture of SIC and SIC group - but for eacmple 10.1 etc but no 10, and
-some non numeric values - see "CP £ Millions" raw data sheet
-
-```{r}
-head(GVA,3)
-```
-
-
-
-#### SIC91 Data
-SIC 91 Sales Data - used in place of the usual GVA values.
-Only contains 91 type SIC codes, 91.01 etc
-contains a mixture of SIC 91.xx and SIC group 91
-
-```{r}
-#kable(head(SIC91,3))
-head(SIC91,3)
-
-```
-
-
-#### Tourism Data
-tourism data - no sector column just year
-what is total, overlap, and perc?
-
-Read in SIC 91 Sales Data from spreadsheet. This data is used in place of the usual GVA values.
-Keeps SIC, year and value = ABS
-Only contains 91 type SIC codes, 91.01 etc ?????? but there is no SIC code?
-```{r}
-head(tourism,3)
-```
-
-
-#### eesectors::DCMS_sectors data
-this is just a dictionary of all the SIC codes with description, sectors, present, and SIC2
-
-
-present is a flag of whether there is a star in the columns for that sector in 'working file',
-obviously just determining which SICs belong to which sector - surely just want to drop all FALSE
-and get rid of this column?
-SIC2 is just integer part of SIC
-SIC and SIC group are in separate columns (SIC 92 is same in both)
-
-```{r}
-#identical(floor(as.numeric(DCMS_sectors$SIC)),round(as.numeric(DCMS_sectors$SIC2)))
-head(eesectors::DCMS_sectors,3)
-```
-
-
-## Summarising Data
-
-combine GVA datasets in long format and instanstiate year_sector_data class
-
-```{r}
-combined_GVA <- combine_GVA(
-  ABS = ABS,
-  GVA = GVA,
-  SIC91 = SIC91,
-  DCMS_sectors = eesectors::DCMS_sectors,
-  tourism = tourism
-) %>%
-  
-year_sector_data()
-
-head(combined_GVA$df,3)
-```
-
-
-## produce output for publication
-
-
-convert data to wide format used in publication
-```{r}
-year_period <- paste0(min(combined_GVA$years), " - ", max(combined_GVA$years))
-year_sector_table(combined_GVA) #how to add title? do in rmd?
-```
-
-
-produce figure 3.1
-```{r, echo=FALSE, results='asis'}
-figure3.1(combined_GVA) +
-  ggplot2::ggtitle(paste0('Figure 3.1: GVA contribution by DCMS sectors: ', year_period))
-```
-
-
-produce figure 3.2
-```{r}
-figure3.2(combined_GVA) +
-  ggplot2::ggtitle(paste0('Figure 3.2: Indexed growth in GVA (2010 = 100)\n in DCMS sectors and UK: ', year_period))
-```
-
-
-produce figure 3.3
-```{r}
-figure3.3(combined_GVA) +
-  ggplot2::ggtitle(paste0('Figure 3.3: Indexed growth in GVA (2010 = 100) in each DCMS sector: ', year_period))
-```
-
-
-produce figure 3.4
-```{r}
-figure3.4(combined_GVA) +
-  ggplot2::ggtitle(paste0('Figure 3.3: Indexed growth in GVA (2010 = 100) in each DCMS sector: ', year_period))
-```
-
-#### run bookdown or markdown knitr code to produce pdf
-
-
-#### produce excel tables
-tables in pdf and excel should be the same - both in £million not £billion
-```{r}
-year_period <- paste0(min(combined_GVA$years), " - ", max(combined_GVA$years))
-year_sector_table(combined_GVA) #how to add title? do in rmd?
-
-# create GVA tables
-excel_workbook(
-  contents_page(),
-  year_sector_table(combined_GVA),
-  year_sector_table(index(combined_GVA))
-)
-
-# create GVA subsectors tables
-excel_workbook(
-  contents_page(),
-  year_sector_table(creative_GVA),
-  year_sector_table(digital_GVA)
-)
-
-
-```
-
-
-
-
-
-## run checks
-
-```{r}
-
-```
-
-
-
