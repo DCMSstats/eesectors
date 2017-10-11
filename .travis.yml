@@ -16,12 +16,11 @@ os:
 r_packages:
   - knitr
 
-#r_github_packages:
-#  - jimhester/covr
+before_install:
+  - Rscript -e "install.packages('knitr')"
 
 install:
   - R -e "0" --args --bootstrap-packrat
-  - Rscript -e "install.packages('knitr')"
 
 after_success:
   - Rscript -e 'devtools::install_github("jimhester/covr")'
