@@ -72,12 +72,12 @@ figure3.3 <- function(x, ...) {
     warning = function() {
 
       w <- warnings()
-      warning('Warning produced running figure3.2():', w)
+      warning('Warning produced running figure3.3():', w)
 
     },
     error = function(e)  {
 
-      stop('Error produced running figure3.2():', e)
+      stop('Error produced running figure3.3():', e)
 
     },
     finally = {}
