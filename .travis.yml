@@ -13,11 +13,11 @@ git:
 os:
   - linux
 
+r_build_args: --no-build-vignettes --no-manual --no-resave-data
+r_check_args: --no-build-vignettes --no-manual
+
 r_packages:
   - knitr
-
-before_install:
-  - Rscript -e "install.packages('knitr')"
 
 install:
   - R -e "0" --args --bootstrap-packrat
