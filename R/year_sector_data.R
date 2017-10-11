@@ -21,6 +21,12 @@
 #'   \code{years}: an integer vector containing \code{unique(df$year)}.
 #'
 #' @param x Input dataframe, see details.
+#' @param log_level The severity level at which log messages are written from
+#' least to most serious: TRACE, DEBUG, INFO, WARN, ERROR, FATAL. Default is
+#' level is INFO. See \code{?flog.threshold()} for additional details.
+#' @param log_appender Defaults to write the log to "console", alternatively you
+#' can provide a character string to specify a filename to also write to. See
+#' for additional details \code{?futile.logger::appender.tee()}.
 #' @param log_issues should issues with the data quality be logged to github?
 #'   See \code{?raise_issue()} for additional details.
 #'
@@ -35,9 +41,24 @@
 #' @export
 
 
-year_sector_data <- function(x, log_issues = FALSE) {
+year_sector_data <- function(x, log_level = futile.logger::WARN,
+                             log_appender = "console",
+                             log_issues = FALSE) {
 
-  message('Initiating year_sector_data class.
+  # Set logger severity threshold, defaults to
+  # high level use (only flags warnings and errors)
+  # Set log_level argument to futile.logger::TRACE for full info
+  futile.logger::flog.threshold(log_level)
+
+  # Set where to write the log to
+  if (log_appender != "console")
+  {
+    # if not console then to console and a file called...
+    futile.logger::flog.appender(futile.logger::appender.file(log_appender))
+  }
+
+  # Checks
+  futile.logger::flog.info('Initiating year_sector_data class.
 \n\nExpects a data.frame with three columns: sector, year, and measure, where
 measure is one of GVA, exports, or enterprises. The data.frame should include
 historical data, which is used for checks on the quality of this year\'s data,
@@ -50,35 +71,44 @@ this class is given by ?year_sector_data().')
   # missing values and three columns, containing sector, year, and one
   # additional column.
 
-  message('\n*** Running integrity checks on input dataframe (x):')
-  message('\nChecking input is properly formatted...')
-  message('Checking x is a data.frame...')
-  if (!is.data.frame(x)) stop("x must be a data.frame")
+  futile.logger::flog.info('\n*** Running integrity checks on input dataframe (x):')
+  futile.logger::flog.info('\nChecking input is properly formatted...')
 
-  message('Checking x has correct columns...')
-  if (length(colnames(x)) != 3) stop("x must have three columns: sector, year, and one of GVA, export, or x")
+  futile.logger::flog.debug('Checking x is a data.frame...')
+  if (!is.data.frame(x))
+    {
+    futile.logger::flog.error("x must be a data.frame",
+                              x, capture = TRUE)
+    }
 
-  message('Checking x contains a year column...')
+  futile.logger::flog.debug('Checking x has correct columns...')
+  if (length(colnames(x)) != 3)
+    {
+    futile.logger::flog.error("x must have three columns: sector, year, and one of GVA, export, or x")
+    }
+
+  futile.logger::flog.debug('Checking x contains a year column...')
   if (!'year' %in% colnames(x)) stop("x must contain year column")
 
-  message('Checking x contains a sector column...')
+  futile.logger::flog.debug('Checking x contains a sector column...')
   if (!'sector' %in% colnames(x)) stop("x must contain sector column")
 
-  message('Checking x does not contain missing values...')
+  futile.logger::flog.debug('Checking x does not contain missing values...')
   if (anyNA(x)) stop("x cannot contain any missing values")
 
-  message('Checking for the correct number of rows...')
+  futile.logger::flog.debug('Checking for the correct number of rows...')
   if (nrow(x) != length(unique(x$sector)) * length(unique(x$year))) {
-
-    warning("x does not appear to be well formed. nrow(x) should equal
-length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
+    futile.logger::flog.warn("x does not appear to be well formed. nrow(x) should equal
+                             length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
   }
 
-  message('...passed')
+
+
+  futile.logger::flog.info('...passed')
 
   # User assertr to run statistical tests on the data itself ----
 
-  message('\n***Running statistical checks on input dataframe (x)...\n
+  futile.logger::flog.info('\n***Running statistical checks on input dataframe (x)...\n
   These tests are implemented using the package assertr see:
   https://cran.r-project.org/web/packages/assertr for more details.')
 
@@ -88,13 +118,13 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
 
   # Check snsible range for year
 
-  message('Checking years in a sensible range (2000:2020)...')
+  futile.logger::flog.debug('Checking years in a sensible range (2000:2020)...')
 
   assertr::assert_(x, assertr::in_set(2000:2020), ~year)
 
   # Check that the correct levels are in sector
 
-  message('Checking sectors are correct...')
+  futile.logger::flog.debug('Checking sectors are correct...')
 
   # Save sectors name lookup for use later
 
@@ -120,7 +150,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
   # median +- 3 * median absolute deviation, implemented in the
   # assertr::within_n_mads() function.
 
-  message('Checking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...')
+  futile.logger::flog.debug('Checking for outliers (x_i > median(x) + 3 * mad(x)) in each sector timeseries...')
 
   # Create a list split by series containing a df in each
 
@@ -131,7 +161,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
   lapply(
     X = series_split,
     FUN = function(x) {
-      message('Checking sector timeseries: ', unique(x[['sector']]))
+      futile.logger::flog.debug('Checking sector timeseries: ', unique(x[['sector']]))
       assertr::insist_(
         x,
         assertr::within_n_mads(3),
@@ -140,7 +170,7 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
     }
   )
 
-  message('...passed')
+  futile.logger::flog.info('...passed')
 
   # Check for outliers using mahalanobis ----
 
@@ -150,14 +180,21 @@ length(unique(x$sector)) * length(unique(x$year)). Check the of x.")
   # ourliers in this new vector of norms. Any value with a distance too great is
   # flagged as an outlier.
 
-  message('Checking for outliers on a row by row basis using mahalanobis distance...')
+  futile.logger::flog.debug('Checking for outliers on a row by row basis using mahalanobis distance...')
 
   lapply(
     X = series_split,
     FUN = maha_check
   )
 
-  message('...passed')
+  futile.logger::flog.debug('...passed')
+
+  ### ISSUE - these might be "changing the world" for the user unexpectedly!
+
+  # Reset threshold to package default
+  futile.logger::flog.threshold(futile.logger::INFO)
+  # Reset so that log is appended to console (the package default)
+  futile.logger::flog.appender(futile.logger::appender.console())
 
   # Define the class here ----
 
