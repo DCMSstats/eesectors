@@ -15,6 +15,7 @@ Description: Provides functions to support production of the Economic Estimates
     into tables and plots for the final publication.
 License: GPL-3
 Depends:
+    dplyr (>= 0.5.0),
     R (>= 3.1.0)
 Suggests:
     testthat (>= 1.0.2),
@@ -23,7 +24,6 @@ Suggests:
     rmarkdown
 Imports:
     assertr (>= 1.0.2),
-    dplyr (>= 0.5.0),
     futile.logger (>= 1.4.3),
     ggplot2 (>= 2.2.0),
     govstyle (>= 0.1.2),
