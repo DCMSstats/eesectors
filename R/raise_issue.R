@@ -24,10 +24,7 @@
 #'
 #' @export
 
-raise_issue <- function(
-  err_str
-  ){
-
+raise_issue <- function(err_str) {
   warning(err_str)
 }
 

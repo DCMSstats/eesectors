@@ -76,9 +76,12 @@ The extract functions will return a `data.frame`, and can be called as follows (
 
 ```r
 
-# Where working_file.xlsm is the spreadsheet containing the underlying data 
+# path to spreadsheet containing the underlying data 
 
-input <- 'working_file.xlsm' 
+input <- 'working_file_YYYY.xlsm' 
+
+# eesectors has a built in example spreadsheet
+input <- example_working_file("example_working_file.xlsx")
 
 extract_ABS_data(input) 
 

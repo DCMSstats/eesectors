@@ -33,7 +33,7 @@ The package can then be installed using
 able to use the `devtools::install_github()` commands as a result of
 network security settings. If this is the case, `eesectors` can be
 installed by downloading the [zip of the
-repository](https://github.com/DCMSstats/govstyle/archive/master.zip)
+repository](https://github.com/DCMSstats/eesectors/archive/master.zip)
 and installing the package locally using
 `devtools::install_local(<path to zip file>)`.
 
@@ -84,9 +84,12 @@ follows (see individual function documentation for more information
 about each of the arguments).
 
 
-    # Where working_file.xlsm is the spreadsheet containing the underlying data 
+    # path to spreadsheet containing the underlying data 
 
-    input <- 'working_file.xlsm' 
+    input <- 'working_file_YYYY.xlsm' 
+
+    # eesectors has a built in example spreadsheet
+    input <- example_working_file("example_working_file.xlsx")
 
     extract_ABS_data(input) 
 
@@ -117,61 +120,20 @@ evaluating the data.
     library(eesectors) 
     GVA_by_sector_2016 
 
-    ##      sector year        GVA
-    ## 1  creative 2010   65188.00
-    ## 2   culture 2010   20291.00
-    ## 3   digital 2010   97303.00
-    ## 4  gambling 2010    8407.00
-    ## 5     sport 2010    7016.00
-    ## 6  telecoms 2010   24738.00
-    ## 7   tourism 2010   49150.00
-    ## 8  creative 2011   69398.00
-    ## 9   culture 2011   20954.00
-    ## 10  digital 2011  102966.00
-    ## 11 gambling 2011    9268.00
-    ## 12    sport 2011    7358.00
-    ## 13 telecoms 2011   25436.00
-    ## 14  tourism 2011   53947.00
-    ## 15 creative 2012   73033.00
-    ## 16  culture 2012   21811.00
-    ## 17  digital 2012  105215.00
-    ## 18 gambling 2012    9800.00
-    ## 19    sport 2012    7901.00
-    ## 20 telecoms 2012   25985.00
-    ## 21  tourism 2012   57343.00
-    ## 22 creative 2013   77885.00
-    ## 23  culture 2013   23490.00
-    ## 24  digital 2013  110027.00
-    ## 25 gambling 2013    9950.00
-    ## 26    sport 2013    9789.00
-    ## 27 telecoms 2013   27976.00
-    ## 28  tourism 2013   58997.00
-    ## 29 creative 2014   81625.00
-    ## 30  culture 2014   23453.00
-    ## 31  digital 2014  111559.00
-    ## 32 gambling 2014   10212.00
-    ## 33    sport 2014   10288.00
-    ## 34 telecoms 2014   29095.00
-    ## 35  tourism 2014   60437.57
-    ## 36 creative 2015   87350.00
-    ## 37  culture 2015   26981.00
-    ## 38  digital 2015  118388.00
-    ## 39 gambling 2015   10300.00
-    ## 40    sport 2015   10133.00
-    ## 41 telecoms 2015   30246.00
-    ## 42  tourism 2015   62406.84
-    ## 43       UK 2010 1414635.00
-    ## 44       UK 2011 1452075.00
-    ## 45       UK 2012 1495576.00
-    ## 46       UK 2013 1551553.00
-    ## 47       UK 2014 1624276.00
-    ## 48       UK 2015 1661081.00
-    ## 49 all_dcms 2010  177069.13
-    ## 50 all_dcms 2011  189810.66
-    ## 51 all_dcms 2012  197915.11
-    ## 52 all_dcms 2013  209389.68
-    ## 53 all_dcms 2014  213286.79
-    ## 54 all_dcms 2015  220928.23
+    ## # A tibble: 54 × 3
+    ##      sector  year    GVA
+    ##      <fctr> <int>  <dbl>
+    ## 1  creative  2010  65188
+    ## 2   culture  2010  20291
+    ## 3   digital  2010  97303
+    ## 4  gambling  2010   8407
+    ## 5     sport  2010   7016
+    ## 6  telecoms  2010  24738
+    ## 7   tourism  2010  49150
+    ## 8  creative  2011  69398
+    ## 9   culture  2011  20954
+    ## 10  digital  2011 102966
+    ## # ... with 44 more rows
 
 When an object is instantiated into the `year_sector_data` class, a
 number of checks are run on the data passed as the first argument. These
