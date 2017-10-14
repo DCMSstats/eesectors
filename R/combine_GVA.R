@@ -92,7 +92,7 @@ combine_GVA <- function(
     # if not the default of console then a file called...
     futile.logger::flog.appender(futile.logger::appender.file(log_appender))
   }
-  
+
   #Annual business survey, duplicate 2014 data for 2015 and
   #then duplicate non SIC91 then add SIC 91 with sales data
   ABS_2015 <- filter(ABS, year == 2014) %>%
@@ -166,4 +166,5 @@ combine_GVA <- function(
   # Reset so that log is appended to console (the package default)
   futile.logger::flog.appender(futile.logger::appender.console())
 
+  return(GVA_by_sector)
 }
