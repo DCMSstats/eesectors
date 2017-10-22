@@ -246,3 +246,17 @@ elongate_SIC <- function(x) {
   return(x)
 
 }
+
+# for checking that tibbles have unique classes
+check_class <- function(df) {
+  if (!identical(
+    class(df), c(deparse(substitute(df)), "tbl_df", "tbl", "data.frame"))) {
+    stop(
+      paste0(
+        deparse(substitute(df)),
+        " must have been created by extract_",
+        deparse(substitute(df)),
+        "_data() and have class ",
+        deparse(substitute(df))))
+  }
+}
