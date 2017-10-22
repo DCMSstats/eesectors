@@ -167,6 +167,9 @@ extract_ABS_data <- function(
     is to disable the creation of such files.'
     )
 
-    return(x)
+  structure(
+    x,
+    class = c("ABS", class(x))
+  )
 
 }

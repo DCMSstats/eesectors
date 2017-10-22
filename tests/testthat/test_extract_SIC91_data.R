@@ -7,7 +7,9 @@ test_that(
   "extract_SIC91_data can extract data from a dummy spreadsheet",
   {
 
-    expect_message(SIC91 <- extract_SIC91_data(testxl, sheet_name = 'SIC 91 Sales Data'))
+    expect_message(
+      SIC91 <- extract_SIC91_data(
+        example_working_file("example_working_file.xlsx")))
 
     expect_is(SIC91, c('data.frame', 'tbl', 'tbl_df'))
     expect_equal_to_reference(SIC91, reference)

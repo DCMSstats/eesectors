@@ -91,6 +91,9 @@ extract_tourism_data <- function(
     is to disable the creation of such files.'
   )
 
-  return(x)
+  structure(
+    x,
+    class = c("tourism", class(x))
+  )
 
 }
