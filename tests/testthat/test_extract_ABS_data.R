@@ -7,7 +7,9 @@ test_that(
   "extract_ABS_data can extract data from a dummy spreadsheet",
   {
 
-    expect_message(ABS <- extract_ABS_data(testxl, sheet_name = 'New ABS Data'))
+    expect_message(
+      ABS <- extract_ABS_data(
+        example_working_file("example_working_file.xlsx")))
 
     expect_is(ABS, c('data.frame', 'tbl', 'tbl_df'))
     expect_equal_to_reference(ABS, reference)

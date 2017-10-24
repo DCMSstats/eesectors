@@ -9,7 +9,9 @@ test_that(
 
     sheet_range <- paste(paste(2010:2015), 'Use')
 
-    expect_message(GVA <- extract_GVA_data(testxl, sheet_range = sheet_range, header_rows = 8:9))
+    expect_message(
+      GVA <- extract_GVA_data(
+        example_working_file("example_working_file.xlsx")))
 
     # Check that GVA is the right kind of object, and identical to the reference
     # object.
@@ -24,7 +26,8 @@ test_that(
     # Additionally check that all of the columns from the test spreadsheet have
     # been properly picked up and transposed
 
-    expect_equal(unique(GVA$GVA), 1:120)
+    # the below is not applicable to new dummy data
+    # expect_equal(unique(GVA$GVA), 1:120)
 
 
   }
