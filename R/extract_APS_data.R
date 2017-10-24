@@ -35,7 +35,8 @@
 #'   (Employment status), "SECJMBR" (Employment status in second job), "PWTA14"
 #'   (Weights), "SEX", "AGES", "ETHUK11", (Ethnicty), "NATOX7" (Nationality),
 #'   "FTPT" (Full time / part time), "HIQUL15D" (Highest qualification),
-#'   "GORWKR" (Region of first job), "GORWK2R" (Region of second job).
+#'   "GORWKR" (Region of first job), "GORWK2R" (Region of second job),
+#'   "REFWKY" (Reference week year).
 #'
 #' @return The function returns the APS data as a dataframe.
 #'
@@ -56,19 +57,30 @@ extract_APS_data <- function(
     "INDC07M", "INDC07S", "INDSC07M", "INDSC07S",
     "SOC10M", "SOC10S", "INECAC05", "SECJMBR",
     "PWTA14", "SEX", "AGES", "ETHUK11", "NATOX7",
-    "FTPT", "HIQUL15D", "GORWKR", "GORWK2R"
+    "FTPT", "HIQUL15D", "GORWKR", "GORWK2R", "REFWKY"
   )
   ) {
 
   # Read the APS data
-  #APSdata=memisc::spss.system.file(x,to.lower=FALSE)
-  #APSdata <- memisc::as.data.set(APSdata)
-
   APSdata <- haven::read_spss(x)
+  colnames(APSdata) <- toupper(colnames(APSdata))
+
+  # Modify the keep variables if year < 2014
+  year <- eesectors:::yearfind(APSdata)
+  if (year<2015){
+    names(APSdata)[names(APSdata)=="HIQUL11D"] <- "HIQUL15D"
+  }
 
   # Select only the needed data
   APSdata <- APSdata[,keep_variables]
 
+  # Change the variables to things we'll actually find useful
+  APSdata$GORWKR <- eesectors:::regionsRecode(APSdata$GORWKR)
+  APSdata$GORWK2R <- eesectors:::regionsRecode(APSdata$GORWK2R)
+  APSdata$SECJMBR <- eesectors:::secondjobRecode(APSdata$SECJMBR)
+  APSdata$ETHUK11 <- eesectors:::ethnicityRecode(APSdata$ETHUK11)
+
   # Return a data frame of only the data we need
   return(APSdata)
+  #return(assign(paste0("aps",eesectors:::yearfind(APSdata)), APSdata, envir = globalenv()))
 }
