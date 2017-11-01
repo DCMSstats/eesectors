@@ -49,13 +49,11 @@
 #'   7. The data are printed to console, and can be saved out using the normal
 #'   methods, for instance \code{saveRDS}, or \code{write.csv}.
 #'
-#' @param x Location of the input spreadsheet file. Named something like
+#' @param path Location of the input spreadsheet file. Named something like
 #'   "working_file_dcms_VXX.xlsm".
 #' @param sheet_name The name of the spreadsheet in which the data are stored.
 #'   Defaults to \code{New ABS Data}.
-#' @param ... passes arguments to \code{readxl::read_excel()} which is the basis
-#'   of this function.
-
+#' @param col_num_vector Index of the columns to be extracted by the function.
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
@@ -67,7 +65,7 @@
 #' \dontrun{
 #' library(eesectors)
 #' extract_ABS_data(
-#' x = 'OFFICIAL_working_file_dcms_V13.xlsm',
+#' path = 'OFFICIAL_working_file_dcms_V13.xlsm',
 #' sheet_name = 'New ABS Data'
 #' )
 #' }

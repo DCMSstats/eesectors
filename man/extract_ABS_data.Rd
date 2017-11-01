@@ -4,17 +4,17 @@
 \alias{extract_ABS_data}
 \title{extract ABS data from ONS working file spreadsheet}
 \usage{
-extract_ABS_data(x, sheet_name = "New ABS Data", ...)
+extract_ABS_data(path, sheet_name = "New ABS Data", col_num_vector = c(1,
+  6:12))
 }
 \arguments{
-\item{x}{Location of the input spreadsheet file. Named something like
+\item{path}{Location of the input spreadsheet file. Named something like
 "working_file_dcms_VXX.xlsm".}
 
 \item{sheet_name}{The name of the spreadsheet in which the data are stored.
 Defaults to \code{New ABS Data}.}
 
-\item{...}{passes arguments to \code{readxl::read_excel()} which is the basis
-of this function.}
+\item{col_num_vector}{Index of the columns to be extracted by the function.}
 }
 \value{
 The function returns nothing, but saves the extracted dataset to
@@ -78,7 +78,7 @@ The best way to understand what happens when you run this function
 \dontrun{
 library(eesectors)
 extract_ABS_data(
-x = 'OFFICIAL_working_file_dcms_V13.xlsm',
+path = 'OFFICIAL_working_file_dcms_V13.xlsm',
 sheet_name = 'New ABS Data'
 )
 }
