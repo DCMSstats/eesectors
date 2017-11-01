@@ -75,87 +75,56 @@
 #' @export
 
 extract_ABS_data <- function(
-  x,
+  path,
   sheet_name = 'New ABS Data',
-  ...
-) {
+  col_num_vector = c(1, 6:12)) {
 
-  # Use readxl to load the data directly from the spreadsheet.
 
-  x <- readxl::read_excel(path = x, sheet = sheet_name, ...)
+  #readxl will read columns in as numeric if it can
+  #the 2016 data contains . in some columns which means the columns will be read
+  #in as character
+  df <-
+    suppressWarnings(
+      readxl::read_excel(
+        path = path, sheet = sheet_name))
+  df <- df[, col_num_vector]
 
-  # Check for and remove duplicated columns - in the 2016 publication, the 2013
-  # and 2014 columns were repeated. Note that this only assumes that the
-  # replication is complete. If two columns are present with the same name, but
-  # different content, this will simply choose the first column.
+  #determine most recent year of data
+  years <- suppressWarnings(as.numeric(colnames(df)))
+  years <- min(years[!is.na(years)]):max(years[!is.na(years)])
 
-  x <- x[, !duplicated(colnames(x))]
+  #replace full stops in data and convert to numeric
+  df[, colnames(df) %in% years] <- lapply(
+    df[, colnames(df) %in% years],
+    function(x) as.numeric(ifelse(x == ".", NA, x)))
 
-  # Identify which columns we are interested in (i.e. ones that look like years)
+  #check for missing columns
+  na_col_test(df)
 
-  year_mask <- suppressWarnings(!is.na(as.numeric(colnames(x))))
-  year_cols <- colnames(x)[year_mask]
-  year_cols <- make.names(year_cols)
+  #convert data to long format
+  df <- df %>%
+    tidyr::gather_(
+      key = "year",
+      value = "ABS",
+      gather_cols = years) %>%
+    filter(!is.na(DOMVAL)) %>%
+    filter(!is.na(ABS)) %>%
+    mutate(year = as.integer(year)) %>%
+    mutate(SIC = eesectors::clean_sic(as.character(DOMVAL)))
 
-  # Create sensible column names, to make selection easier
-  colnames(x) <- make.names(colnames(x))
+  #check columns names
+  if(
+    !identical(
+      colnames(df),
+      c("DOMVAL", "year", "ABS", "SIC")))
+    stop("column names have not been created correctly")
 
-  # In case there are other extraneous columns, such as ``, select out only the
-  # columns that we are interested in.
+  #check column types
+  df_types <- sapply(df, class)
+  names(df_types) <- NULL
+  if(!identical(df_types, c("character", "integer", "numeric", "character")))
+    stop("column classes have not been created correctly")
 
-  x <- dplyr::select_(x, 'DOMVAL', lazyeval::interp(~dplyr::matches(x), x = '^X[19]|[20]\\d{2}$'))
-
-  # Pivot the data into long form. In doing so, I discovered that some of the
-  # values in the original data were not being cleanly converted into an integer.
-  # Here I check why this is the case. This seems to be due to the presence of
-  # full stops in the data, which might be suppressed?, or look like they should
-  # be zeros. The function integrity_check is designed to check that the values
-  # that resolve to NA should really be NAs.
-
-  # First convert to long form
-
-  x <- tidyr::gather_(
-    data = x,
-    key = 'year',
-    value = 'ABS',
-    gather_cols = year_cols
-  )
-
-  # Then strip out the X in the year column, and conver to integer
-
-  x$year <- gsub('X','',x$year)
-  x$year <- as.integer(x$year)
-
-  # Run the integrity check function to check for conversion issues.
-
-  check_na <- eesectors::integrity_check(x$ABS)
-
-  # Check that there are no unexpected failures to convert numbers from character
-  # to numeric
-
-  testthat::expect_is(x$ABS[check_na], 'character')
-  #testthat::expect_equal(unique(x$abs[check_na]), '.')
-
-  # Lots of full stops... After examining the data, it looks like these values
-  # should be zeros. But will chase up with DCMS. Convert them to zeros here:
-
-  x <- dplyr::mutate_(
-    x,
-    ABS = ~ifelse(check_na, 0, ABS),
-    ABS = ~as.numeric(ABS)
-  )
-
-  # Now check again that they were successfully removed.
-
-  testthat::expect_is(x$ABS[check_na], 'numeric')
-  testthat::expect_equal(sum(x$ABS[check_na]), 0)
-
-  # Yes... they have been converted to zeros as expected
-
-  # Finally, clean up the sic code by adding a full stop to cases when it is a
-  # three or four character codes.
-
-  x$SIC <- eesectors::clean_sic(x$DOMVAL)
 
   message(
     '################################# WARNING #################################
@@ -168,8 +137,9 @@ extract_ABS_data <- function(
     )
 
   structure(
-    x,
-    class = c("ABS", class(x))
+    df,
+    years = years,
+    class = c("ABS", class(df))
   )
 
 }

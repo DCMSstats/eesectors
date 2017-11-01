@@ -138,6 +138,24 @@ integrity_check <- function(x) {
 
 }
 
+#remove trailing zeros
+remove_trailing_zeros <- function(x) {
+  if(is.na(x) | is.numeric(x)) {
+    return(x)
+  }
+  else {
+    for(i in nchar(x):0) {
+      if(substr(x, i, i) == "0") {
+        x <- substr(x, 0, i - 1)
+      }
+      else {
+        return(x)
+      }
+    }
+  }
+}
+
+
 #' @title Clean SIC codes
 #'
 #' @description Converts 3 or 4 digit SIC codes from format \code{123} or
@@ -149,10 +167,12 @@ integrity_check <- function(x) {
 #' @return A cleaned character vector of SIC codes.
 #' @export
 
+
 clean_sic <- function(x) {
 
   correct_sic <- function(y) {
-    if (nchar(y) %in% 3:4) {
+    y <- remove_trailing_zeros(y)
+    if (nchar(y) %in% 3:5) {
 
       left <- substr(y, 1, 2)
       right <- substr(y, 3, nchar(y))
@@ -258,5 +278,13 @@ check_class <- function(df) {
         deparse(substitute(df)),
         "_data() and have class ",
         deparse(substitute(df))))
+  }
+}
+
+#check for missing columns
+na_col_test <-  function (x) {
+  w <- sapply(x, function(x)all(is.na(x)))
+  if (any(w)) {
+    stop(paste("All NA in columns", paste(which(w), collapse=", ")))
   }
 }
