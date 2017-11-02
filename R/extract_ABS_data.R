@@ -79,6 +79,9 @@ extract_ABS_data <- function(
   sheet_name = 'New ABS Data',
   col_num_vector = c(1, 6:12)) {
 
+  #ABS data explanation - in working file, for each full SIC, they look up
+  #the GVA from ABS for the full sic and also the two digit part. then the
+  #percentage the former of the latter is calculated and used to weight gva
 
   #readxl will read columns in as numeric if it can
   #the 2016 data contains . in some columns which means the columns will be read
@@ -110,19 +113,20 @@ extract_ABS_data <- function(
     filter(!is.na(DOMVAL)) %>%
     filter(!is.na(ABS)) %>%
     mutate(year = as.integer(year)) %>%
-    mutate(SIC = eesectors::clean_sic(as.character(DOMVAL)))
+    mutate(SIC = eesectors::clean_sic(as.character(DOMVAL))) %>%
+    select(-DOMVAL)
 
   #check columns names
   if(
     !identical(
       colnames(df),
-      c("DOMVAL", "year", "ABS", "SIC")))
+      c("year", "ABS", "SIC")))
     stop("column names have not been created correctly")
 
   #check column types
   df_types <- sapply(df, class)
   names(df_types) <- NULL
-  if(!identical(df_types, c("character", "integer", "numeric", "character")))
+  if(!identical(df_types, c("integer", "numeric", "character")))
     stop("column classes have not been created correctly")
 
 

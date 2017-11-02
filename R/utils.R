@@ -144,7 +144,7 @@ remove_trailing_zeros <- function(x) {
     return(x)
   }
   else {
-    for(i in nchar(x):0) {
+    for(i in nchar(x):3) {
       if(substr(x, i, i) == "0") {
         x <- substr(x, 0, i - 1)
       }
@@ -171,9 +171,9 @@ remove_trailing_zeros <- function(x) {
 clean_sic <- function(x) {
 
   correct_sic <- function(y) {
-    y <- remove_trailing_zeros(y)
-    if (nchar(y) %in% 3:5) {
 
+    if (nchar(y) %in% 3:5) {
+      y <- remove_trailing_zeros(y)
       left <- substr(y, 1, 2)
       right <- substr(y, 3, nchar(y))
       y <- paste0(left, '.', right)

@@ -4,14 +4,15 @@
 \alias{extract_ABS_data}
 \title{extract ABS data from ONS working file spreadsheet}
 \usage{
-extract_ABS_data(x, sheet_name = "New ABS Data", ...)
+extract_ABS_data(path, sheet_name = "New ABS Data", col_num_vector = c(1,
+  6:12))
 }
 \arguments{
-\item{x}{Location of the input spreadsheet file. Named something like
-"working_file_dcms_VXX.xlsm".}
-
 \item{sheet_name}{The name of the spreadsheet in which the data are stored.
 Defaults to \code{New ABS Data}.}
+
+\item{x}{Location of the input spreadsheet file. Named something like
+"working_file_dcms_VXX.xlsm".}
 
 \item{...}{passes arguments to \code{readxl::read_excel()} which is the basis
 of this function.}

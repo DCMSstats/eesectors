@@ -1,3 +1,28 @@
+#' @title extract GVA data from ONS working file spreadsheet
+#'
+#' @description The data which underlies the Economic Sectors for DCMS sectors
+#'   data is typically provided to DCMS as a spreadsheet from the Office for
+#'   National Statistics. This function extracts the ABS data from that
+#'   spreadsheet, and saves it to .Rds format.
+#'
+#'   IT IS HIGHLY ADVISEABLE TO ENSURE THAT THE DATA WHICH ARE CREATED BY THIS
+#'   FUNCTION ARE NOT STORED IN A FOLDER WHICH IS A GITHUB REPOSITORY TO
+#'   MITIGATE AGAINST ACCIDENTAL COMMITTING OF OFFICIAL DATA TO GITHUB. TOOLS TO
+#'   FURTHER HELP MITIGATE THIS RISK ARE AVAILABLE AT
+#'   https://github.com/ukgovdatascience/dotfiles.
+#'
+#' @details The best way to understand what happens when you run this function
+#'   is to look at the source code, which is available at
+#'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}. The
+#'   code is relatively transparent and well documented.
+#' @param x Location of the input spreadsheet file. Named something like
+#'   "working_file_dcms_VXX.xlsm".
+#' @param sheet_name The name of the spreadsheet in which the data are stored.
+#'   Defaults to \code{New ABS Data}.
+#' @param ... passes arguments to \code{readxl::read_excel()} which is the basis
+#'   of this function
+#'
+#' @export
 
 
 #excel file explantion
