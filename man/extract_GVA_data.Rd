@@ -8,10 +8,10 @@ extract_GVA_data(path, sheet = "CP Millions", dstart = c(15, 3),
   dend = c(40, 184), cnames = 5)
 }
 \arguments{
-\item{x}{Location of the input spreadsheet file. Named something like
+\item{path}{Location of the input spreadsheet file. Named something like
 "working_file_dcms_VXX.xlsm".}
 
-\item{sheet_name}{The name of the spreadsheet in which the data are stored.
+\item{sheet}{The name of the spreadsheet in which the data are stored.
 Defaults to \code{New ABS Data}.}
 
 \item{...}{passes arguments to \code{readxl::read_excel()} which is the basis

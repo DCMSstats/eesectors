@@ -15,9 +15,9 @@
 #'   is to look at the source code, which is available at
 #'   \url{https://github.com/ukgovdatascience/eesectors/blob/master/R/}. The
 #'   code is relatively transparent and well documented.
-#' @param x Location of the input spreadsheet file. Named something like
+#' @param path Location of the input spreadsheet file. Named something like
 #'   "working_file_dcms_VXX.xlsm".
-#' @param sheet_name The name of the spreadsheet in which the data are stored.
+#' @param sheet The name of the spreadsheet in which the data are stored.
 #'   Defaults to \code{New ABS Data}.
 #' @param ... passes arguments to \code{readxl::read_excel()} which is the basis
 #'   of this function
