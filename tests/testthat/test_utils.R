@@ -72,8 +72,10 @@ test_that(
     expect_identical(clean_sic(c(1234,1234)), c("12.34","12.34"))
     expect_identical(clean_sic(NA), NA)
     expect_identical(clean_sic(12), 12)
-    expect_identical(clean_sic(12345), 12345)
-    expect_identical(clean_sic(c(12,123,1234,12345, NA)), c('12', '12.3', '12.34', 12345, NA))
+    expect_identical(clean_sic(123456), 123456)
+    expect_identical(
+      clean_sic(c(12,123,1234,12345, 123456, NA)),
+      c('12', '12.3', '12.34', '12.345', 123456, NA))
 
   }
 )

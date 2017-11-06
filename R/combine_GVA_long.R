@@ -49,6 +49,8 @@ combine_GVA_long <- function(
     #this line makes no sense to me - we are just duplicated rows we already
     #have so surely it is redundant??
     bind_rows(filter(ABS, !SIC %in% unique(SIC91$SIC))) %>%
+
+    #simply appending SIC sales data which supplements the ABS for SIC 91
     bind_rows(SIC91)
 
 
@@ -56,6 +58,7 @@ combine_GVA_long <- function(
   denom <- filter(ABS_2015, SIC %in% unique(eesectors::DCMS_sectors$SIC2)) %>%
     select(year, ABS, SIC) %>%
     rename(ABS_2digit_GVA = ABS, SIC2 = SIC)
+
 
   #add ABS to DCMS sectors
   GVA_sectors <- left_join(eesectors::DCMS_sectors, ABS_2015, by = c('SIC')) %>%
