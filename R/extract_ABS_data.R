@@ -51,9 +51,9 @@
 #'
 #' @param path Location of the input spreadsheet file. Named something like
 #'   "working_file_dcms_VXX.xlsm".
-#' @param sheet_name The name of the spreadsheet in which the data are stored.
+#' @param sheet The name of the spreadsheet in which the data are stored.
 #'   Defaults to \code{New ABS Data}.
-#' @param col_num_vector Index of the columns to be extracted by the function.
+#' @param format Specify which years format the data is in
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
@@ -74,8 +74,8 @@
 
 extract_ABS_data <- function(
   path,
-  sheet_name = 'New ABS Data',
-  col_num_vector = c(1, 6:12)) {
+  sheet = 'New ABS Data',
+  format = 2015) {
 
   #ABS data explanation - in working file, for each full SIC, they look up
   #the GVA from ABS for the full sic and also the two digit part. then the
@@ -87,8 +87,18 @@ extract_ABS_data <- function(
   df <-
     suppressWarnings(
       readxl::read_excel(
-        path = path, sheet = sheet_name))
-  df <- df[, col_num_vector]
+        path = path, sheet = sheet))
+
+  # choose where to select excel data from
+  if(format == 2015) {
+      df <- df[, c(1, 6:12)]
+  } else if(format == 2016) {
+      df <- rbind(
+        df[, c(1, 4:11)],
+        df[5:86, 13:21] %>%
+          rename(DOMVAL = Checks))
+  } else
+      stop("Invalid format argument")
 
   #determine most recent year of data
   years <- suppressWarnings(as.numeric(colnames(df)))
