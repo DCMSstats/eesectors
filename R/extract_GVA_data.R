@@ -19,8 +19,13 @@
 #'   "working_file_dcms_VXX.xlsm".
 #' @param sheet The name of the spreadsheet in which the data are stored.
 #'   Defaults to \code{New ABS Data}.
-#' @param ... passes arguments to \code{readxl::read_excel()} which is the basis
-#'   of this function
+#' @param dstart numeric vector containing reference to excel cell
+#' c(<row number>, <column number>) where data (excluding column headings)
+#' starts
+#' @param dend numeric vector containing reference to excel cell
+#' c(<row number>, <column number>) where data (excluding column headings)
+#' ends
+#' @param cnames row containg column headings
 #'
 #' @export
 

@@ -14,8 +14,15 @@ extract_GVA_data(path, sheet = "CP Millions", dstart = c(15, 3),
 \item{sheet}{The name of the spreadsheet in which the data are stored.
 Defaults to \code{New ABS Data}.}
 
-\item{...}{passes arguments to \code{readxl::read_excel()} which is the basis
-of this function}
+\item{dstart}{numeric vector containing reference to excel cell
+c(<row number>, <column number>) where data (excluding column headings)
+starts}
+
+\item{dend}{numeric vector containing reference to excel cell
+c(<row number>, <column number>) where data (excluding column headings)
+ends}
+
+\item{cnames}{row containg column headings}
 }
 \description{
 The data which underlies the Economic Sectors for DCMS sectors
