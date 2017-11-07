@@ -93,10 +93,12 @@ extract_ABS_data <- function(
   if(format == 2015) {
       df <- df[, c(1, 6:12)]
   } else if(format == 2016) {
-      df <- rbind(
-        df[, c(1, 4:11)],
-        df[5:86, 13:21] %>%
-          rename(DOMVAL = Checks))
+      df <-
+        rbind(
+          #df[, c(1, 4:11)], raw data
+          df[91:161, 13:21],
+          df[c(5:86, 89), 13:21]) %>%
+        rename(DOMVAL = Checks)
   } else
       stop("Invalid format argument")
 
@@ -121,8 +123,11 @@ extract_ABS_data <- function(
     filter(!is.na(DOMVAL)) %>%
     filter(!is.na(ABS)) %>%
     mutate(year = as.integer(year)) %>%
-    mutate(SIC = eesectors::clean_sic(as.character(DOMVAL))) %>%
+
+    mutate(SIC = DOMVAL) %>%
     select(-DOMVAL)
+    #mutate(SIC = eesectors::clean_sic(as.character(DOMVAL))) %>%
+    #select(-DOMVAL)
 
   #check columns names
   if(
