@@ -78,15 +78,13 @@ test_that(
     expect_identical(remove_trailing_zeros("1234"), "1234")
     expect_identical(remove_trailing_zeros("1234."), "1234.")
     expect_identical(remove_trailing_zeros("12.34"), "12.34")
-    expect_identical(remove_trailing_zeros("123450"), "12345")
-    expect_identical(remove_trailing_zeros("1234560"), "123456")
+    expect_identical(remove_trailing_zeros("123450"), "123450")
   }
 )
 
 test_that(
   'clean_sic works as expected.',
   {
-
     expect_identical(clean_sic(1234), "12.34")
     expect_identical(clean_sic(c(1234,1234)), c("12.34","12.34"))
     expect_identical(clean_sic(NA), NA)
@@ -97,7 +95,8 @@ test_that(
       c('12', '12.3', '12.34', '12.345', 123456, NA))
     expect_identical(clean_sic(12000), "12.000")
     expect_identical(clean_sic("12000"), "12")
-
+    expect_identical(clean_sic("10000"), "10")
+    expect_identical(clean_sic("10"), "10")
   }
 )
 

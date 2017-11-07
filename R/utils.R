@@ -140,7 +140,7 @@ integrity_check <- function(x) {
 
 #remove trailing zeros
 remove_trailing_zeros <- function(x) {
-  if(is.na(x) | is.numeric(x)) {
+  if(is.na(x) | is.numeric(x) | !nchar(x) %in% 3:5) {
     return(x)
   }
   else {
