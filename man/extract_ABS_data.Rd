@@ -4,17 +4,16 @@
 \alias{extract_ABS_data}
 \title{extract ABS data from ONS working file spreadsheet}
 \usage{
-extract_ABS_data(path, sheet_name = "New ABS Data", col_num_vector = c(1,
-  6:12))
+extract_ABS_data(path, sheet = "New ABS Data", format = 2015)
 }
 \arguments{
 \item{path}{Location of the input spreadsheet file. Named something like
 "working_file_dcms_VXX.xlsm".}
 
-\item{sheet_name}{The name of the spreadsheet in which the data are stored.
+\item{sheet}{The name of the spreadsheet in which the data are stored.
 Defaults to \code{New ABS Data}.}
 
-\item{col_num_vector}{Index of the columns to be extracted by the function.}
+\item{format}{Specify which years format the data is in}
 }
 \value{
 The function returns nothing, but saves the extracted dataset to
