@@ -140,7 +140,7 @@ integrity_check <- function(x) {
 
 #remove trailing zeros
 remove_trailing_zeros <- function(x) {
-  if(is.na(x) | is.numeric(x)) {
+  if(is.na(x) | is.numeric(x) | !nchar(x) %in% 3:5) {
     return(x)
   }
   else {
@@ -152,6 +152,7 @@ remove_trailing_zeros <- function(x) {
         return(x)
       }
     }
+    return(x)
   }
 }
 
@@ -172,13 +173,13 @@ clean_sic <- function(x) {
 
   correct_sic <- function(y) {
 
-    if (nchar(y) %in% 3:5) {
+    if (nchar(remove_trailing_zeros(y)) %in% 3:5) {
       y <- remove_trailing_zeros(y)
       left <- substr(y, 1, 2)
       right <- substr(y, 3, nchar(y))
       y <- paste0(left, '.', right)
 
-    } else return(y)
+    } else return(remove_trailing_zeros(y))
   }
 
   x <- unlist(lapply(x, correct_sic))
