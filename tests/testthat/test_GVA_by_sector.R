@@ -21,7 +21,8 @@ test_that(
   "GVA_by_sector returns object with right class", {
     expect_identical(
       class(GVA_by_sector),
-      c("GVA_by_sector", "tbl_df", "tbl", "data.frame"))
+      #c("GVA_by_sector", "tbl_df", "tbl", "data.frame"))
+      c("year_sector_data"))
   }
 )
 
