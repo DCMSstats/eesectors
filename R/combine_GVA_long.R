@@ -40,11 +40,11 @@ combine_GVA_long <- function(
   check_class(GVA)
   check_class(SIC91)
 
-
+  abs_year <- max(attr(ABS, "years"))
   #Annual business survey, duplicate 2014 data for 2015 and
   #then duplicate non SIC91 then add SIC 91 with sales data
-  ABS_2015 <- filter(ABS, year == 2014) %>%
-    mutate(year = 2015) %>%
+  ABS_2015 <- filter(ABS, year == abs_year) %>%
+    mutate(year = abs_year + 1) %>%
 
     #this line makes no sense to me - we are just duplicated rows we already
     #have so surely it is redundant??
@@ -73,8 +73,11 @@ combine_GVA_long <- function(
     left_join(GVA, by = c('SIC2' = 'SIC', 'year')) %>% #add in GVA if SIC appears in SIC2
     mutate(BB16_GVA = perc_split * GVA)
 
+  years = sort(unique(GVA_sectors$year))
+
   structure(
     GVA_sectors,
+    years = years,
     class = c("combine_GVA_long", class(GVA_sectors))
   )
 }
