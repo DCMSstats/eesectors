@@ -42,7 +42,7 @@ GVA_by_sector <- function(
 
     #append total UK GVA
     bind_rows(
-      filter(GVA, grepl('total.*intermediate.*',SIC)) %>%
+      filter(GVA, SIC == "year_total") %>%
         mutate(sector = "UK") %>%
         select(year, sector, GVA)
     ) %>%
@@ -71,8 +71,34 @@ GVA_by_sector <- function(
     select(sector, year, GVA) %>%
     arrange(year, sector)
 
-  structure(
-    GVA_by_sector,
-    class = c("GVA_by_sector", class(combine_GVA_long)[-1])
+  # structure(
+  #   GVA_by_sector,
+  #   class = c("GVA_by_sector", class(combine_GVA_long)[-1])
+  # )
+
+  sectors_set <- c(
+    "creative"    = "Creative Industries",
+    "culture"    = "Cultural Sector",
+    "digital"     = "Digital Sector",
+    "gambling"    = "Gambling",
+    "sport"       = "Sport",
+    "telecoms"    = "Telecoms",
+    "tourism"     = "Tourism",
+    "all_dcms"    = "All DCMS sectors",
+    "perc_of_UK"  = "% of UK GVA",
+    "UK"          = "UK"
   )
+
+  x <- GVA_by_sector
+  structure(
+    list(
+      df = x,
+      colnames = colnames(x),
+      type = colnames(x)[!colnames(x) %in% c('year','sector')],
+      sector_levels = levels(x$sector),
+      sectors_set = sectors_set,
+      years = unique(x$year)
+    ),
+    class = "year_sector_data")
+
 }
