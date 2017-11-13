@@ -64,7 +64,7 @@ GVA_by_sector <- function(
     select(-overlap) %>%
 
     #final clean up
-    filter(year %in% 2010:2015) %>%
+    filter(year %in% 2010:max(attr(combine_GVA_long, "years"))) %>%
     mutate(GVA = round(GVA, 2),
            sector = factor(sector),
            year = as.integer(year)) %>%
