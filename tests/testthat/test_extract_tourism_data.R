@@ -7,7 +7,9 @@ test_that(
   "extract_tourism_data can extract data from a dummy spreadsheet",
   {
 
-    expect_message(tourism <- extract_tourism_data(testxl, sheet_name = 'Tourism'))
+    expect_message(
+      tourism <- extract_tourism_data(
+        example_working_file("example_working_file.xlsx")))
     expect_is(tourism, c('data.frame', 'tbl', 'tbl_df'))
     expect_equal_to_reference(tourism, reference)
 

@@ -57,9 +57,9 @@ year_sector_table.year_sector_data <- function(x, html = FALSE, fmt = '%.1f', ..
 
     df_wide <- dplyr::mutate_(
       df_wide,
-      since_2014 = ~relative_to(`2014`,`2015`, digits = 1),
-      since_2010 = ~relative_to(`2010`,`2015`, digits = 1),
-      UK_perc = ~100 + relative_to(total_GVA[[1]],`2015`, digits = 1)
+      since_2015 = ~relative_to(`2015`,`2016`, digits = 1),
+      since_2010 = ~relative_to(`2010`,`2016`, digits = 1),
+      UK_perc = ~100 + relative_to(total_GVA[[1]],`2016`, digits = 1)
     )
 
     # To avoid headaches later: convert the column names into syntactically

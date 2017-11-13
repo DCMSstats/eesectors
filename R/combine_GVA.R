@@ -130,7 +130,7 @@ combine_GVA <- function(
 
     #append total UK GVA
     bind_rows(
-      filter(GVA, grepl('total.*intermediate.*',SIC)) %>%
+      filter(GVA, SIC == "year_total") %>%
         mutate(sector = "UK") %>%
         select(year, sector, GVA)
     ) %>%
