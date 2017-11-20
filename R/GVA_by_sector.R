@@ -40,7 +40,7 @@ GVA_by_sector <- function(
   GVA_by_sector <- dplyr::group_by(combine_GVA_long, year, sector) %>%
     summarise(GVA = sum(BB16_GVA)) %>%
 
-    #append total UK GVA
+    #append total UK GVA by year
     bind_rows(
       filter(GVA, SIC == "year_total") %>%
         mutate(sector = "UK") %>%

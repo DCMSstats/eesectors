@@ -61,6 +61,7 @@ extract_GVA_data <- function(
       col_types = rep("numeric",dend[2]))
   )
 
+  # subset data to the table we want
   data2 <- data.frame(t(data[dstart[1]:dend[1], (dstart[2] + 1):dend[2]]))
   colnames(data2) <- unlist(data[dstart[1]:dend[1], dstart[2]])
 
@@ -71,9 +72,10 @@ extract_GVA_data <- function(
 
   SIC <- as.character(t(SIC[cnames, (dstart[2] + 1):dend[2]]))
   gva <- cbind(SIC, data2, stringsAsFactors = FALSE)
+  gva[1, 1] <- "year_total"
 
   gva <- gva %>%
-    filter(SIC %in% eesectors::DCMS_sectors$SIC2)
+    filter(SIC %in% eesectors::DCMS_sectors$SIC2 | SIC == "year_total")
 
 
   #determine most recent year of data
@@ -83,8 +85,8 @@ extract_GVA_data <- function(
   #check for missing columns
   na_col_test(gva)
 
-  #check number of SIC codes in dataset
-  if (nrow(gva) != length(unique((eesectors::DCMS_sectors$SIC2))))
+  #check number of SIC codes in dataset (+1 for year_total)
+  if (nrow(gva) != length(unique((eesectors::DCMS_sectors$SIC2))) + 1)
     stop(
       paste0(
         "GVA data has rows for ",
@@ -98,15 +100,6 @@ extract_GVA_data <- function(
     tidyr::gather_(key = "year", value = "GVA", gather_cols = years) %>%
     mutate(year = as.integer(year)) %>%
     as.tbl()
-
-  # add total of SICs for each year
-  totals <- gva2 %>%
-    group_by(year) %>%
-    summarise(GVA = sum(GVA)) %>%
-    mutate(SIC = "year_total") %>%
-    select(SIC, year, GVA)
-
-  gva2 <- rbind(gva2, totals)
 
   #check columns names
   if(

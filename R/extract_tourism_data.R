@@ -79,6 +79,8 @@ extract_tourism_data <- function(
 
   x <- x[mask,]
 
+  x <- x[, 1:5]
+
   # Return the data to the console.
 
   message(

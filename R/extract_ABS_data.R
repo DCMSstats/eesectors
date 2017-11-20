@@ -102,6 +102,9 @@ extract_ABS_data <- function(
   } else
       stop("Invalid format argument")
 
+  #remove duplicate SIC 92
+  df <- df[-149, ]
+
   #determine most recent year of data
   years <- suppressWarnings(as.numeric(colnames(df)))
   years <- min(years[!is.na(years)]):max(years[!is.na(years)])
