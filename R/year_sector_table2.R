@@ -39,14 +39,14 @@ year_sector_table2 <- function(GVA_by_sub_sector, html, fmt, ...) {
       mutate(change1015 = (`2016` / `2010` - 1) *100) %>%
       mutate(ukperc = 100 * `2016` / total2016) %>%
 
-      mutate_all(function(x) round(x, 1)) %>%
-      mutate(`2010` = round(`2010`, 0)) %>%
-      mutate(`2011` = round(`2011`, 0)) %>%
-      mutate(`2012` = round(`2012`, 0)) %>%
-      mutate(`2013` = round(`2013`, 0)) %>%
-      mutate(`2014` = round(`2014`, 0)) %>%
-      mutate(`2015` = round(`2015`, 0)) %>%
-      mutate(`2016` = round(`2016`, 0)) %>%
+      # mutate_all(function(x) round(x, 1)) %>%
+      # mutate(`2010` = round(`2010`, 0)) %>%
+      # mutate(`2011` = round(`2011`, 0)) %>%
+      # mutate(`2012` = round(`2012`, 0)) %>%
+      # mutate(`2013` = round(`2013`, 0)) %>%
+      # mutate(`2014` = round(`2014`, 0)) %>%
+      # mutate(`2015` = round(`2015`, 0)) %>%
+      # mutate(`2016` = round(`2016`, 0)) %>%
       rename(
         `Sub-sector` = sub_sector_categories,
         `% change 2015 - 2016` = change1516,

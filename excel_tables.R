@@ -6,24 +6,25 @@ wb <- loadWorkbook(file =
   "G:/Economic Estimates/Rmarkdown/DCMS_Sectors_Economic_Estimates_Template.xlsx")
 
 ysd_headings <-
-  c("sector",
-    GVA_by_sector2$years,
+  c("Sector",
+    2010:2015,
+    "2016 (p)",
     "% change 2015 - 2016",
     "% change 2010-2016",
     "% of UK GVA 2016") %>%
   matrix(nrow = 1)
 
 # Contents
-writeData(wb, 1, x = "November 2017", startCol = 2, startRow = 10)
+#writeData(wb, 1, x = "November 2017", startCol = 2, startRow = 10)
 
 # 3.1 - GVA (£m)
 writeData(wb, 2, x = combined_GVA2, startCol = 1, startRow = 6)
 writeData(wb, 2, x = ysd_headings, startCol = 1, startRow = 6, colNames = FALSE)
-writeData(wb, 2, x = "Years: 2010 - 2016", startCol = 1, startRow = 3)
+#writeData(wb, 2, x = "Years: 2010 - 2016", startCol = 1, startRow = 3)
 
 # 3.1a - GVA (2010=100)
 writeData(wb, 3, x = indexed, startCol = 1, startRow = 6)
-writeData(wb, 3, x = "Years: 2010 - 2016", startCol = 1, startRow = 3)
+#writeData(wb, 3, x = "Years: 2010 - 2016", startCol = 1, startRow = 3)
 
 saveWorkbook(wb, "G:/Economic Estimates/Rmarkdown/excel_tables.xlsx", overwrite = TRUE)
 

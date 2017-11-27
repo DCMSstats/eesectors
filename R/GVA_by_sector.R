@@ -30,12 +30,14 @@
 GVA_by_sector <- function(
   combine_GVA_long = NULL,
   GVA = NULL,
-  tourism = NULL
+  tourism = NULL,
+  charities = NULL
 ) {
 
   check_class(combine_GVA_long)
   check_class(GVA)
   check_class(tourism)
+
 
   GVA_by_sector <- dplyr::group_by(combine_GVA_long, year, sector) %>%
     summarise(GVA = sum(BB16_GVA)) %>%
@@ -51,22 +53,39 @@ GVA_by_sector <- function(
     bind_rows(
       mutate(tourism, sector = "tourism") %>%
         select(year, sector, GVA)
+    ) %>%
+
+    #append charitites data
+    bind_rows(
+      mutate(charities, sector = "charities") %>%
+        select(year, sector, GVA)
     )
 
   #add overlap info from tourism in order to calculate GVA for sector=all_dcms
   tourism_all_sectors <- mutate(tourism, sector = "all_dcms") %>%
     select(year, sector, overlap)
 
+  #add overlap info from tourism in order to calculate GVA for sector=all_dcms
+  charities_all_sectors <- mutate(charities, sector = "all_dcms") %>%
+    select(year, sector, overlap)
+
+
   GVA_by_sector <-
     left_join(GVA_by_sector, tourism_all_sectors, by = c("year", "sector")) %>%
     ungroup() %>%
     mutate(GVA = ifelse(!is.na(overlap), overlap + GVA, GVA)) %>%
-    select(-overlap) %>%
+    select(-overlap)
+
+  GVA_by_sector <-
+    left_join(GVA_by_sector, charities_all_sectors, by = c("year", "sector")) %>%
+    ungroup() %>%
+    mutate(GVA = ifelse(!is.na(overlap), overlap + GVA, GVA)) %>%
+    select(-overlap)
 
     #final clean up
+  GVA_by_sector <- GVA_by_sector %>%
     filter(year %in% 2010:max(attr(combine_GVA_long, "years"))) %>%
-    mutate(GVA = round(GVA, 2),
-           sector = factor(sector),
+    mutate(sector = factor(sector),
            year = as.integer(year)) %>%
     select(sector, year, GVA) %>%
     arrange(year, sector)
@@ -77,8 +96,9 @@ GVA_by_sector <- function(
   # )
 
   sectors_set <- c(
+    "charities"   = "Civil Society (Non-market charities)",
     "creative"    = "Creative Industries",
-    "culture"    = "Cultural Sector",
+    "culture"     = "Cultural Sector",
     "digital"     = "Digital Sector",
     "gambling"    = "Gambling",
     "sport"       = "Sport",

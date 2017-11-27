@@ -61,8 +61,8 @@ GVA_by_sub_sector <- function(
 
     #final clean up
     filter(year %in% 2010:max(attr(combine_GVA_long, "years"))) %>%
-    mutate(GVA = round(GVA, 2),
-           sub_sector_categories = factor(sub_sector_categories),
+    mutate(#GVA = round(GVA, 2),
+           #sub_sector_categories = factor(sub_sector_categories),
            year = as.integer(year)) %>%
     select(sub_sector_categories, year, GVA) %>%
     arrange(year, sub_sector_categories)

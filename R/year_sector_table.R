@@ -57,10 +57,18 @@ year_sector_table.year_sector_data <- function(x, html = FALSE, fmt = '%.1f', ..
 
     df_wide <- dplyr::mutate_(
       df_wide,
-      since_2015 = ~relative_to(`2015`,`2016`, digits = 1),
-      since_2010 = ~relative_to(`2010`,`2016`, digits = 1),
-      UK_perc = ~100 + relative_to(total_GVA[[1]],`2016`, digits = 1)
-    )
+      since_2015 = ~relative_to(`2015`,`2016`, digits = 10),
+      since_2010 = ~relative_to(`2010`,`2016`, digits = 10),
+      UK_perc = ~100 + relative_to(total_GVA[[1]],`2016`, digits = 10)
+    ) %>%
+      mutate(`2010` = `2010` / 1000) %>%
+      mutate(`2011` = `2011` / 1000) %>%
+      mutate(`2012` = `2012` / 1000) %>%
+      mutate(`2013` = `2013` / 1000) %>%
+      mutate(`2014` = `2014` / 1000) %>%
+      mutate(`2015` = `2015` / 1000) %>%
+      mutate(`2016` = `2016` / 1000)
+
 
     # To avoid headaches later: convert the column names into syntactically
     # valid ones
@@ -93,12 +101,13 @@ year_sector_table.year_sector_data <- function(x, html = FALSE, fmt = '%.1f', ..
 
     df_table <- dplyr::arrange_(df_table, ~sector)
 
+
       # Format numbers for output using roundf. Better to refer to these columns
       # not by index, but will return to this problem when the method is
       # generalised.
 
-      df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)] <- roundf(df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)], fmt)
-      df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)] <- sprintf(fmt, as.numeric(df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)]))
+      # df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)] <- roundf(df_table[df_table$sector != 'perc_of_UK', paste0('X', x$years)], fmt)
+      # df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)] <- sprintf(fmt, as.numeric(df_table[df_table$sector == 'perc_of_UK', paste0('X', x$years)]))
 
       # Finally set
 
