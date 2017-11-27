@@ -38,7 +38,6 @@
 #' @param col_names character vector used to rename the column names from the
 #'   imported spreadsheet. Defaults to
 #'   \code{c('year','gva','total','perc','overlap')}.
-#' @param ... additional arguments to be passed to \code{readxl::read_excel}.
 #'
 #' @return The function returns nothing, but saves the extracted dataset to
 #'   \code{file.path(output_path, 'OFFICIAL_ABS.Rds')}. This is an R data
@@ -57,29 +56,23 @@
 #'
 #' @export
 
-extract_tourism_data <- function(
+extract_charities_data <- function(
   x,
-  sheet_name = 'Tourism',
-  col_names = c('year','GVA','total','perc','overlap'),
-  ...
+  sheet_name = 'Charities',
+  col_names = c('year','GVA','total','perc','overlap')
 ) {
 
   # Load the data using readr. Note that additional arguments (e.g. skip, and
   # colnames) can be passed to read_excel using the ... operator
 
-  x <- readxl::read_excel(path = x, sheet = sheet_name, col_names = TRUE, ...)
+  df <- readxl::read_excel(path = x, sheet = sheet_name, col_names = TRUE, skip = 1)
 
   # Standardise the column names.
 
-  colnames(x) <- col_names
+  colnames(df) <- col_names
 
   # Remove the extraneous rows, byt first checking whether they are all NA.
-
-  mask <- !(is.na(x$year) & is.na(x$GVA) & is.na(x$total) & is.na(x$perc) & is.na(x$overlap))
-
-  x <- x[mask,]
-
-  x <- x[, 1:5]
+  df2 <- df[1:7, 1:5]
 
   # Return the data to the console.
 
@@ -94,8 +87,8 @@ extract_tourism_data <- function(
   )
 
   structure(
-    x,
-    class = c("tourism", class(x))
+    df2,
+    class = c("charities", class(df2))
   )
 
 }

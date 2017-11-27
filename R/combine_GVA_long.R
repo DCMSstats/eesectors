@@ -34,34 +34,46 @@ combine_GVA_long <- function(
   ABS = NULL,
   GVA = NULL,
   SIC91 = NULL,
-  DCMS_sectors = eesectors::DCMS_sectors) {
+  DCMS_sectors = eesectors::sic_mappings) {
 
   check_class(ABS)
   check_class(GVA)
   check_class(SIC91)
 
   abs_year <- max(attr(ABS, "years"))
-  #Annual business survey, duplicate 2014 data for 2015 and
-  #then duplicate non SIC91 then add SIC 91 with sales data
-  ABS_2015 <- filter(ABS, year == abs_year) %>%
-    mutate(year = abs_year + 1) %>%
 
-    #this line makes no sense to me - we are just duplicated rows we already
-    #have so surely it is redundant??
-    bind_rows(filter(ABS, !SIC %in% unique(SIC91$SIC))) %>%
+  # #Annual business survey, duplicate 2014 data for 2015 and
+  # #then duplicate non SIC91 then add SIC 91 with sales data
+  # ABS_2015 <- filter(ABS, year == abs_year) %>%
+  #   mutate(year = abs_year + 1) %>%
+  #
+  #   #this line makes no sense to me - we are just duplicated rows we already
+  #   #have so surely it is redundant??
+  #   bind_rows(filter(ABS, !SIC %in% unique(SIC91$SIC))) %>%
+  #
+  #   #simply appending SIC sales data which supplements the ABS for SIC 91
+  #   bind_rows(SIC91)
+
+  ABS_2015 <- ABS %>%
+    filter(!SIC %in% unique(SIC91$SIC)) %>%
 
     #simply appending SIC sales data which supplements the ABS for SIC 91
     bind_rows(SIC91)
 
+  ABS_2015 <-
+    bind_rows(
+      ABS_2015,
+      filter(ABS_2015, year == abs_year) %>%
+      mutate(year = abs_year + 1))
 
   # keep cases from ABS which have integer SIC - which is just a higher level SIC
-  denom <- filter(ABS_2015, SIC %in% unique(eesectors::DCMS_sectors$SIC2)) %>%
+  denom <- filter(ABS_2015, SIC %in% unique(eesectors::sic_mappings$SIC2)) %>%
     select(year, ABS, SIC) %>%
     rename(ABS_2digit_GVA = ABS, SIC2 = SIC)
 
 
   #add ABS to DCMS sectors
-  GVA_sectors <- left_join(eesectors::DCMS_sectors, ABS_2015, by = c('SIC')) %>%
+  GVA_sectors <- left_join(eesectors::sic_mappings, ABS_2015, by = c('SIC')) %>%
     rename(ABS_ind_GVA = ABS) %>%
     #drop cases where SIC is not in that sector - should do when building DCMS_sectors
     filter(present == TRUE) %>%
